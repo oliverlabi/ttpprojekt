@@ -31,7 +31,7 @@ class CurriculumCalculator{
             this.checkStudyLoad();
             this.checkCurriculumDegree();
             this.drawResultBox();
-        } else {
+        }else {
             $("#error").html("Kontrollige üle sisestuslahtrid!");
             $("#result_error").html("Kontrollige üle sisestuslahtrid!");
         }
@@ -168,7 +168,6 @@ $("#abroad_no").on("click", function(){
 
 /*var seconds = 0; //OOP eksami osa
 var interval;
-
 $("#continue_button").click( function(){
     interval = setInterval(function(){
         seconds += 1;
@@ -176,7 +175,6 @@ $("#continue_button").click( function(){
         $("#time_on_page").html(seconds);
     }, 1000);
 });
-
 $("#calculate_button").click( function(){
     clearInterval(interval);
     seconds = 0;
@@ -217,20 +215,65 @@ $("#result_calculate_button").click(function(){
     let calculation = new CurriculumCalculator;
 })
 
+function CalculatorToEng() {
+    document.getElementById('heading').innerHTML = "Curriculum scenario calculator";
+    document.getElementById('info_text').innerHTML = "Study data can be found in Õis under study results";
+    document.getElementById('curriculum_dropdown_label').innerHTML = "Curriculum";
+    document.getElementById('select_curriculum').innerHTML = "Choose a curriculum";
+    document.getElementById('computer_science').innerHTML = "Computer science";
+    document.getElementById('info_science').innerHTML = "Info science";
+    document.getElementById('mathematics').innerHTML = "Mathematics";
+    document.getElementById('education_technology').innerHTML = "Education technology";
+    document.getElementById('computer_science_business').innerHTML = "Computer science business";
+    document.getElementById('computer_science_teacher').innerHTML = "Computer science teacher";
+    document.getElementById('mathematics_teacher').innerHTML = "Mathematics teacher";
+    document.getElementById('open_society_technologies').innerHTML = "Open society technologies";
+    document.getElementById('digital_study_games').innerHTML = "Digital study games";
+    document.getElementById('human_and_computer_interaction').innerHTML = "Human and computer interaction";
+    document.getElementById('interaction_design').innerHTML = "Interaction design";
+    document.getElementById('free_label').innerHTML = "Free";
+    document.getElementById('paid_label').innerHTML = "Paid";
+    document.getElementById('continue_button').innerHTML = "Next";
+    document.getElementById('curriculum_attendance_label').innerHTML = "Number of semesters spent at TU";
+    document.getElementById('sabbatical_leave_label').innerHTML = "Number of semesters spent on academic leave";
+    document.getElementById('ects_count_label').innerHTML = "EAPs taken into account when completing the curriculum";
+    document.getElementById('studied_abroad_label').innerHTML = "Have you studied abroad or on internship?";
+    document.getElementById('currently_studying_abroad_label').innerHTML = "Are you currently studying abroad or on internship?";
+    document.getElementById('abroad_semester_count_label').innerHTML = "Number of semesters spent abroad";
+    document.getElementById('abroad_ects_count_label').innerHTML = "Number of EAP completed in abroad study";
+    document.getElementById('studied_estonian_label').innerHTML = "Have you been assigned and completed the minor specialization in the state language?";
+    document.getElementById('current_sabbatical_leave_label').innerHTML = "Are you currently on academic leave?";
+    document.getElementById('back_button').innerHTML = "Back";
+    document.getElementById('calculate_button').innerHTML = "Calculate";
+    document.getElementById('calculate_button').style.marginLeft = "483px";
+    document.getElementById('first_help_txt').innerHTML = "Includes all semesters spent at Tallinn University (including academic leave, study abroad, etc.)";
+    document.getElementById('second_help_txt').innerHTML = 'Õis information system box "including academically"';
+    document.getElementById('third_help_txt').innerHTML = 'Õis information system box "ECTS taken into account in load calculation as of the end of the autumn semester and the academic year"';
+    document.getElementById('fourth_help_txt').innerHTML = "Completion of the in-depth study module is obligatory only for students of Estonian-language curricula whose Estonian language level does not meet the C1 requirement established at the university and who are assigned by TU, on the basis of a placement test, to complete the in-depth study module.";
+    document.getElementById('fourth_help_txt').style.marginTop = "10px";
+    document.getElementById('result_heading').innerHTML = "Result";
+    $("#curriculum_result").html("Your curriculum: " + $("#curriculum_dropdown :selected").text());
+    $("#ects_result").html("Your number of EAP: " + $("#ects_count").val() + " EAP");
+    if($("#ects_count").val() < ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+        $("#study_load").html("Study load: Part time");
+    } else {
+        $("#study_load").html("Study load: Full time");
+    }
+    $("#study_lower_limit_result").html("The lower limit for continuing learning: " + ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5) + " EAP");
+    $("#full_study_load_limit_result").html("Minimum required for full-time studies: " + (($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5) + " EAP");
+    document.getElementById('new_calculation_button').innerHTML = "New calculation";
+    document.getElementById('result_calculate_button').innerHTML = "Calculate";
+    document.getElementById('result_calculate_button').style.marginLeft = "416px";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    var x = document.getElementsByClassName("yes_label");
+    var i;
+    for (i = 0; i < x.length; i++) {
+        x[i].innerHTML = "Yes";
+    }
+    var y = document.getElementsByClassName("no_label");
+    var j;
+    for (j = 0; j < y.length; j++) {
+        y[j].innerHTML = "No";
+    }
+    
+}
