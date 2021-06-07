@@ -11,9 +11,20 @@ button{
 #info_text {
     background-color: #6BCABA;
     padding: 5px;
-    width: 586px;
+    width: 590px;
     color: white;
     margin-bottom: 10px;
+}
+
+#lang_link{
+    color: rgb(160,206,200);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#language{
+    float: right;
+    margin-right: 10px;
 }
 
 #time_on_page {
@@ -29,9 +40,8 @@ button{
     padding: 10px;
     border-style: solid;
     border-color: #6BCABA;
-    width: 570px;
+    width: 575px;
 }
-
 
 #abroad_input_area {
     display: none;
@@ -41,7 +51,7 @@ button{
     margin-bottom: 10px;
     margin-top: 10px;
     padding: 10px;
-    width: 570px;
+    width: 575px;
     display: none;
     border-style: solid;
     border-color: #6BCABA;
@@ -66,16 +76,16 @@ button{
 }
 
 #continue_button{
-    margin-left: 536px;
+    margin-left: 541px;
     width: 60px;
 }
 
 #calculate_button{
-    margin-left: 466px;
+    margin-left: 471px;
 }
 
 #result_calculate_button{
-    margin-left: 426px;
+    margin-left: 431px;
 }
 
 #back_button, #new_calculation_button{
@@ -104,7 +114,7 @@ input[type=number] {
     padding: 10px;
     border-style: solid;
     border-color: #6BCABA;
-    width: 543px;
+    width: 548px;
 }
 
 #back_button:hover, #new_calculation_button:hover{
@@ -114,4 +124,36 @@ input[type=number] {
 #result_padding p {
     margin-top: 2px;
     margin-bottom: 2px;
+}
+
+
+.fa{
+    font-size: 14px;
+    color: rgb(109,204,188);
+}
+
+.fa_tekst{
+    display: none;
+}
+
+.help_button{
+    position: relative;
+    display: inline-block;
+}
+  
+.help_button .help_txt{
+    visibility: hidden;
+    font-size: 12px;
+    background-color: rgb(109,204,188);
+    color: white;
+    padding: 10px;
+    text-align:initial;
+    border-radius: 20px;
+    position: absolute;
+    top: -9px;
+    margin-left: 5px;
+}
+
+.help_button:hover .help_txt{
+    visibility: visible;
 }
