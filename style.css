@@ -1,0 +1,117 @@
+body{
+    display: block;
+    flex-direction: column;
+    font-family: 'Helvetica', sans-serif;
+}
+
+button{
+    cursor: pointer;
+}
+
+#info_text {
+    background-color: #6BCABA;
+    padding: 5px;
+    width: 586px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+#time_on_page {
+    display: none;
+}
+
+#input_area, #input_area_buttons, #result_area_buttons{
+    display: none;
+}
+
+#input_area, #curriculum_choice_area {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-style: solid;
+    border-color: #6BCABA;
+    width: 570px;
+}
+
+
+#abroad_input_area {
+    display: none;
+}
+
+#result_padding {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    width: 570px;
+    display: none;
+    border-style: solid;
+    border-color: #6BCABA;
+}
+
+#error, #result_error {
+    margin-top: 10px;
+    color: red;
+    font-weight: bold;
+}
+
+#result_error {
+    display: none;
+}
+
+#calculate_button, #continue_button, #result_calculate_button{
+    padding: 5px;
+    font-size: 14px;
+    background-color: #6BCABA;
+    color: white;
+    border: none;
+}
+
+#continue_button{
+    margin-left: 536px;
+    width: 60px;
+}
+
+#calculate_button{
+    margin-left: 466px;
+}
+
+#result_calculate_button{
+    margin-left: 426px;
+}
+
+#back_button, #new_calculation_button{
+    padding: 5px;
+    font-size: 14px;
+    opacity: 0.5;
+    color: rgb(85, 85, 85);
+    background-color: white;
+    border-style: solid;
+    border-color: rgb(141, 141, 141);
+    transition-duration: 0.8s;
+}
+
+input[type=number] {
+    float: right;
+    width: 40px;
+}
+
+#curriculum_dropdown {
+    float: right;
+}
+
+#results{
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    border-style: solid;
+    border-color: #6BCABA;
+    width: 543px;
+}
+
+#back_button:hover, #new_calculation_button:hover{
+    opacity: 1;
+}
+
+#result_padding p {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
