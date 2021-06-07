@@ -16,10 +16,6 @@ button{
     margin-bottom: 10px;
 }
 
-#time_on_page {
-    display: none;
-}
-
 #input_area, #input_area_buttons, #result_area_buttons{
     display: none;
 }

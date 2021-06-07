@@ -1,10 +1,25 @@
+function getParameter(){
+    let url = window.location.href;
+    let parameters = url.split("?").pop();
+	if(parameters != ""){
+		let splitParam = new URLSearchParams(parameters);
+        let incrementValue = 0;
+		splitParam.forEach(function(value, key) {
+            incrementValue = incrementValue + 1;
+		});	
+        if(incrementValue == 8){
+            let paramCalculation = new CurriculumCalculator(1);
+        }							
+	}
+}
+
 class CurriculumCalculator{
-    constructor(){
+    constructor(parameterCheck){
+        this.parameterCheck = parameterCheck;
         this.bachelorsCurriculums = ["Informaatika", "Infoteadus", "Matemaatika, majandusmatemaatika ja andmeanalüüs"];
         this.mastersCurriculums = ["Haridustehnoloogia", "Infotehnoloogia juhtimine", "Infoteadus", "Informaatikaõpetaja", "Matemaatikaõpetaja", "Avatud ühiskonna tehnoloogiad", "Digitaalsed õpimängud", "Inimese ja arvuti interaktsioon", "Interaktsioonidisain"];
         this.attendanceCount = $("#curriculum_attendance").val();
         this.sabbaticalCount = $("#sabbatical_leave").val();
-        this.universityAttendance = this.attendanceCount - this.sabbaticalCount;
         this.ectsCount = $("#ects_count").val();
         this.abroadSemesterCount = $("#abroad_semester_count").val();
         this.abroadEctsCount = $("#abroad_ects_count").val();
@@ -16,6 +31,7 @@ class CurriculumCalculator{
         this.studyLoad = "";
         this.curriculumChoice = $("#curriculum_dropdown :selected").text();
         this.degree = "none";
+        this.checkParameters(this.parameterCheck);
         this.init();
     }
 
@@ -31,12 +47,83 @@ class CurriculumCalculator{
             this.checkStudyLoad();
             this.checkCurriculumDegree();
             this.drawResultBox();
+            this.setParameters();
         } else {
             $("#error").html("Kontrollige üle sisestuslahtrid!");
             $("#result_error").html("Kontrollige üle sisestuslahtrid!");
         }
         $("#new_calculation_button").on("click", ()=>{this.pageReload();});
     }
+	
+    checkParameters(){ 
+        if(this.parameterCheck == 1){ 
+            let url = window.location.href;
+            let parameters = url.split("?").pop();
+	        if(parameters != ""){
+		        let splitParam = new URLSearchParams(parameters);
+                let incrementValue = 0;
+                let values = [];
+		        splitParam.forEach(function(value, key) {
+                    values[incrementValue] = value;
+                    incrementValue = incrementValue + 1;
+		        });
+                for(let i=0; i<values.length; i++){
+                    if(i == 0){
+                        this.curriculumChoice = values[i];
+                    } else if(i == 1){
+                        this.attendanceCount = values[i];
+                    } else if(i == 2){
+                        this.ectsCount = values[i];
+                    } else if(i == 3){
+                        this.sabbaticalCount = values[i];
+                    } else if(i == 4){
+                        this.abroadSemesterCount = values[i];
+                    } else if(i == 5){
+                        this.abroadEctsCount = values[i];
+                    } else if(i == 6){
+                        this.currentSabbaticalLeave = values[i];
+                    } else if(i == 7){
+                        this.currentAbroadStudies = values[i];
+                    }
+                }
+                $("#curriculum_choice_area").css("display", "none");
+                $("#curriculum_choice_area_buttons").css("display", "none");
+                $("#input_area").css("display", "block");
+                $("#curriculum_dropdown :selected").text(this.curriculumChoice);
+                $("#curriculum_attendance").val(this.attendanceCount);
+                $("#sabbatical_leave").val(this.sabbaticalCount);
+                $("#ects_count").val(this.ectsCount);
+                $("#abroad_semester_count").val(this.abroadSemesterCount);
+            }
+        }
+    }
+
+	setParameters(){
+		var url = new URL("http://greeny.cs.tlu.ee/~karlkor/projekt/curriculumcalc.html?sel=Informaatika&cur=2&ect=98&sab=0&abr=0&ectsabr=0&cursab=0&curabr=0");
+		var search_params = url.searchParams;
+		search_params.set("sel",this.curriculumChoice);
+		search_params.set("cur",this.attendanceCount);
+		search_params.set("ect",this.ectsCount);
+		search_params.set("sab",this.sabbaticalCount);
+		search_params.set("abr",this.abroadSemesterCount);
+		search_params.set("ectabr",this.abroadEctsCount);
+		search_params.set("cursab",this.currentSabbaticalLeave);
+		search_params.set("curabr",this.currentAbroadStudies);
+		
+		url.search = search_params.toString();
+		var new_url = url.toString();
+		
+		var queryParams = new URLSearchParams(window.location.search);
+		queryParams.set("sel",this.curriculumChoice);
+		queryParams.set("cur",this.attendanceCount);
+		queryParams.set("ect",this.ectsCount);
+		queryParams.set("sab",this.sabbaticalCount);
+		queryParams.set("abr",this.abroadSemesterCount);
+		queryParams.set("ectabr",this.abroadEctsCount);
+		queryParams.set("cursab",this.currentSabbaticalLeave);
+		queryParams.set("curabr",this.currentAbroadStudies);
+		history.pushState(null, null, "?"+queryParams.toString());
+	}
 
     pageReload(){
         location.reload();
@@ -94,9 +181,9 @@ class CurriculumCalculator{
 
 
     calcStudyLimits(){
-        this.studyLowerLimit = (this.universityAttendance * 30) * 0.5;
+        this.studyLowerLimit = (this.attendanceCount * 30) * 0.5;
         $("#study_lower_limit_result").html("Õppes jätkamise alampiir: " + this.studyLowerLimit + " EAP");
-        this.fullStudyLoadLowerLimit = this.universityAttendance * 22.5;
+        this.fullStudyLoadLowerLimit = this.attendanceCount * 22.5;
         $("#full_study_load_limit_result").html("Vajalik alampiir õpingute jätkamiseks täiskoormuses: " + this.fullStudyLoadLowerLimit + " EAP");
     }
 
@@ -138,16 +225,16 @@ class CurriculumCalculator{
         if(this.ectsCount <= this.fullStudyLoadLowerLimit){
             $("#scenario").html("Langed õpingutega osakoormusele.");
         }
-        if(this.universityAttendance % 2 == 0 && this.ectsCount < this.studyLowerLimit){
+        if(this.attendanceCount % 2 == 0 && this.ectsCount < this.studyLowerLimit){
             $("#scenario").html("<b>Oled eksmatrikuleerimisohus, kuna EAP-de arv on väiksem kui õppes jätkamise alampiir!</b>");
         }
 
         // ERIJUHTUMID
-        if(this.degree = "masters" && this.universityAttendance == 4 && this.ectsCount == 96){
+        if(this.degree = "masters" && this.attendanceCount == 4 && this.ectsCount == 96){
             $("#scenario").html("<b>Käesolev semester on viimane võimalus oma õpingud lõpetada!</b><br>");
             $("#scenario").append("Oled sooritanud kõik õppekavajärgsed ained, kuid esitamist-kaitsmist ootab veel magistri lõputöö.");
         }
-        if(this.degree = "bachelors" && this.universityAttendance == 6 && this.ectsCount == 168){
+        if(this.degree = "bachelors" && this.attendanceCount == 6 && this.ectsCount == 168){
             $("#scenario").html("<b>Käesolev semester on viimane võimalus oma õpingud lõpetada!</b><br>");
             $("#scenario").append("Oled sooritanud kõik õppekavajärgsed ained, kuid esitamist-kaitsmist ootab veel bakalaureuse lõputöö.");
         }
@@ -165,23 +252,6 @@ $("#abroad_no").on("click", function(){
     $("#abroad_input_area").css("display", "none");
 })
 
-
-/*var seconds = 0; //OOP eksami osa
-var interval;
-
-$("#continue_button").click( function(){
-    interval = setInterval(function(){
-        seconds += 1;
-        console.log("siin");
-        $("#time_on_page").html(seconds);
-    }, 1000);
-});
-
-$("#calculate_button").click( function(){
-    clearInterval(interval);
-    seconds = 0;
-});*/
-
 $("#continue_button").on("click", function(){
     if($("#curriculum_dropdown :selected").text() == "Vali õppekava..."){
         $("#error").html("Vali õppekava!");
@@ -191,7 +261,6 @@ $("#continue_button").on("click", function(){
         $("#curriculum_choice_area_buttons").css("display", "none");
         $("#input_area").css("display", "block");
         $("#input_area_buttons").css("display", "block");
-        $("#time_on_page").css("display", "block");
     }
     
 })
@@ -201,23 +270,19 @@ $("#back_button").on("click", function(){
     $("#curriculum_choice_area_buttons").css("display", "block");
     $("#input_area").css("display", "none");
     $("#input_area_buttons").css("display", "none");
-    $("#time_on_page").css("display", "none");
-    /*clearInterval(interval); //OOP eksami osa
-    seconds = 0;
-    $("#time_on_page").html(seconds);*/
 })
 
-
 $("#calculate_button").click(function(){
-    
-    let calculation = new CurriculumCalculator;
+    let calculation = new CurriculumCalculator(0);
 })
 
 $("#result_calculate_button").click(function(){
-    let calculation = new CurriculumCalculator;
+    let calculation = new CurriculumCalculator(0);
 })
 
-
+window.onload = (event) => {
+  getParameter();
+};
 
 
 
