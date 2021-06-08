@@ -52,8 +52,6 @@ class CurriculumCalculator{
             Calculation.prototype.calcScenario.call(this);
         }
     }
-
-    
 }
 
 $("#abroad_yes").on("click", function(){
@@ -86,6 +84,17 @@ $("#back_button").on("click", function(){
     $("#time_on_page").css("display", "none");
 })
 
+$("#pdf_save_button").on("click", function(){
+    html2canvas($("#whole_page_area"), {
+        onrendered: function(canvas) {         
+            var imgData = canvas.toDataURL(
+                "image/png");              
+            var doc = new jsPDF("p", "mm");
+            doc.addImage(imgData, "PNG", 10, 10);
+            doc.save("TLU_calculation.pdf");
+        }
+    });
+})
 
 $("#calculate_button").click(function(){
     
