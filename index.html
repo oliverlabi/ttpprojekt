@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://fonts.cdnfonts.com/css/segoe-ui-4" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-alpha1/html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <script src="Main.js" defer></script>
+    <script src="Validation.js" defer></script>
+    <script src="Calculation.js" defer></script>
+    <title>Sisestuslahtrid</title>
+</head>
+<body>
+    <div id="whole_page_area">
+        <div id="language">
+            <a href="index.html" class="lang_link">Eesti keeles </a>
+            <a onclick="CalculatorToEng();" class="lang_link" id="en">| In English</a>
+        </div>
+        <h2 id="heading">Õppekava täitmise kalkulaator</h2>
+        <p id="info_text">Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt (ÕISist)</p>
+        <div id="curriculum_choice_area">
+            <label for="curriculum_dropdown" id="curriculum_dropdown_label">Vali õppekava: </label>
+            <select name="curriculum_dropdown" id="curriculum_dropdown">
+                <option value="select_curriculum" id="select_curriculum" disabled selected>Vali õppekava...</option>
+                <option value="computer_science" id="computer_science">Informaatika</option>
+                <option value="info_science" id="info_science">Infoteadus</option>
+                <option value="mathematics" id="mathematics">Matemaatika, majandusmatemaatika ja andmeanalüüs</option>
+                <option value="education_technology" id="education_technology">Haridustehnoloogia</option>
+                <option value="computer_science_business" id="computer_science_business">Infotehnoloogia juhtimine</option>
+                <option value="computer_science_teacher" id="computer_science_teacher">Informaatikaõpetaja</option>
+                <option value="mathematics_teacher" id="mathematics_teacher">Matemaatikaõpetaja</option>
+                <option value="open_society_technologies" id="open_society_technologies">Avatud ühiskonna tehnoloogiad</option>
+                <option value="digital_study_games" id="digital_study_games">Digitaalsed õpimängud</option>
+                <option value="human_and_computer_interaction" id="human_and_computer_interaction">Inimese ja arvuti interaktsioon</option>
+                <option value="interaction_design" id="interaction_design">Interaktsioonidisain</option>
+            </select> 
+            <div id="pay_load">
+                <br>
+                <input type="radio" id="free" name="pay_load" value="free" checked>
+                <label for="free" id="free_label">Tasuta</label>
+                <input type="radio" id="paid" name="pay_load" value="paid">
+                <label for="paid" id="paid_label">Tasuline</label>
+            </div>
+        </div>
+        <div id="curriculum_choice_area_buttons">
+            <button id="continue_button">Edasi</button>
+        </div>
+            <div id="input_area">
+                <label for="curriculum_attendance" id="curriculum_attendance_label">TLÜs viibitud semestrite arv</label>
+                <div class="help_button">
+                    <i class="fa fa-question-circle" id="first_help"></i>
+                    <span class="help_txt" id="first_help_txt" style="width: 280px;">Sisaldab kõiki Tallinna Ülikoolis viibitud semestreid (k.a akadeemilisel puhkusel, välisõppes jne)</span>
+                </div>
+                <input type="number" id="curriculum_attendance" value="7" min="0" oninput="validity.valid||(value='');">
+                <br>
+                <br>
+                <label for="sabbatical_leave" id="sabbatical_leave_label">Akadeemilisel puhkusel viibitud semestrite arv</label>
+                <div class="help_button">
+                    <i class="fa fa-question-circle" id="second_help"></i>
+                    <span class="help_txt" id="second_help_txt" style="width: 150px;">Õppeinfosüsteemi lahter "sh akadeemiliselt"</span>
+                </div>
+                <input type="number" id="sabbatical_leave" value="2" min="0" oninput="validity.valid||(value='');">
+                <br>
+                <br>
+                <label for="ects_count" id="ects_count_label">Õppekava täitmisel arvesse minevad EAP-d</label>
+                <div class="help_button">
+                    <i class="fa fa-question-circle" id="third_help"></i>
+                    <span class="help_txt" id="third_help_txt" style="width: 170px;">Õppeinfosüsteemi lahter "Koormusarvutusel arvesse minevad EAP-d sügissemestri ja õppeaasta lõpu seisuga"</span>
+                </div>
+                <input type="number" id="ects_count" value="98" min="0" oninput="validity.valid||(value='');">
+                <br>
+                <br>
+                <label for="studied_abroad" id="studied_abroad_label">Kas oled viibinud välisõppes või välispraktikal?</label>
+                <div id="studied_abroad">
+                    <br>
+                    <input type="radio" id="abroad_yes" name="studied_abroad" value="yes">
+                    <label for="abroad_yes" class="yes_label">Jah</label>
+                    <input type="radio" id="abroad_no" name="studied_abroad" value="no" checked>
+                    <label for="abroad_no" class="no_label">Ei</label>
+                    <br>
+                    <div id="abroad_input_area">
+                        <br>
+                        <label for="currently_studying_abroad" id="currently_studying_abroad_label">Kas sa viibid hetkel välisõppel või välispraktikal?</label>
+                        <br>
+                        <br>
+                        <div id="currently_studying_abroad">
+                            <input type="radio" id="currently_abroad_yes" name="currently_studying_abroad" value="yes">
+                            <label for="currently_abroad_yes" class="yes_label">Jah</label>
+                            <input type="radio" id="currently_abroad_no" name="currently_studying_abroad" value="no" checked>
+                            <label for="currently_abroad_no" class="no_label">Ei</label> 
+                        </div>
+                        <br>
+                        <label for="abroad_semester_count" id="abroad_semester_count_label">Välisõppes viibitud semestrite arv</label>
+                        <input type="number" id="abroad_semester_count" value="0" min="0" oninput="validity.valid||(value='');">
+                        <br>
+                        <br>
+                        <label for="abroad_ects_count" id="abroad_ects_count_label">Välisõppes sooritatud ainepunktide arv</label>
+                        <input type="number" id="abroad_ects_count" value="0" min="0" oninput="validity.valid||(value='');">
+                        <br>
+                    </div>
+                </div>
+                <br>
+                <label for="studied_estonian" id="studied_estonian_label">Kas sulle on määratud ja oled edukalt täitnud riigikeele süvaõppe kõrvaleriala?</label>
+                <div class="help_button">
+                    <i class="fa fa-question-circle" id="fourth_help"></i>
+                    <span class="help_txt" id="fourth_help_txt" style="width: 200px;">Süvaõppe mooduli täitmine on kohustuslik vaid eestikeelsete õppekavade üliõpilastele, kelle eesti keele tase ei vasta ülikoolis kehtestatud C1-nõudele ja kes on TLÜ poolt, paigutustesti alusel, määratud süvaõppe moodulit täitma.</span>
+                </div>
+                <div id="studied_estonian">
+                    <br>
+                    <input type="radio" id="estonian_yes" name="studied_estonian" value="yes">
+                    <label for="estonian_yes" class="yes_label">Jah</label>
+                    <input type="radio" id="estonian_no" name="studied_estonian" value="no" checked>
+                    <label for="estonian_no" class="no_label">Ei</label>
+                </div>
+                <br>
+                <label for="current_sabbatical_leave" id="current_sabbatical_leave_label">Kas viibid hetkel akadeemilisel puhkusel?</label>
+                <div id="current_sabbatical_leave">
+                    <br>
+                    <input type="radio" id="current_sabbatical_leave_yes" name="current_sabbatical_leave" value="yes">
+                    <label for="current_sabbatical_leave_yes" class="yes_label">Jah</label>
+                    <input type="radio" id="current_sabbatical_leave_no" name="current_sabbatical_leave" value="no" checked>
+                    <label for="current_sabbatical_leave_no" class="no_label">Ei</label>
+                </div>
+                <br>
+            </div>
+            <div id="input_area_buttons">
+                <button id="back_button">Tagasi</button>
+                <button id="calculate_button">Kalkuleeri</button>
+            </div>
+            <div id="error"></div>
+            <div id="result_padding">
+                <p id="result_heading">Tulemus</p>
+                <div id="results">
+                    <div id="curriculum_result">Sinu õppekava: </div>
+                    <div id="study_load">Õppekoormus: </div>
+                    <div id="ects_result">Sinu ainepunktide arv: </div>
+                    <div id="study_lower_limit_result">Õppes jätkamise alampiir: </div>
+                    <div id="full_study_load_limit_result">Alampiir õpingute jätkamiseks täiskoormuses: </div>
+                    <br>
+                    <div id="scenario">stsenaariumitekst</div>
+                </div>
+            </div>
+    </div>
+    <div id="result_area_buttons">
+        <button id="new_calculation_button">Alusta uuesti</button>
+        <button id="result_calculate_button">Kalkuleeri</button>
+        <button id="pdf_save_button">Salvesta PDFina</button>
+    </div>
+    <div id="result_error"></div>
+</body>
+</html>
