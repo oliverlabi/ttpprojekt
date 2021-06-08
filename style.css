@@ -57,6 +57,7 @@ button{
 }
 
 #calculate_button, #continue_button, #result_calculate_button, #pdf_save_button{
+
     padding: 5px;
     font-size: 14px;
     background-color: #6BCABA;
