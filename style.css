@@ -57,7 +57,7 @@ button{
     display: none;
 }
 
-#calculate_button, #continue_button, #result_calculate_button{
+#calculate_button, #continue_button, #result_calculate_button, #pdf_save_button{
     padding: 5px;
     font-size: 14px;
     background-color: #6BCABA;
@@ -74,8 +74,12 @@ button{
     margin-left: 466px;
 }
 
+#pdf_save_button{
+    margin-left: 307px;
+}
+
 #result_calculate_button{
-    margin-left: 426px;
+    margin-left: 10px;
 }
 
 #back_button, #new_calculation_button{
