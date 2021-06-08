@@ -1,6 +1,5 @@
 body{
     display: block;
-    flex-direction: column;
     font-family: 'Helvetica', sans-serif;
 }
 
@@ -16,12 +15,13 @@ button{
     margin-bottom: 10px;
 }
 
-#time_on_page {
+#input_area, #input_area_buttons, #result_area_buttons{
     display: none;
 }
 
-#input_area, #input_area_buttons, #result_area_buttons{
-    display: none;
+#input_area_buttons, #result_area_buttons {
+    max-width: 596px;
+    max-height: 30px;
 }
 
 #input_area, #curriculum_choice_area {
@@ -71,11 +71,11 @@ button{
 }
 
 #calculate_button{
-    margin-left: 466px;
+    float: right;
 }
 
 #result_calculate_button{
-    margin-left: 426px;
+    float: right;
 }
 
 #back_button, #new_calculation_button{
