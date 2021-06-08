@@ -1,6 +1,5 @@
 body{
     display: block;
-    flex-direction: column;
     font-family: 'Helvetica', sans-serif;
 }
 
@@ -8,15 +7,8 @@ button{
     cursor: pointer;
 }
 
-#info_text {
-    background-color: #6BCABA;
-    padding: 5px;
-    width: 590px;
-    color: white;
-    margin-bottom: 10px;
-}
 
-#lang_link{
+.lang_link{
     color: rgb(160,206,200);
     text-decoration: underline;
     cursor: pointer;
@@ -27,12 +19,21 @@ button{
     margin-right: 10px;
 }
 
-#time_on_page {
-    display: none;
+#info_text {
+    background-color: #6BCABA;
+    padding: 5px;
+    width: 590px;
+    color: white;
+    margin-bottom: 10px;
 }
 
 #input_area, #input_area_buttons, #result_area_buttons{
     display: none;
+}
+
+#input_area_buttons, #result_area_buttons {
+    max-width: 600px;
+    max-height: 30px;
 }
 
 #input_area, #curriculum_choice_area {
@@ -40,7 +41,7 @@ button{
     padding: 10px;
     border-style: solid;
     border-color: #6BCABA;
-    width: 575px;
+    width: 574px;
 }
 
 #abroad_input_area {
@@ -51,7 +52,7 @@ button{
     margin-bottom: 10px;
     margin-top: 10px;
     padding: 10px;
-    width: 575px;
+    width: 574px;
     display: none;
     border-style: solid;
     border-color: #6BCABA;
@@ -67,7 +68,7 @@ button{
     display: none;
 }
 
-#calculate_button, #continue_button, #result_calculate_button{
+#calculate_button, #continue_button, #result_calculate_button, #pdf_save_button{
     padding: 5px;
     font-size: 14px;
     background-color: #6BCABA;
@@ -76,16 +77,21 @@ button{
 }
 
 #continue_button{
-    margin-left: 541px;
+    margin-left: 536px;
     width: 60px;
 }
 
 #calculate_button{
-    margin-left: 471px;
+    float: right;
 }
 
 #result_calculate_button{
-    margin-left: 431px;
+    float: right;
+}
+
+#pdf_save_button{
+    float: right;
+    margin-right: 4px;
 }
 
 #back_button, #new_calculation_button{
@@ -114,7 +120,7 @@ input[type=number] {
     padding: 10px;
     border-style: solid;
     border-color: #6BCABA;
-    width: 548px;
+    width: 547px;
 }
 
 #back_button:hover, #new_calculation_button:hover{
@@ -125,7 +131,6 @@ input[type=number] {
     margin-top: 2px;
     margin-bottom: 2px;
 }
-
 
 .fa{
     font-size: 14px;
