@@ -52,4 +52,5 @@ class Calculation extends CurriculumCalculator {
         }
     }
 
+
 }

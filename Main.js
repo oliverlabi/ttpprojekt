@@ -98,7 +98,6 @@ $("#pdf_save_button").on("click", function(){
 })
 
 
-
 $("#calculate_button").click(function(){
     
     let calculation = new CurriculumCalculator;
