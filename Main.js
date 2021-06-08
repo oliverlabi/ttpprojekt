@@ -36,6 +36,7 @@ class CurriculumCalculator{
             $("#result_error").html("Kontrollige üle sisestuslahtrid!");
         }
         $("#new_calculation_button").on("click", ()=>{this.pageReload();});
+        
     }
 
     
@@ -71,7 +72,6 @@ $("#continue_button").on("click", function(){
         $("#curriculum_choice_area_buttons").css("display", "none");
         $("#input_area").css("display", "block");
         $("#input_area_buttons").css("display", "block");
-        $("#time_on_page").css("display", "block");
     }
     
 })
@@ -81,20 +81,8 @@ $("#back_button").on("click", function(){
     $("#curriculum_choice_area_buttons").css("display", "block");
     $("#input_area").css("display", "none");
     $("#input_area_buttons").css("display", "none");
-    $("#time_on_page").css("display", "none");
 })
 
-$("#pdf_save_button").on("click", function(){
-    html2canvas($("#whole_page_area"), {
-        onrendered: function(canvas) {         
-            var imgData = canvas.toDataURL(
-                "image/png");              
-            var doc = new jsPDF("p", "mm");
-            doc.addImage(imgData, "PNG", 10, 10);
-            doc.save("TLU_calculation.pdf");
-        }
-    });
-})
 
 $("#calculate_button").click(function(){
     

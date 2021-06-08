@@ -19,10 +19,6 @@ button{
     display: none;
 }
 
-#input_area, #input_area_buttons, #result_area_buttons{
-    display: none;
-}
-
 #input_area_buttons, #result_area_buttons {
     max-width: 596px;
     max-height: 30px;
@@ -61,7 +57,7 @@ button{
     display: none;
 }
 
-#calculate_button, #continue_button, #result_calculate_button, #pdf_save_button{
+#calculate_button, #continue_button, #result_calculate_button{
     padding: 5px;
     font-size: 14px;
     background-color: #6BCABA;
@@ -75,20 +71,11 @@ button{
 }
 
 #calculate_button{
-    margin-left: 466px;
-}
-
-#pdf_save_button{
-    margin-left: 307px;
-}
-
-#result_calculate_button{
-    margin-left: 10px;
+    float: right;
 }
 
 #result_calculate_button{
     float: right;
-
 }
 
 #back_button, #new_calculation_button{

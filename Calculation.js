@@ -4,6 +4,7 @@ class Calculation extends CurriculumCalculator {
         $("#study_lower_limit_result").html("Õppes jätkamise alampiir: " + this.studyLowerLimit + " EAP");
         this.fullStudyLoadLowerLimit = this.universityAttendance * 22.5;
         $("#full_study_load_limit_result").html("Vajalik alampiir õpingute jätkamiseks täiskoormuses: " + this.fullStudyLoadLowerLimit + " EAP");
+        console.log(this.studyLowerLimit);
     }
 
     calcStudyLoad(){
@@ -51,4 +52,5 @@ class Calculation extends CurriculumCalculator {
             }
         }
     }
+
 }
