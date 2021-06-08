@@ -52,7 +52,6 @@ class CurriculumCalculator{
             Calculation.prototype.calcScenario.call(this);
         }
     }
-
 }
 
 $("#abroad_yes").on("click", function(){
@@ -96,7 +95,6 @@ $("#pdf_save_button").on("click", function(){
         }
     });
 })
-
 
 $("#calculate_button").click(function(){
     
