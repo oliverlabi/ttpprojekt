@@ -52,6 +52,7 @@ class CurriculumCalculator{
             Calculation.prototype.calcScenario.call(this);
         }
     }
+
 }
 
 $("#abroad_yes").on("click", function(){
@@ -71,7 +72,6 @@ $("#continue_button").on("click", function(){
         $("#curriculum_choice_area_buttons").css("display", "none");
         $("#input_area").css("display", "block");
         $("#input_area_buttons").css("display", "block");
-        $("#time_on_page").css("display", "block");
     }
     
 })
@@ -81,7 +81,6 @@ $("#back_button").on("click", function(){
     $("#curriculum_choice_area_buttons").css("display", "block");
     $("#input_area").css("display", "none");
     $("#input_area_buttons").css("display", "none");
-    $("#time_on_page").css("display", "none");
 })
 
 $("#pdf_save_button").on("click", function(){
@@ -95,6 +94,7 @@ $("#pdf_save_button").on("click", function(){
         }
     });
 })
+
 
 $("#calculate_button").click(function(){
     
