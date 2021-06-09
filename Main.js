@@ -6,6 +6,7 @@ class CurriculumCalculator{
         this.bachelorsCurriculums = ["Informaatika", "Infoteadus", "Matemaatika, majandusmatemaatika ja andmeanalüüs"];
         this.mastersCurriculums = ["Haridustehnoloogia", "Infotehnoloogia juhtimine", "Infoteadus", "Informaatikaõpetaja", "Matemaatikaõpetaja", "Avatud ühiskonna tehnoloogiad", "Digitaalsed õpimängud", "Inimese ja arvuti interaktsioon", "Interaktsioonidisain"];
         this.fullStudyLoadLowerLimit = 0;
+        this.payLoad = $('input[name="pay_load"]:checked').val();
         this.studyLowerLimit = 0;
         this.scenarioText = "";
         this.studyLoad = "";
@@ -52,10 +53,10 @@ class CurriculumCalculator{
     draw_graph(){
 		Graphic.prototype.clear_canvas.call(this);
 		Graphic.prototype.draw_base.call(this);
-		if(this.studyLoad == "Täiskoormus"){
+		if(this.payLoad == "free"){
 			Graphic.prototype.draw_freeMargins.call(this);
 		} 
-		if(this.studyLoad == "Osakoormus"){
+		if(this.payLoad == "paid"){
 			Graphic.prototype.draw_paidMargins.call(this);
 		}
 		Graphic.prototype.draw_data.call(this);
@@ -69,6 +70,7 @@ class CurriculumCalculator{
             $("#ects_result").html("Sinu ainepunktide arv: " + this.ectsCount + " EAP");
             $("#result_padding").css("display", "block");
             $("#results").css("display", "block");
+            $("#footer").css("bottom", "-70px");
             Calculation.prototype.calcScenario.call(this);
         }
     }

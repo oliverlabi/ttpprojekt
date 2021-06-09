@@ -1,38 +1,4 @@
 class Graphic extends CurriculumCalculator {
-	
-	
-
-
-	/*window.onload = function(){
-		
-	}*/
-
-	/*draw_graph(){
-		/*let canvas = document.getElementById("canvas");
-		let ctx = canvas.getContext("2d");
-		let graphX = 10;
-		let graphY = 45;
-		let graphBorderWidth = 3;
-		let fullTimeEdu, partTimeEdu, TäiskoormusFullEduLimit, payload, this.universityAttendance, this.ectsCount;
-		let payload = this.studyLoad;
-		console.log(this.studyLoad);
-		Graphic.prototype.clear_canvas(this);
-		Graphic.prototype.draw_base(this);
-		//draw_base();
-		if(payload == "Täiskoormus"){
-			Graphic.prototype.draw_freeMargins(this);
-			//draw_TäiskoormusMargins();
-		} else if(payload == "Osakoormus"){
-			Graphic.prototype.draw_paidMargins(this);
-			//draw_OsakoormusMargins();
-		}
-		Graphic.prototype.draw_data(this);
-		Graphic.prototype.draw_student(this);
-		//draw_data();
-		//draw_student();
-		
-	}*/
-
 	clear_canvas(){
 		let canvas = document.getElementById("canvas");
 		let ctx = canvas.getContext("2d");
@@ -43,29 +9,19 @@ class Graphic extends CurriculumCalculator {
 		ctx.fill();
 	}
 
-	/*calculate_data(){
-		
-		let fullTimeEdu = this.fullStudyLoadLowerLimit;
-		let partTimeEdu = (this.universityAttendance* 15); //siia panna +15 pärast??
-		let TäiskoormusFullEduLimit = (this.universityAttendance * 30) - 6;
-		
-	}*/
-
 	draw_base(){
 		let canvas = document.getElementById("canvas");
 		let ctx = canvas.getContext("2d");
 		let graphX = 10;
 		let graphY = 45;
 		let graphBorderWidth = 3;
-		//kasti suurust muuta ainult siit graphX ja graphY juurest
+		//kasti suurust muuta ainult siit graphX ja graphY juurest ning teha seda igas funktsioonis
 		ctx.strokeStyle = "rgba(112, 203, 188, 1)";
 		ctx.lineWidth = graphBorderWidth;
 		ctx.beginPath();
 			ctx.rect(graphX, graphY, canvas.width - 2*graphX, canvas.height - 2*graphY);
-			/* width ja height peavad olema 2*graphX ja 2*graphY, et ta kuvaks sees olevat kasti sümmeertiliselt*/
 		ctx.closePath();
 		ctx.stroke();
-
 	}
 
 	draw_freeMargins(){
@@ -134,7 +90,6 @@ class Graphic extends CurriculumCalculator {
 		ctx.closePath();
 		ctx.stroke();
 		ctx.fill();
-		
 	}
 
 	draw_data(){
@@ -144,17 +99,16 @@ class Graphic extends CurriculumCalculator {
 		let graphY = 45;
 		let graphBorderWidth = 3;
 		let fullTimeEdu = this.fullStudyLoadLowerLimit;
-		console.log(this.fullStudyLoadLowerLimit);
 		let partTimeEdu = (this.universityAttendance* 15); //siia panna +15 pärast??
 		let freeFullEduLimit = (this.universityAttendance * 30) - 6;
-		let payload = this.studyLoad;
+		let payload = this.payLoad;
 		ctx.beginPath();
 			ctx.strokeStyle = "black";
 			ctx.lineWidth = 2;
-			if(payload == "Osakoormus"){
+			if(payload == "paid"){
 				ctx.moveTo((canvas.width / 2), graphY+(graphBorderWidth/2));
 				ctx.lineTo((canvas.width / 2), (canvas.height - graphY)-(graphBorderWidth/2));
-			} else if(payload == "Täiskoormus"){
+			} else if(payload == "free"){
 				ctx.moveTo(((canvas.width-2*graphX)*1/3)+graphX, graphY+(graphBorderWidth/2));
 				ctx.lineTo(((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY)-(graphBorderWidth/2));
 			}
@@ -163,12 +117,12 @@ class Graphic extends CurriculumCalculator {
 			ctx.fillStyle = "black";
 			ctx.textAlign = "center";
 			ctx.fillText(0, graphX+graphBorderWidth, graphY - graphBorderWidth*2);
-			if(payload == "Osakoormus"){	
+			if(payload == "paid"){	
 				ctx.fillText(partTimeEdu, canvas.width/2, graphY - graphBorderWidth*2);
 				ctx.font = "12px arial";
 				ctx.fillText("Õppes jätkamise", canvas.width/2, (canvas.height - graphY) + graphBorderWidth*5);
 				ctx.fillText("alampiir", canvas.width/2, (canvas.height - graphY) + graphBorderWidth*9);
-			} else if(payload == "Täiskoormus"){		
+			} else if(payload == "free"){		
 				ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)*1/3)+graphX, graphY - graphBorderWidth*2);
 				ctx.font = "12px arial";
 				ctx.fillText("Õppes jätkamise", ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*5);
@@ -179,7 +133,7 @@ class Graphic extends CurriculumCalculator {
 			ctx.fillText("EAP-de alampiiride skaala:", graphX, graphY - graphBorderWidth*4 -20);
 		ctx.closePath();
 		
-		if(payload == "Täiskoormus"){
+		if(payload == "free"){
 			ctx.beginPath();
 				ctx.strokeStyle = "black";
 				ctx.lineWidth = 2;
@@ -196,7 +150,7 @@ class Graphic extends CurriculumCalculator {
 			ctx.closePath();
 		}
 		
-		if(payload == "Täiskoormus"){
+		if(payload == "free"){
 			ctx.beginPath();
 				ctx.strokeStyle = "black";
 				ctx.lineWidth = 2;

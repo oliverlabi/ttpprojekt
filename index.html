@@ -18,11 +18,11 @@
 </head>
 <body>
     <div id="whole_page_area">
-        <div id="language">
+        <div id="header">
+            <span id="heading">Õppekava täitmise kalkulaator</span>
             <a href="index.html" class="lang_link">Eesti keeles </a>
             <a onclick="CalculatorToEng();" class="lang_link" id="en">| In English</a>
         </div>
-        <h2 id="heading">Õppekava täitmise kalkulaator</h2>
         <p id="info_text">Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt (ÕISist)</p>
         <div id="curriculum_choice_area">
             <label for="curriculum_dropdown" id="curriculum_dropdown_label">Vali õppekava: </label>
@@ -154,5 +154,9 @@
         <button id="pdf_save_button">Salvesta PDFina</button>
     </div>
     <div id="result_error"></div>
+    <footer id="footer">
+        <span>Õppeinfosüsteem:</span>
+        <a href="https://ois.tlu.ee/pls/portal/ois2.ois_public.main" id="help_link">https://ois.tlu.ee/pls/portal/ois2.ois_public.main</a>
+    </footer>
 </body>
 </html>
