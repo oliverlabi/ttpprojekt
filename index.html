@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-alpha1/html2canvas.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="style.css" rel="stylesheet">
     <script src="Main.js" defer></script>
     <script src="Validation.js" defer></script>
@@ -18,11 +19,10 @@
 </head>
 <body>
     <div id="whole_page_area">
-        <div id="header">
-            <span id="heading">Õppekava täitmise kalkulaator</span>
-            <a href="index.html" class="lang_link">Eesti keeles </a>
-            <a onclick="CalculatorToEng();" class="lang_link" id="en">| In English</a>
-        </div>
+        <p id="heading">Õppekava täitmise kalkulaator</p>
+        <a href="https://www.tlu.ee/" id="mainpage">Tagasi pealehele</a>
+        <a href="index.html" class="lang_link" id="ee">Eesti keeles </a>
+        <a onclick="CalculatorToEng();" class="lang_link" id="en">| In English</a>
         <p id="info_text">Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt (ÕISist)</p>
         <div id="curriculum_choice_area">
             <label for="curriculum_dropdown" id="curriculum_dropdown_label">Vali õppekava: </label>
@@ -152,11 +152,12 @@
         <button id="new_calculation_button">Alusta uuesti</button>
         <button id="result_calculate_button">Kalkuleeri</button>
         <button id="pdf_save_button">Salvesta PDFina</button>
+        <button id="clipboard_copy_button"><img src="icon/clipboard.png" id="clipboard_pic"></button>
     </div>
     <div id="result_error"></div>
     <footer id="footer">
         <span>Õppeinfosüsteem:</span>
-        <a href="https://ois.tlu.ee/pls/portal/ois2.ois_public.main" id="help_link">https://ois.tlu.ee/pls/portal/ois2.ois_public.main</a>
+        <a href="https://ois.tlu.ee/pls/portal/ois2.ois_public.main" target="_blank" id="help_link">https://ois.tlu.ee/pls/portal/ois2.ois_public.main</a>
     </footer>
 </body>
 </html>

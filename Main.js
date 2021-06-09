@@ -36,11 +36,10 @@ class CurriculumCalculator{
                 Calculation.prototype.checkCurriculumDegree.call(this);
                 this.drawResultBox();
                 this.draw_graph();
-            } else {
-                //$("#error").html(this.error);
-                //$("#result_error").html(this.error);
             }
             $("#new_calculation_button").on("click", ()=>{this.pageReload();});
+            $("#en").on("click", ()=>{this.lang = 1;});
+            $("#en").on("click", ()=>{this.draw_graph();});
         //}
         
     }
@@ -70,7 +69,7 @@ class CurriculumCalculator{
             $("#ects_result").html("Sinu ainepunktide arv: " + this.ectsCount + " EAP");
             $("#result_padding").css("display", "block");
             $("#results").css("display", "block");
-            $("#footer").css("bottom", "-70px");
+            $("#footer").css("margin-top", "50px");
             Calculation.prototype.calcScenario.call(this);
         }
     }
@@ -80,6 +79,7 @@ let lang = 0;
 
 $("#abroad_yes").on("click", function(){
     $("#abroad_input_area").css("display", "block");
+    $("#footer").css("margin-top", "50px");
 })
 
 $("#abroad_no").on("click", function(){
@@ -97,6 +97,11 @@ $("#continue_button").on("click", function(){
         $("#input_area_buttons").css("display", "block");
     }
     
+})
+
+$("#en").on("click", function(){
+    $("#en").css("color", "rgb(100, 146, 140)");
+    $("#en").css("color", "rgb(100, 146, 140)");
 })
 
 $("#back_button").on("click", function(){
@@ -118,17 +123,44 @@ $("#pdf_save_button").on("click", function(){
     });
 })
 
+$(document).ready(function(){
+    var $temp = $("<input>");
+    var $url = $(location).attr('href');
+    $('#clipboard_copy_button').click(function() {
+    $("body").append($temp);
+    $temp.val($url).select();
+    document.execCommand("copy");
+    $temp.remove();
+    if(lang == 1){
+        //alert("Link copied!");
+        swal({
+            title: "Link copied!",
+            icon: "success",
+            button: "OK",
+        });
+    } else {
+        //alert("Link kopeeritud!");
+        swal({
+            title: "Link kopeeritud!",
+            icon: "success",
+            button: "OK",
+        });
+    }
+    });
+})
+
 $("#calculate_button").click(function(){
-    let calculation = new CurriculumCalculator;
+    let calculation = new CurriculumCalculator(lang);
     if(lang == 1){
         ResultToEng();
     }
 })
 
 $("#result_calculate_button").click(function(){
-    let calculation = new CurriculumCalculator;
+    let calculation = new CurriculumCalculator(lang);
     if(lang == 1){
         ResultToEng();
+        
     }
 })
 

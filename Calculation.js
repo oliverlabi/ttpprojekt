@@ -39,6 +39,9 @@ class Calculation extends CurriculumCalculator {
         if($("input[name='currently_studying_abroad']:checked").val() == "yes"){
             $("#scenario").html("<b>Viibid hetkel välisõppes/välispraktikal.</b>");
         }
+        if($("input[name='current_sabbatical_leave']:checked").val() == "yes"){
+            $("#scenario").html("<b>Viibid hetkel akadeemilisel puhkusel.</b>");
+        }
     }
 
     checkCurriculumDegree(){

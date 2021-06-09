@@ -1,6 +1,11 @@
 body{
+    height: 100%;
     display: block;
     font-family: 'Helvetica', sans-serif;
+}
+
+#whole_page_area{
+    min-height: 94%;
 }
 
 button{
@@ -15,16 +20,17 @@ canvas {
 #heading{
     font-size: 24px;
     margin-right: 105px;
+    margin-bottom: 12px;
 }
 
-.lang_link{
+a{
     color: rgb(160,206,200);
     text-decoration: underline;
     cursor: pointer;
 }
 
-#header{
-    display: inline;
+#mainpage{
+    margin-right: 301px;
 }
 
 #info_text {
@@ -42,6 +48,7 @@ canvas {
 #input_area_buttons, #result_area_buttons {
     max-width: 596px;
     max-height: 30px;
+    margin-bottom: 10px;
 }
 
 #input_area, #curriculum_choice_area {
@@ -77,12 +84,34 @@ canvas {
     display: none;
 }
 
-#calculate_button, #continue_button, #result_calculate_button, #pdf_save_button{
+#calculate_button, #continue_button, #result_calculate_button, #pdf_save_button, #clipboard_copy_button{
     padding: 5px;
     font-size: 14px;
     background-color: #6BCABA;
     color: white;
     border: none;
+    -webkit-transition-duration: 0.8s;
+    transition-duration: 0.8s;
+}
+
+#calculate_button:hover, #continue_button:hover, #result_calculate_button:hover, #pdf_save_button:hover, #clipboard_copy_button:hover{
+    padding: 5px;
+    font-size: 14px;
+    background-color: #509489;
+    color: white;
+    border: none;
+}
+
+#ee{
+    color: rgb(160,206,200);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#en{
+    color: rgb(160,206,200);
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 #continue_button{
@@ -98,9 +127,19 @@ canvas {
     float: right;
 }
 
+#clipboard_pic{
+    filter: brightness(0) invert(1);
+}
+
+#clipboard_copy_button{
+    float: right;
+    margin-top: -9px;
+    transform: scale(0.578);
+}
+
 #pdf_save_button{
     float: right;
-    margin-right: 4px;
+    margin-right: 9px;
 }
 
 #back_button, #new_calculation_button{
@@ -173,9 +212,8 @@ input[type=number] {
     visibility: visible;
 }
 
-footer {
+footer{
     position:absolute;
     bottom: 0;
-    margin-top: 20px;
     height: 30px;
 }
