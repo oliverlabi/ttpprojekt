@@ -1,0 +1,43 @@
+Mina:
+kodeerida erijuhtumid
+
+Oliver Antsov:
+(custom error text window alert)
+
+Karl-Reimond Kõrs:
+Konfiguratsioonifaili lugemine
+
+Enri Gregor Riim:
+ka erijuhtumid
+
+Sofia Geroiskaja:
+abinuppude parandus
+errorid inglise keeles
+CSS
+
+Teha veel:
+Trahvirahad
+Tasuline tudeng - erinevad hüvitamise tasud
+URL parameetrite integreerimine
+URL parameetrite õigsuse kontroll
+eesti keele nupp samamoodi toimima nagu inglise keele nupp
+teha Main.js faili stiil ühtseks - nagu nt vanilla javascripti osad, mis on eelnevalt Jqueryga tehtud, muuta Jqueryks
+error messaged õigeks + testida üle
+stsenaariumiarvutus
+õppekoormuse arvutamise ülevaatamine
+
+Tehtud:
+abiurl teha lehekülje footerisse
+errori kirjad inglise keelseks
+Erijuhtumid:
+	Akadeemiline erijuhtum
+	Välisõppel viibimise erijuhtum
+
+Vead:
+Graafiku PDFi allalaadimisel kast ümber (Väga väike bug tho, üks viimastest fixidest pigem)
+Graafiku inglise keelne tõlge
+URLi link on all
+
+Intervjuu küsimused:
+Maksimaalne välisõppes viibitud semestrite ning EAPide arv
+

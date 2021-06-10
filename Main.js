@@ -3,8 +3,8 @@ class CurriculumCalculator{
         this.currentSabbaticalLeave = 0;
         this.currentAbroadStudies = 0;
         this.curriculumChoice = $("#curriculum_dropdown :selected").text();
-        this.bachelorsCurriculums = ["Informaatika", "Infoteadus", "Matemaatika, majandusmatemaatika ja andmeanalüüs"];
-        this.mastersCurriculums = ["Haridustehnoloogia", "Infotehnoloogia juhtimine", "Infoteadus", "Informaatikaõpetaja", "Matemaatikaõpetaja", "Avatud ühiskonna tehnoloogiad", "Digitaalsed õpimängud", "Inimese ja arvuti interaktsioon", "Interaktsioonidisain"];
+        this.bachelorsCurriculums = ["Informaatika", "Infoteadus (BA)", "Matemaatika, majandusmatemaatika ja andmeanalüüs"];
+        this.mastersCurriculums = ["Haridustehnoloogia", "Infotehnoloogia juhtimine", "Infoteadus (MA)", "Informaatikaõpetaja", "Avatud ühiskonna tehnoloogiad", "Digitaalsed õpimängud", "Inimese ja arvuti interaktsioon", "Interaktsioonidisain"];
         this.fullStudyLoadLowerLimit = 0;
         this.payLoad = $('input[name="pay_load"]:checked').val();
         this.studyLowerLimit = 0;
@@ -19,11 +19,13 @@ class CurriculumCalculator{
         this.universityAttendance = this.attendanceCount - this.sabbaticalCount;
         this.error = "";
         this.lang = language;
+        this.fullStudyLoadFreeLimit = 0;
         this.init();
     }
 
     init(){
         //if(Validation.prototype.removeSpecialChars.call(this) == 1){
+            Validation.prototype.checkCurriculumDegree.call(this);
             if(Validation.prototype.inputValidation.call(this) == 1){
                 $("#error").html("");
                 $("#result_error").html("");
@@ -33,8 +35,9 @@ class CurriculumCalculator{
                 $("#result_error").css("display", "block");
                 Calculation.prototype.calcStudyLimits.call(this);
                 Calculation.prototype.calcStudyLoad.call(this);
-                Calculation.prototype.checkCurriculumDegree.call(this);
+                
                 this.drawResultBox();
+                
                 this.draw_graph();
             }
             $("#new_calculation_button").on("click", ()=>{this.pageReload();});
@@ -64,7 +67,7 @@ class CurriculumCalculator{
 	}
 
     drawResultBox(){
-        if($("#error").html("")){
+        if(this.error == ""){
             $("#curriculum_result").html("Sinu õppekava: " + this.curriculumChoice);
             $("#ects_result").html("Sinu ainepunktide arv: " + this.ectsCount + " EAP");
             $("#result_padding").css("display", "block");
@@ -88,7 +91,25 @@ $("#abroad_no").on("click", function(){
 
 $("#continue_button").on("click", function(){
     if($("#curriculum_dropdown :selected").text() == "Vali õppekava..."){
-        $("#error").html("Vali õppekava!");
+        swal({
+            width: "1000px",
+            title: "Viga!",
+            text: "Vali rippmenüüst õppekava!",
+            icon: "error",
+            button: "OK",
+            className: "errorMsg",
+        });
+        //$("#error").html("Vali õppekava!");
+    } else if($("#curriculum_dropdown :selected").text() == "Choose a curriculum..."){
+        swal({
+            width: "1000px",
+            title: "Error!",
+            text: "Choose a curriculum from drop-down menu!",
+            icon: "error",
+            button: "OK",
+            className: "errorMsg",
+        });
+        //$("#error").html("Select curriculum!");
     } else {
         $("#error").html("");
         $("#curriculum_choice_area").css("display", "none");
@@ -100,8 +121,17 @@ $("#continue_button").on("click", function(){
 })
 
 $("#en").on("click", function(){
-    $("#en").css("color", "rgb(100, 146, 140)");
-    $("#en").css("color", "rgb(100, 146, 140)");
+    $("#en").css("color", "rgb(16, 16, 16)");
+    $("#en").css("font-decoration", "none");
+    $("#ee").css("color", "rgb(160, 206, 200)");
+    $("#ee").css("font-decoration", "underline");
+})
+
+$("#ee").on("click", function(){
+    $("#ee").css("color", "rgb(16, 16, 16)");
+    $("#en").css("color", "rgb(160, 206, 200)");
+    $("#ee").css("font-decoration", "none");
+    $("#en").css("font-decoration", "underline");
 })
 
 $("#back_button").on("click", function(){
@@ -163,29 +193,6 @@ $("#result_calculate_button").click(function(){
         
     }
 })
-
-function ResultToEng(){
-    $("#curriculum_result").html("Your curriculum: " + $("#curriculum_dropdown :selected").text());
-    $("#ects_result").html("Your number of ECTS: " + $("#ects_count").val() + " ECTS");
-    if($("#ects_count").val() < ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
-        $("#study_load").html("Study load: Part time");
-    } else {
-        $("#study_load").html("Study load: Full time");
-    }
-    $("#study_lower_limit_result").html("The lower limit for continuing learning: " + ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5) + " ECTS");
-    $("#full_study_load_limit_result").html("Minimum required for full-time studies: " + (($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5) + " ECTS");
-    
-    if($("#ects_count").val() >= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
-        $("#scenario").html("You will continue to study full-time.");
-    }
-    if($("#ects_count").val() <= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
-        $("#scenario").html("You fall to part-time studies.");
-    }
-    if(($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) % 2 == 0 && $("#ects_count").val() < ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5)){
-        $("#scenario").html("<b>You are at risk of expulsion because the number of ECTS is lower than the minimum number of continuing studies</b>");
-    }
-}
-
 function CalculatorToEng() {
     if(lang == 0){
         lang = 1;
@@ -194,6 +201,7 @@ function CalculatorToEng() {
     }
     document.getElementById('heading').innerHTML = "Curriculum scenario calculator";
     document.getElementById('info_text').innerHTML = "Study data can be found in the study information system under study results (ÕIS)";
+    document.getElementById('mainpage').innerHTML = "Back to mainpage";
     document.getElementById('curriculum_dropdown_label').innerHTML = "Choose a curriculum";
     document.getElementById('select_curriculum').innerHTML = "Choose a curriculum...";
     document.getElementById('computer_science').innerHTML = "informatics";
@@ -232,9 +240,8 @@ function CalculatorToEng() {
     document.getElementById('new_calculation_button').innerHTML = "New calculation";
     document.getElementById('result_calculate_button').innerHTML = "Calculate";
     document.getElementById('pdf_save_button').innerHTML = "Save as PDF";
-
-    ResultToEng();
-
+    document.getElementById('infosystem').innerHTML = "Learning information system: ";
+    
     var x = document.getElementsByClassName("yes_label");
     var i;
     for (i = 0; i < x.length; i++) {
@@ -245,5 +252,54 @@ function CalculatorToEng() {
     for (j = 0; j < y.length; j++) {
         y[j].innerHTML = "No";
     }
+    ErrorToEng();
+    ResultToEng(); 
+}
+
+function ResultToEng(){
+    $("#curriculum_result").html("Your curriculum: " + $("#curriculum_dropdown :selected").text());
+    $("#ects_result").html("Your number of ECTS: " + $("#ects_count").val() + " ECTS");
+    if($("#ects_count").val() < ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+        $("#study_load").html("Study load: Part time");
+    } else {
+        $("#study_load").html("Study load: Full time");
+    }
+    $("#study_lower_limit_result").html("The lower limit for continuing learning: " + ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5) + " ECTS");
+    $("#full_study_load_limit_result").html("Minimum required for full-time studies: " + (($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5) + " ECTS");
     
+    if($("#ects_count").val() >= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+        $("#scenario").html("You will continue to study full-time.");
+    }
+    if($("#ects_count").val() <= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+        $("#scenario").html("You fall to part-time studies.");
+    }
+    if(($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) % 2 == 0 && $("#ects_count").val() < ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5)){
+        $("#scenario").html("<b>You are at risk of expulsion because the number of ECTS is lower than the minimum number of continuing studies</b>");
+    }
+}
+
+function ErrorToEng(){
+    var err1 = document.getElementById("error").innerHTML.replace("\nTLÜs viibitud semestrite arv ei tohi olla 0!\n", "\nThe number of semesters spent at TU must not be 0!\n");
+    document.getElementById("error").innerHTML = err1;
+    document.getElementById("result_error").innerHTML = err1;
+
+    var err2 = document.getElementById("error").innerHTML.replace("\nAkadeemilisel puhkusel viibitud semestrite arv ei tohi olla üle TLÜs viibitud semestrite arvust!\n", "\nThe number of semesters spent on academic leave must not exceed the number of semesters spent at TU!\n");
+    document.getElementById("error").innerHTML = err2;
+    document.getElementById("result_error").innerHTML = err2;
+
+    var err3 = document.getElementById("error").innerHTML.replace("\nÕppekava täitmisel arvesse minevate EAP-de arv ei tohi olla 0!\n", "\nThe number of credits to be taken into account for the completion of the curriculum must not be 0!\n");
+    document.getElementById("error").innerHTML = err3;
+    document.getElementById("result_error").innerHTML = err3;
+
+    var err4 = document.getElementById("error").innerHTML.replace("\nVälisõppes viibitud semestrite arv ei tohi olla 0!\n", "\nThe number of semesters spent studying abroad must not be 0!\n");
+    document.getElementById("error").innerHTML = err4;
+    document.getElementById("result_error").innerHTML = err4;
+
+    var err5 = document.getElementById("error").innerHTML.replace("\nVälisõppes viibitud ainepunktide arv ei tohi olla 0!\n", "\nThe number of credits spent abroad must not be 0!\n");
+    document.getElementById("error").innerHTML = err5;
+    document.getElementById("result_error").innerHTML = err5;
+
+    var err6 = document.getElementById("error").innerHTML.replace("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!\n", "\nAcademic leave and study abroad cannot be taken at the same time!\n");
+    document.getElementById("error").innerHTML = err6;
+    document.getElementById("result_error").innerHTML = err6;
 }

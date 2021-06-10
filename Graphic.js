@@ -76,29 +76,68 @@ class Graphic extends CurriculumCalculator {
 		ctx.strokeStyle = "red";
 		ctx.fillStyle = "red";
 		ctx.lineWidth = graphBorderWidth;
+		console.log(this.universityAttendance);
+		console.log(this.degree);
 		ctx.beginPath();
+		if(this.degree == "masters" && this.universityAttendance < 4){
 			ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3) - graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
-		ctx.closePath();
-		ctx.stroke();
-		ctx.fill();
-		
-		ctx.strokeStyle = "limegreen";
-		ctx.fillStyle = "limegreen";
-		ctx.lineWidth = graphBorderWidth;
-		ctx.beginPath();
-			ctx.rect(((canvas.width - 2*graphX)/3)+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3), ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+
+		} else if (this.degree == "bachelors" && this.universityAttendance < 6){
+			ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3) - graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+		} else {
+			ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/2) - graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+		}
 		ctx.closePath();
 		ctx.stroke();
 		ctx.fill();
 
-		ctx.strokeStyle = "green";
-		ctx.fillStyle = "green";
-		ctx.lineWidth = graphBorderWidth;
-		ctx.beginPath();
-			ctx.rect(((canvas.width - 2*graphX)*(2/3))+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3)-graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
-		ctx.closePath();
-		ctx.stroke();
-		ctx.fill();
+		if(this.degree == "masters" && this.universityAttendance < 4){
+			ctx.strokeStyle = "limegreen";
+			ctx.fillStyle = "limegreen";
+			ctx.lineWidth = graphBorderWidth;
+			ctx.beginPath();
+				ctx.rect(((canvas.width - 2*graphX)/3)+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3), ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+			ctx.closePath();
+			ctx.stroke();
+			ctx.fill();
+
+			ctx.strokeStyle = "green";
+			ctx.fillStyle = "green";
+			ctx.lineWidth = graphBorderWidth;
+			ctx.beginPath();
+				ctx.rect(((canvas.width - 2*graphX)*(2/3))+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3)-graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+			ctx.closePath();
+			ctx.stroke();
+			ctx.fill();
+		} else if(this.degree == "bachelors" && this.universityAttendance < 6){
+			ctx.strokeStyle = "limegreen";
+			ctx.fillStyle = "limegreen";
+			ctx.lineWidth = graphBorderWidth;
+			ctx.beginPath();
+				ctx.rect(((canvas.width - 2*graphX)/3)+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3), ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+			ctx.closePath();
+			ctx.stroke();
+			ctx.fill();
+
+			ctx.strokeStyle = "green";
+			ctx.fillStyle = "green";
+			ctx.lineWidth = graphBorderWidth;
+			ctx.beginPath();
+				ctx.rect(((canvas.width - 2*graphX)*(2/3))+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3)-graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+			ctx.closePath();
+			ctx.stroke();
+			ctx.fill();
+		} else {
+			ctx.strokeStyle = "green";
+			ctx.fillStyle = "green";
+			ctx.lineWidth = graphBorderWidth;
+			ctx.beginPath();
+				ctx.rect(((canvas.width - 2*graphX)/2)+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/2)-graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+			ctx.closePath();
+			ctx.stroke();
+			ctx.fill();
+		}
+		
 	}
 
 	draw_data(){
@@ -109,7 +148,7 @@ class Graphic extends CurriculumCalculator {
 		let graphBorderWidth = 3;
 		let fullTimeEdu = this.fullStudyLoadLowerLimit;
 		let partTimeEdu = (this.universityAttendance* 15); //siia panna +15 pärast??
-		let freeFullEduLimit = (this.universityAttendance * 30) - 6;
+		let freeFullEduLimit = this.fullStudyLoadFreeLimit;
 		let payload = this.payLoad;
 		let EAPScaleText = "";
 		let partTimeText_1 ="";
@@ -139,36 +178,102 @@ class Graphic extends CurriculumCalculator {
 		ctx.beginPath();
 			ctx.strokeStyle = "black";
 			ctx.lineWidth = 2;
-			ctx.moveTo(((canvas.width-2*graphX)*1/3)+graphX, graphY+(graphBorderWidth/2));
-			ctx.lineTo(((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY)-(graphBorderWidth/2));
-			ctx.stroke();
+			if(this.degree == "masters" && this.universityAttendance < 4){
+				ctx.moveTo(((canvas.width-2*graphX)*1/3)+graphX, graphY+(graphBorderWidth/2));
+				ctx.lineTo(((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY)-(graphBorderWidth/2));
+				ctx.stroke();
+			} else if(this.degree == "bachelors" && this.universityAttendance < 6){
+				ctx.moveTo(((canvas.width-2*graphX)*1/3)+graphX, graphY+(graphBorderWidth/2));
+				ctx.lineTo(((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY)-(graphBorderWidth/2));
+				ctx.stroke();
+
+			} else if(payload == "free"){
+				ctx.moveTo(((canvas.width-2*graphX)*1/3)+graphX, graphY+(graphBorderWidth/2));
+				ctx.lineTo(((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY)-(graphBorderWidth/2));
+				ctx.stroke();
+			} else {
+				ctx.moveTo(((canvas.width-2*graphX)/2)+graphX, graphY+(graphBorderWidth/2));
+				ctx.lineTo(((canvas.width-2*graphX)/2)+graphX, (canvas.height - graphY)-(graphBorderWidth/2));
+				ctx.stroke();
+			}
 			ctx.font = "20px arial";
 			ctx.fillStyle = "black";
 			ctx.textAlign = "center";
 			ctx.fillText(0, graphX+graphBorderWidth, graphY - graphBorderWidth*2);
+			if(this.degree == "masters" && this.universityAttendance < 4){
 				ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)*1/3)+graphX, graphY - graphBorderWidth*2);
 				ctx.font = "12px arial";
 				ctx.fillText(partTimeText_1, ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*5);
 				ctx.fillText(partTimeText_2, ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*9);
+			} else if(this.degree == "bachelors" && this.universityAttendance < 6){
+				ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)*1/3)+graphX, graphY - graphBorderWidth*2);
+				ctx.font = "12px arial";
+				ctx.fillText(partTimeText_1, ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*5);
+				ctx.fillText(partTimeText_2, ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*9);
+			} else if(payload == "free"){
+				ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)*1/3)+graphX, graphY - graphBorderWidth*2);
+				ctx.font = "12px arial";
+				ctx.fillText(partTimeText_1, ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*5);
+				ctx.fillText(partTimeText_2, ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*9);
+			} else {
+				ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)/2)+graphX, graphY - graphBorderWidth*2);
+				ctx.font = "12px arial";
+				ctx.fillText(partTimeText_1, ((canvas.width-2*graphX)/2)+graphX, (canvas.height - graphY) + graphBorderWidth*5);
+				ctx.fillText(partTimeText_2, ((canvas.width-2*graphX)/2)+graphX, (canvas.height - graphY) + graphBorderWidth*9);
+			}
+				
 			ctx.font = "16px arial";
 			ctx.textAlign = "left";
 			ctx.fillText(EAPScaleText, graphX, graphY - graphBorderWidth*4 -20);
 		ctx.closePath();
 		
-			ctx.beginPath();
-				ctx.strokeStyle = "black";
-				ctx.lineWidth = 2;
-				ctx.moveTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), graphY+(graphBorderWidth/2));
-				ctx.lineTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY)-(graphBorderWidth/2));
-				ctx.stroke();
-				ctx.font = "20px arial";
-				ctx.fillStyle = "black";
-				ctx.textAlign = "center";		
-				ctx.fillText(fullTimeEdu, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), graphY - graphBorderWidth*2);
-				ctx.font = "12px arial";
-				ctx.fillText(fullTimeText_1, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY) + graphBorderWidth*5);
-				ctx.fillText(fullTimeText_2, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY) + graphBorderWidth*9);
-			ctx.closePath();
+			if(this.degree == "masters" && this.universityAttendance < 4){
+				ctx.beginPath();
+					ctx.strokeStyle = "black";
+					ctx.lineWidth = 2;
+					ctx.moveTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), graphY+(graphBorderWidth/2));
+					ctx.lineTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY)-(graphBorderWidth/2));
+					ctx.stroke();
+					ctx.font = "20px arial";
+					ctx.fillStyle = "black";
+					ctx.textAlign = "center";		
+					ctx.fillText(fullTimeEdu, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), graphY - graphBorderWidth*2);
+					ctx.font = "12px arial";
+					ctx.fillText(fullTimeText_1, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY) + graphBorderWidth*5);
+					ctx.fillText(fullTimeText_2, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY) + graphBorderWidth*9);
+				ctx.closePath();
+			} else if(this.degree == "bachelors" && this.universityAttendance < 6){
+				ctx.beginPath();
+					ctx.strokeStyle = "black";
+					ctx.lineWidth = 2;
+					ctx.moveTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), graphY+(graphBorderWidth/2));
+					ctx.lineTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY)-(graphBorderWidth/2));
+					ctx.stroke();
+					ctx.font = "20px arial";
+					ctx.fillStyle = "black";
+					ctx.textAlign = "center";		
+					ctx.fillText(fullTimeEdu, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), graphY - graphBorderWidth*2);
+					ctx.font = "12px arial";
+					ctx.fillText(fullTimeText_1, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY) + graphBorderWidth*5);
+					ctx.fillText(fullTimeText_2, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY) + graphBorderWidth*9);
+				ctx.closePath();
+			} else if(payload == "free"){
+				ctx.beginPath();
+					ctx.strokeStyle = "black";
+					ctx.lineWidth = 2;
+					ctx.moveTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), graphY+(graphBorderWidth/2));
+					ctx.lineTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY)-(graphBorderWidth/2));
+					ctx.stroke();
+					ctx.font = "20px arial";
+					ctx.fillStyle = "black";
+					ctx.textAlign = "center";		
+					ctx.fillText(fullTimeEdu, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), graphY - graphBorderWidth*2);
+					ctx.font = "12px arial";
+					ctx.fillText(fullTimeText_1, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY) + graphBorderWidth*5);
+					ctx.fillText(fullTimeText_2, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY) + graphBorderWidth*9);
+				ctx.closePath();
+			}
+			
 
 		if(payload == "free"){
 			ctx.beginPath();
@@ -196,7 +301,7 @@ class Graphic extends CurriculumCalculator {
 		let graphBorderWidth = 3;
 		let fullTimeEdu = this.fullStudyLoadLowerLimit;
 		let partTimeEdu = (this.universityAttendance* 15); //siia panna +15 pärast??
-		let freeFullEduLimit = (this.universityAttendance * 30) - 6;
+		let freeFullEduLimit = this.fullStudyLoadFreeLimit;
 		let XLength;
 		let XPosition;
 		let arrowX;
@@ -217,8 +322,7 @@ class Graphic extends CurriculumCalculator {
 				ctx.stroke();
 			ctx.closePath();
 			arrowX = graphX + graphBorderWidth + XPosition;
-		}
-		if(this.ectsCount >= partTimeEdu && this.ectsCount < fullTimeEdu){
+		} else if(this.ectsCount >= partTimeEdu && this.ectsCount < fullTimeEdu){
 			XLength = ((canvas.width-2*graphX)/2)*(1/3);
 			XPosition = ((this.ectsCount - partTimeEdu)/(fullTimeEdu - partTimeEdu))*XLength;
 			ctx.beginPath();
@@ -229,8 +333,7 @@ class Graphic extends CurriculumCalculator {
 				ctx.stroke();
 			ctx.closePath();
 			arrowX = (canvas.width / 2) + XPosition;
-		}
-		if(this.ectsCount >= fullTimeEdu && this.ectsCount < freeFullEduLimit){
+		} else if(this.ectsCount >= fullTimeEdu && this.ectsCount < freeFullEduLimit){
 			XLength = ((canvas.width-2*graphX)/2)*(3/6);
 			XPosition = ((this.ectsCount - fullTimeEdu)/(freeFullEduLimit - fullTimeEdu))*XLength;
 			ctx.beginPath();
@@ -241,8 +344,7 @@ class Graphic extends CurriculumCalculator {
 				ctx.stroke();
 			ctx.closePath();
 			arrowX = (canvas.width / 2) + ((((canvas.width)-2*graphX)/2)*(1/3)) + XPosition;
-		}
-		if(this.ectsCount >= freeFullEduLimit){
+		} else if(this.ectsCount >= freeFullEduLimit){
 			XLength = ((canvas.width-2*graphX)/2)*(1/6);
 			if(this.ectsCount >= (this.universityAttendance*30)){
 				XPosition = 1 * XLength;

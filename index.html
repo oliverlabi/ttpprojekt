@@ -18,23 +18,24 @@
     <title>Õppekava täitmise kalkulaator</title>
 </head>
 <body>
-    <div id="whole_page_area">
         <p id="heading">Õppekava täitmise kalkulaator</p>
         <a href="https://www.tlu.ee/" id="mainpage">Tagasi pealehele</a>
         <a href="index.html" class="lang_link" id="ee">Eesti keeles </a>
-        <a onclick="CalculatorToEng();" class="lang_link" id="en">| In English</a>
+        <a class="lang_link" id="link_line">|</a>
+        <a onclick="CalculatorToEng();" class="lang_link" id="en"> In English</a>
+    <div id="whole_page_area">
         <p id="info_text">Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt (ÕISist)</p>
         <div id="curriculum_choice_area">
             <label for="curriculum_dropdown" id="curriculum_dropdown_label">Vali õppekava: </label>
             <select name="curriculum_dropdown" id="curriculum_dropdown">
                 <option value="select_curriculum"id="select_curriculum" disabled selected>Vali õppekava...</option>
                 <option value="computer_science" id="computer_science">Informaatika</option>
-                <option value="info_science" id="info_science">Infoteadus</option>
+                <option value="info_science" id="info_science_bd">Infoteadus (BA)</option>
+                <option value="info_science" id="info_science_md">Infoteadus (MA)</option>
                 <option value="mathematics" id="mathematics">Matemaatika, majandusmatemaatika ja andmeanalüüs</option>
                 <option value="education_technology" id="education_technology">Haridustehnoloogia</option>
                 <option value="computer_science_business" id="computer_science_business">Infotehnoloogia juhtimine</option>
                 <option value="computer_science_teacher" id="computer_science_teacher">Informaatikaõpetaja</option>
-                <option value="mathematics_teacher" id="mathematics_teacher">Matemaatikaõpetaja</option>
                 <option value="open_society_technologies" id="open_society_technologies">Avatud ühiskonna tehnoloogiad</option>
                 <option value="digital_study_games" id="digital_study_games">Digitaalsed õpimängud</option>
                 <option value="human_and_computer_interaction" id="human_and_computer_interaction">Inimese ja arvuti interaktsioon</option>
@@ -49,7 +50,7 @@
             </div>
         </div>
         <div id="curriculum_choice_area_buttons">
-            <button id="continue_button">Edasi</button>
+            <button id="continue_button" class="green_btn">Edasi</button>
         </div>
             <div id="input_area">
                 <label for="curriculum_attendance" id="curriculum_attendance_label">TLÜs viibitud semestrite arv</label>
@@ -57,7 +58,7 @@
                     <i class="fa fa-question-circle" id="first_help"></i>
                     <span class="help_txt" id="first_help_txt" style="width: 280px;">Sisaldab kõiki Tallinna Ülikoolis viibitud semestreid (k.a akadeemilisel puhkusel, välisõppes jne)</span>
                 </div>
-                <input type="number" id="curriculum_attendance" value="7" min="0" oninput="validity.valid||(value='');">
+                <input type="number" id="curriculum_attendance" value="7" min="0" oninput="validity.valid||(value=0);">
                 <br>
                 <br>
                 <label for="sabbatical_leave" id="sabbatical_leave_label">Akadeemilisel puhkusel viibitud semestrite arv</label>
@@ -65,15 +66,15 @@
                     <i class="fa fa-question-circle" id="second_help"></i>
                     <span class="help_txt" id="second_help_txt" style="width: 150px;">Õppeinfosüsteemi lahter "sh akadeemiliselt"</span>
                 </div>
-                <input type="number" id="sabbatical_leave" value="2" min="0" oninput="validity.valid||(value='');">
+                <input type="number" id="sabbatical_leave" value="2" min="0" oninput="validity.valid||(value=0);">
                 <br>
                 <br>
                 <label for="ects_count" id="ects_count_label">Õppekava täitmisel arvesse minevad EAP-d</label>
                 <div class="help_button">
                     <i class="fa fa-question-circle" id="third_help"></i>
-                    <span class="help_txt" id="third_help_txt" style="width: 170px;">Õppeinfosüsteemi lahter "Koormusarvutusel arvesse minevad EAP-d sügissemestri ja õppeaasta lõpu seisuga"</span>
+                    <span class="help_txt" id="third_help_txt" style="width: 165px;">Õppeinfosüsteemi lahter "Koormusarvutusel arvesse minevad EAP-d sügissemestri ja õppeaasta lõpu seisuga"</span>
                 </div>
-                <input type="number" id="ects_count" value="98" min="0" oninput="validity.valid||(value='');">
+                <input type="number" id="ects_count" value="98" min="0" max="180" oninput="validity.valid||(value='');">
                 <br>
                 <br>
                 <label for="studied_abroad" id="studied_abroad_label">Kas oled viibinud välisõppes või välispraktikal?</label>
@@ -109,7 +110,7 @@
                 <label for="studied_estonian" id="studied_estonian_label">Kas sulle on määratud ja oled edukalt täitnud riigikeele süvaõppe kõrvaleriala?</label>
                 <div class="help_button">
                     <i class="fa fa-question-circle" id="fourth_help"></i>
-                    <span class="help_txt" id="fourth_help_txt" style="width: 200px;">Süvaõppe mooduli täitmine on kohustuslik vaid eestikeelsete õppekavade üliõpilastele, kelle eesti keele tase ei vasta ülikoolis kehtestatud C1-nõudele ja kes on TLÜ poolt, paigutustesti alusel, määratud süvaõppe moodulit täitma.</span>
+                    <span class="help_txt" id="fourth_help_txt" style="width: 350px;">Süvaõppe mooduli täitmine on kohustuslik vaid eestikeelsete õppekavade üliõpilastele, kelle eesti keele tase ei vasta ülikoolis kehtestatud C1-nõudele ja kes on TLÜ poolt, paigutustesti alusel, määratud süvaõppe moodulit täitma.</span>
                 </div>
                 <div id="studied_estonian">
                     <br>
@@ -130,14 +131,16 @@
                 <br>
             </div>
             <div id="input_area_buttons">
-                <button id="back_button">Tagasi</button>
-                <button id="calculate_button">Kalkuleeri</button>
+                <button id="back_button" class="white_btn">Tagasi</button>
+                <button id="calculate_button" class="green_btn">Kalkuleeri</button>
             </div>
             <div id="error"></div>
             <div id="result_padding">
                 <p id="result_heading">Tulemus</p>
                 <div id="results">
-                    <canvas id="canvas" width="538" height="126"></canvas>
+                    <div id="canvas_graph">
+                        <canvas id="canvas" width="538" height="126"></canvas>
+                    </div>
                     <div id="curriculum_result">Sinu õppekava: </div>
                     <div id="study_load">Õppekoormus: </div>
                     <div id="ects_result">Sinu ainepunktide arv: </div>
@@ -149,14 +152,14 @@
             </div>
     </div>
     <div id="result_area_buttons">
-        <button id="new_calculation_button">Alusta uuesti</button>
-        <button id="result_calculate_button">Kalkuleeri</button>
-        <button id="pdf_save_button">Salvesta PDFina</button>
-        <button id="clipboard_copy_button"><img src="icon/clipboard.png" id="clipboard_pic"></button>
+        <button id="new_calculation_button" class="white_btn">Alusta uuesti</button>
+        <button id="result_calculate_button" class="green_btn">Kalkuleeri</button>
+        <button id="pdf_save_button" class="green_btn">Salvesta PDFina</button>
+        <button id="clipboard_copy_button"><img src="icon/clipboard.png" id="clipboard_pic" class="green_btn"></button>
     </div>
     <div id="result_error"></div>
     <footer id="footer">
-        <span>Õppeinfosüsteem:</span>
+        <span id="infosystem">Õppeinfosüsteem:</span>
         <a href="https://ois.tlu.ee/pls/portal/ois2.ois_public.main" target="_blank" id="help_link">https://ois.tlu.ee/pls/portal/ois2.ois_public.main</a>
     </footer>
 </body>
