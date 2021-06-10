@@ -3,12 +3,15 @@ kodeerida erijuhtumid
 
 Oliver Antsov:
 (custom error text window alert)
+error messaged õigeks + TESTIDA ERROREID
+
 
 Karl-Reimond Kõrs:
 Konfiguratsioonifaili lugemine
 
 Enri Gregor Riim:
 ka erijuhtumid
+KALKULAATORI ERROR
 
 Sofia Geroiskaja:
 abinuppude parandus
@@ -22,7 +25,6 @@ URL parameetrite integreerimine
 URL parameetrite õigsuse kontroll
 eesti keele nupp samamoodi toimima nagu inglise keele nupp
 teha Main.js faili stiil ühtseks - nagu nt vanilla javascripti osad, mis on eelnevalt Jqueryga tehtud, muuta Jqueryks
-error messaged õigeks + testida üle
 stsenaariumiarvutus
 õppekoormuse arvutamise ülevaatamine
 
@@ -35,8 +37,10 @@ Erijuhtumid:
 
 Vead:
 Graafiku PDFi allalaadimisel kast ümber (Väga väike bug tho, üks viimastest fixidest pigem)
-Graafiku inglise keelne tõlge
+Clipboard nupp on valge
 URLi link on all
+inglise keeles ei lase arvutada
+abinuppu on läbi inglise keelse hoveri näha
 
 Intervjuu küsimused:
 Maksimaalne välisõppes viibitud semestrite ning EAPide arv

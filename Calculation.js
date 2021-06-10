@@ -41,6 +41,7 @@ class Calculation extends CurriculumCalculator {
     }
 
     calcScenario(){
+        //vahejuhtum taiskoormuse ning tasuta oppe puhverruumi vahel tegemata!
         if($("input[name='currently_studying_abroad']:checked").val() == "yes"){
             $("#scenario").html("<b>Viibid hetkel välisõppes/välispraktikal.</b>");
         }
@@ -103,16 +104,16 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").append("Sooritamata on üks 6 EAPiline aine ning esitamist-kaitsmist ootab veel bakalaureuse lõputöö. Pead tasuma trahviraha ning saad järgmine kooliaasta täiskoormuses lõpetada oma ained ning esitada-kaitsta lõputöö.");
                     } else {
                         console.log(this.studyLowerLimit);
-                        if(this.ectsCount >= this.fullStudyLoadLowerLimit && this.universityAttendance < 6){
-                            $("#scenario").html("Jätkad täiskoormusel õppimist.");
-                        } else if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance >= 6){
+                        //if(this.ectsCount >= this.fullStudyLoadLowerLimit && this.universityAttendance < 6){
+                            //$("#scenario").html("Jätkad täiskoormusel õppimist.");
+                        if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance >= 6){
                             $("#scenario").html("Jätkad osakoormusel õppimist.");
                         } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance >= 6){
                             $("#scenario").html("<b>Kahjuks oled eksmatrikuleeritud.</b>");
-                        } else if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance % 2 == 1 && this.universityAttendance < 6){
-                            $("#scenario").html("<b>Käesoleval semestril peate saama üle " + (this.universityAttendance+1)*22.5 + " EAPi, et jätkata täiskoormusel.</b> Vastasel juhul langete osakoormusesse.");
-                        } else if(this.ectsCount <= this.fullStudyLoadLowerLimit && this.universityAttendance % 2 == 0 && this.ectsCount > this.studyLowerLimit){
-                            $("#scenario").html("<b>Langed õpingutega osakoormusele.</b>");
+                        //} else if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance % 2 == 1 && this.universityAttendance < 6){
+                            //$("#scenario").html("<b>Käesoleval semestril peate saama üle " + (this.universityAttendance+1)*22.5 + " EAPi, et jätkata täiskoormusel.</b> Vastasel juhul langete osakoormusesse.");
+                        } else if(this.ectsCount <= this.fullStudyLoadLowerLimit && this.universityAttendance < 6 && this.ectsCount > this.studyLowerLimit){
+                            $("#scenario").html("Jätkad õpingutega osakoormusel.");
                         } else if(this.universityAttendance % 2 == 0 && this.ectsCount < this.studyLowerLimit){
                             $("#scenario").html("<b>Kahjuks oled eksmatrikuleeritud.</b>");
                         }
