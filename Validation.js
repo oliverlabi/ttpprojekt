@@ -29,10 +29,10 @@ class Validation extends CurriculumCalculator {
 
     checkCurriculumDegree(){
         for(let i=0; i<this.mastersCurriculums.length; i++){
-            if(this.mastersCurriculums[i] == this.curriculumChoice){
+            if(this.mastersCurriculums[i] == this.curriculumChoice || (this.mastersCurriculumsEng[i] == this.curriculumChoice && lang == 1)){
                 this.degree = "masters";
                 break;
-            } else if (this.bachelorsCurriculums[i] == this.curriculumChoice){
+            } else if (this.bachelorsCurriculums[i] == this.curriculumChoice || (this.bachelorsCurriculumsEng[i] == this.curriculumChoice && lang == 1)){
                 this.degree = "bachelors";
             }
         }
@@ -52,8 +52,10 @@ class Validation extends CurriculumCalculator {
                 this.k1 = 1;
             }
         }
-        if($("#sabbatical_leave").val() >= 0 || $("#sabbatical_leave").val() <= $("#curriculum_attendance").val()){
-            this.k2 = 1;
+        if($("#sabbatical_leave").val() >= 0){
+            if(parseInt($("#sabbatical_leave").val()) < parseInt($("#curriculum_attendance").val())){
+                this.k2 = 1;
+            }
         }
         if($("#ects_count").val() > 0){
             if(this.degree == "masters" && $("#ects_count").val() <= 120){
@@ -88,6 +90,7 @@ class Validation extends CurriculumCalculator {
     }
 
     errorMessages(){
+        //Validation.prototype.checkCurriculumDegree.call(this);
         if(this.k1 == 0 && lang == 1){
             if(this.degree == "masters" && this.universityAttendance > 8){
                 swal({
@@ -97,7 +100,8 @@ class Validation extends CurriculumCalculator {
                     button: "OK",
                     className: "errorMsg",
                 });
-            } else if (this.degree == "bachelors" && this.universityAttendance > 12){
+            }
+            if (this.degree == "bachelors" && this.universityAttendance > 12){
                 swal({
                     title: "Error!",
                     text: "Bachelors curriculum semester count must not be higher than 12!",
@@ -105,15 +109,8 @@ class Validation extends CurriculumCalculator {
                     button: "OK",
                     className: "errorMsg",
                 });
-            } else if (this.universityAttendance == 0){
-                swal({
-                    title: "Error!",
-                    text: "The number of semesters spent at TU must not be 0!",
-                    icon: "error",
-                    button: "OK",
-                    className: "errorMsg",
-                });
-            } else if (this.universityAttendance < 0){
+            }
+            if (this.universityAttendance == 0){
                 swal({
                     title: "Error!",
                     text: "The number of semesters spent at TU must not be 0!",
@@ -122,6 +119,16 @@ class Validation extends CurriculumCalculator {
                     className: "errorMsg",
                 });
             }
+            if (this.universityAttendance < 0){
+                swal({
+                    title: "Error!",
+                    text: "The number of semesters spent at TU must not be below 0!",
+                    icon: "error",
+                    button: "OK",
+                    className: "errorMsg",
+                });
+            }
+
             /*$("#error").append("\nThe number of semesters spent at TU must not be 0!\n");
             $("#result_error").append("\nThe number of semesters spent at TU must not be 0!\n");*/
             this.k1 = 1;
@@ -135,7 +142,8 @@ class Validation extends CurriculumCalculator {
                     button: "OK",
                     className: "errorMsg",
                 });
-            } else if (this.degree == "bachelors" && this.universityAttendance > 12){
+            }
+            if (this.degree == "bachelors" && this.universityAttendance > 12){
                 swal({
                     title: "Viga!",
                     text: "Bakalaureuse õppekava semestrite arv ei tohi olla suurem kui 12!",
@@ -143,7 +151,8 @@ class Validation extends CurriculumCalculator {
                     button: "OK",
                     className: "errorMsg",
                 });
-            } else if (this.universityAttendance == 0) {
+            }
+            if (this.universityAttendance == 0) {
                 swal({
                     title: "Viga!",
                     text: "TLÜs viibitud semestrite arv ei tohi olla 0!",
@@ -151,10 +160,11 @@ class Validation extends CurriculumCalculator {
                     button: "OK",
                     className: "errorMsg",
                 });
-            } else if (this.universityAttendance < 0){
+            }
+            if (this.universityAttendance < 0){
                 swal({
                     title: "Viga!",
-                    text: "TLÜs viibitud semestrite arv ei tohi olla 0!",
+                    text: "TLÜs viibitud semestrite arv ei tohi olla väiksem kui 0!",
                     icon: "error",
                     button: "OK",
                     className: "errorMsg",
@@ -166,10 +176,19 @@ class Validation extends CurriculumCalculator {
             this.k1 = 1;
         }
         if(this.k2 == 0 && lang == 1){
-            if($("#sabbatical_leave").val() > $("#curriculum_attendance").val()){
+            if(parseInt(this.attendanceCount) < parseInt(this.sabbaticalCount)){
                 swal({
                     title: "Error!",
                     text: "The number of semesters spent on academic leave must not exceed the number of semesters spent at TU!",
+                    icon: "error",
+                    button: "OK",
+                    className: "errorMsg",
+                });
+            }
+            if(parseInt(this.attendanceCount) == parseInt(this.sabbaticalCount)){
+                swal({
+                    title: "Error!",
+                    text: "The number of semesters spent on academic leave must not equal with the number of semesters spent at TU!",
                     icon: "error",
                     button: "OK",
                     className: "errorMsg",
@@ -180,7 +199,7 @@ class Validation extends CurriculumCalculator {
             this.k2 = 1;
         }
         if(this.k2 == 0){
-            if($("#sabbatical_leave").val() > $("#curriculum_attendance").val()){
+            if(parseInt(this.attendanceCount) < parseInt(this.sabbaticalCount)){
                 swal({
                     title: "Viga!",
                     text: "Akadeemilisel puhkusel viibitud semestrite arv ei tohi olla üle TLÜs viibitud semestrite arvust!",
@@ -189,6 +208,16 @@ class Validation extends CurriculumCalculator {
                     className: "errorMsg",
                 });
             }
+            if(parseInt(this.attendanceCount) == parseInt(this.sabbaticalCount)){
+                swal({
+                    title: "Viga!",
+                    text: "Akadeemilisel puhkusel viibitud semestrite arv ei tohi olla võrdne TLÜs viibitud semestrite arvust!",
+                    icon: "error",
+                    button: "OK",
+                    className: "errorMsg",
+                });
+            }
+
             /*$("#error").append("\nAkadeemilisel puhkusel viibitud semestrite arv ei tohi olla üle TLÜs viibitud semestrite arvust!\n");
             $("#result_error").append("\nAkadeemilisel puhkusel viibitud semestrite arv ei tohi olla üle TLÜs viibitud semestrite arvust!\n");*/
             this.k2 = 1;
@@ -332,4 +361,3 @@ class Validation extends CurriculumCalculator {
         }
     }
 }
-

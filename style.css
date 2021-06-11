@@ -5,7 +5,7 @@ html, body{
     margin-left: 20px;
 }
 
-#whole_page_area{max-height: 96%;}
+#whole_page_area{min-height: 92%;}
 
 .errorMsg{width: 600px;}
 
@@ -22,7 +22,6 @@ canvas {
 button{
     cursor: pointer;
     padding: 5px;
-    font-size: 14px;
 }
 
 button:hover{
@@ -70,9 +69,7 @@ a, p, #infosystem{font-size: 14px;}
 
 #free, .yes{margin-left: -1px;}
 
-#free_label{margin-right: 157px;}
-
-.yes_label{margin-right: 20px;}
+#free_label, .yes_label{margin-right: 20px;}
 
 #info_text {
     background-color: rgba(107,203,186,255);
@@ -150,8 +147,9 @@ a, p, #infosystem{font-size: 14px;}
 
 #clipboard_copy_button{
     float: right;
-    margin-top: -9px;
-    transform: scale(0.578);
+    margin-top: -6.6px;
+    margin-right: 2px;
+    transform: scale(0.646);
     background-color: rgb(107,203,186);
 }
 

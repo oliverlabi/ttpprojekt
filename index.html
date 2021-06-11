@@ -18,12 +18,12 @@
     <title>Õppekava täitmise kalkulaator</title>
 </head>
 <body>
+    <div id="whole_page_area">
         <p id="heading">Õppekava täitmise kalkulaator</p>
         <a href="https://www.tlu.ee/" id="mainpage">Tagasi pealehele</a>
         <a onclick="CalculatorToEst();" class="lang_link" id="ee">Eesti keeles </a>
         <a class="lang_link" id="link_line">|</a>
         <a onclick="CalculatorToEng();" class="lang_link" id="en"> In English</a>
-    <div id="whole_page_area">
         <p id="info_text">Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt (ÕISist)</p>
         <div id="curriculum_choice_area">
             <label for="curriculum_dropdown" id="curriculum_dropdown_label">Vali õppekava: </label>
@@ -142,11 +142,7 @@
                         <canvas id="canvas" width="538" height="126"></canvas>
                     </div>
                     <div id="curriculum_result">Sinu õppekava: </div>
-                    <div id="study_load">Õppekoormus: </div>
                     <div id="ects_result">Sinu ainepunktide arv: </div>
-                    <div id="study_lower_limit_result">Õppes jätkamise alampiir: </div>
-                    <div id="full_study_load_limit_result">Alampiir õpingute jätkamiseks täiskoormuses: </div>
-                    <br>
                     <div id="scenario">stsenaariumitekst</div>
                 </div>
             </div>
@@ -155,7 +151,7 @@
         <button id="new_calculation_button" class="white_btn">Alusta uuesti</button>
         <button id="result_calculate_button" class="green_btn">Kalkuleeri</button>
         <button id="pdf_save_button" class="green_btn">Salvesta PDFina</button>
-        <button id="clipboard_copy_button"><img src="icon/clipboard.png" id="clipboard_pic" class="green_btn"></button>
+        <button id="clipboard_copy_button" class="green_btn"><img src="icon/copy_link.png" id="clipboard_pic"></button>
     </div>
     <div id="result_error"></div>
     <footer id="footer">

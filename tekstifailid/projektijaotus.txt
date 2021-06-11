@@ -2,9 +2,7 @@ Mina:
 kodeerida erijuhtumid
 
 Oliver Antsov:
-(custom error text window alert)
-error messaged õigeks + TESTIDA ERROREID
-
+TESTIDA ERROREID
 
 Karl-Reimond Kõrs:
 Konfiguratsioonifaili lugemine
@@ -14,21 +12,19 @@ ka erijuhtumid
 KALKULAATORI ERROR
 
 Sofia Geroiskaja:
-abinuppude parandus
-errorid inglise keeles
-CSS
 
 Teha veel:
 Trahvirahad
 Tasuline tudeng - erinevad hüvitamise tasud
 URL parameetrite integreerimine
-URL parameetrite õigsuse kontroll
-eesti keele nupp samamoodi toimima nagu inglise keele nupp
-teha Main.js faili stiil ühtseks - nagu nt vanilla javascripti osad, mis on eelnevalt Jqueryga tehtud, muuta Jqueryks
 stsenaariumiarvutus
 õppekoormuse arvutamise ülevaatamine
+keelevahetuse kõik elemendid üle testida
 
 Tehtud:
+Error-messaged
+teha Main.js faili stiil ühtseks - nagu nt vanilla javascripti osad, mis on eelnevalt Jqueryga tehtud, muuta Jqueryks
+URL parameetrite õigsuse kontroll
 abiurl teha lehekülje footerisse
 errori kirjad inglise keelseks
 Erijuhtumid:
@@ -36,6 +32,7 @@ Erijuhtumid:
 	Välisõppel viibimise erijuhtum
 
 Vead:
+kalkuleeri nupud on liiga all
 Graafiku PDFi allalaadimisel kast ümber (Väga väike bug tho, üks viimastest fixidest pigem)
 Clipboard nupp on valge
 URLi link on all
@@ -44,4 +41,6 @@ abinuppu on läbi inglise keelse hoveri näha
 
 Intervjuu küsimused:
 Maksimaalne välisõppes viibitud semestrite ning EAPide arv
+Kuidas teha osakoormuselt üleminekut täiskoormusele? trahvirahad jne
+Osakoormuselt täiskoormusele (ja vastupidi)
 
