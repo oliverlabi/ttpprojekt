@@ -17,9 +17,9 @@ Teha veel:
 Trahvirahad
 Tasuline tudeng - erinevad hüvitamise tasud
 URL parameetrite integreerimine
-stsenaariumiarvutus
 õppekoormuse arvutamise ülevaatamine
 keelevahetuse kõik elemendid üle testida
+paid osa stsenaariumite korrektsus üle vaadata
 
 Tehtud:
 Error-messaged
@@ -36,7 +36,6 @@ kalkuleeri nupud on liiga all
 Graafiku PDFi allalaadimisel kast ümber (Väga väike bug tho, üks viimastest fixidest pigem)
 Clipboard nupp on valge
 URLi link on all
-inglise keeles ei lase arvutada
 abinuppu on läbi inglise keelse hoveri näha
 
 Intervjuu küsimused:

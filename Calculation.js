@@ -151,7 +151,8 @@ class Calculation extends CurriculumCalculator {
                             $("#scenario").html("<b>Kahjuks oled eksmatrikuleeritud.</b><br>");
                             $("#scenario").append("Sa ei ole täitnud osakoormusel õppe nõuet ehk sooritanud minimaalselt 15 EAP õppekavajärgseid aineid semestris. ");
                         } else if(this.universityAttendance % 2 == 1 && this.ectsCount < this.studyLowerLimit){
-                            $("#scenario").html("<b>Kahjuks oled eksmatrikuleerimisohus.</b> Pead järgneval semestril vähemalt " + (this.universityAttendance + 1 ) * 15 + " koormusarvutusel arvesse minevat EAPi omandama, et jätkata osakoormusel õppimist.");
+                            $("#scenario").html("<b>Kahjuks oled eksmatrikuleerimisohus.</b><br>" + (this.universityAttendance + 1 ) * 15 + " koormusarvutusel arvesse minevat EAPi omandama, et jätkata osakoormusel õppimist.");
+                            $("#scenario").append("Pead järgneval semestril vähemalt.");
                         } else if(this.ectsCount < this.fullStudyLoadLowerLimit && this.universityAttendance < 6 && this.ectsCount >= this.studyLowerLimit && this.universityAttendance % 2 == 0){
                             $("#scenario").html("Jätkad õpingutega käesoleval ning järgneval semestril osakoormusel.");
                         } else if(this.ectsCount < this.fullStudyLoadLowerLimit && this.universityAttendance < 6 && this.ectsCount >= this.studyLowerLimit && this.universityAttendance % 2 == 1){
