@@ -200,8 +200,10 @@ class Calculation extends CurriculumCalculator {
         } else {
             if(this.payLoad == "free"){ //tasuta õpe
                 if(this.degree == "bachelors"){ //bakalaureuse kraad
-                    if(this.universityAttendance == 6 && this.ectsCount == 180){
+                    if(this.ectsCount == 180){
                         $("#scenario").html(schoolOverScenario);
+                    } else if(this.ectsCount > 162 && this.ectsCount < 180 && this.ectsCount != 168){
+                        $("#scenario").html(impossibleScenario);
                     } else if(this.universityAttendance == 6 && this.ectsCount == 168){
                         $("#scenario").html(bfScenario1);
                         $("#scenario").append(bfScenario1_1);
@@ -215,8 +217,7 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").append(bfScenario3_1 + "<br>");
                         $("#scenario").append(bfScenario1_1);
                         this.payLoad = "free";
-                    } else if(this.ectsCount > 162 && this.ectsCount < 180 && this.ectsCount != 168){
-                        $("#scenario").html(impossibleScenario);
+                    
                     } else {
                         if(this.ectsCount >= (this.fullStudyLoadFreeLimit + 6) && this.universityAttendance < 6){
                             $("#scenario").html(bfScenario3); 
@@ -250,8 +251,10 @@ class Calculation extends CurriculumCalculator {
                         }
                     }
                 } else if(this.degree == "masters"){
-                    if(this.universityAttendance == 4 && this.ectsCount == 120){
+                    if(this.ectsCount == 120){
                         $("#scenario").html(schoolOverScenario);
+                    } else if(this.ectsCount > 90 && this.ectsCount < 120 && this.ectsCount != 96){
+                        $("#scenario").html(impossibleScenario);
                     } else if(this.universityAttendance == 4 && this.ectsCount == 96){
                         $("#scenario").html(bfScenario1);
                         $("#scenario").append(mfScenario1);
@@ -265,8 +268,7 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").append(bfScenario3_1 + "<br>");
                         $("#scenario").append(mfScenario1);
                         this.payLoad = "free";
-                    } else if(this.ectsCount > 90 && this.ectsCount < 120 && this.ectsCount != 96){
-                        $("#scenario").html(impossibleScenario);
+                    
                     } else {
                         if(this.ectsCount >= (this.fullStudyLoadFreeLimit + 6) && this.universityAttendance < 4){
                             $("#scenario").html(bfScenario3); 
@@ -302,7 +304,11 @@ class Calculation extends CurriculumCalculator {
                 }
             } else if(this.payLoad == "paid"){
                 if(this.degree == "bachelors"){ //bakalaureuse kraad
-                    if(this.universityAttendance == 12){ //juhtumid vahemikus 12-11
+                    if(this.ectsCount == 180){
+                        $("#scenario").html(schoolOverScenario);
+                    } else if(this.ectsCount > 162 && this.ectsCount < 180){
+                        $("#scenario").html(impossibleScenario);
+                    } else if(this.universityAttendance == 12){ //juhtumid vahemikus 12-11
                         if(this.ectsCount == 180){
                             $("#scenario").html(schoolOverScenario);
                         } else if(this.ectsCount < 180){
@@ -313,8 +319,6 @@ class Calculation extends CurriculumCalculator {
                     } else if(this.universityAttendance == 11 && this.ectsCount >= 165){
                         $("#scenario").html(bLastSemesterScenario); //juhtumid vahemikus 12-11 lõppevad
                         this.feeType = 2;
-                    } else if(this.ectsCount > 162 && this.ectsCount < 180){
-                        $("#scenario").html(impossibleScenario);
                     } else {
                         console.log(this.studyLowerLimit);
                         if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance >= 6){
@@ -349,7 +353,11 @@ class Calculation extends CurriculumCalculator {
                         }
                     }
                 } else if(this.degree = "masters"){
-                    if(this.universityAttendance == 8){ //juhtumid vahemikus 8-7
+                    if(this.ectsCount == 120){
+                        $("#scenario").html(schoolOverScenario);
+                    } else if(this.ectsCount > 90 && this.ectsCount < 120 && this.ectsCount != 96){
+                        $("#scenario").html(impossibleScenario);
+                    } else if(this.universityAttendance == 8){ //juhtumid vahemikus 8-7
                         if(this.ectsCount == 120){
                             $("#scenario").html(schoolOverScenario);
                         } else if(this.ectsCount < 120){
@@ -361,8 +369,7 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").html(mpScenario2); //juhtumid vahemikus 12-11 lõppevad
                         this.feeType = 2;
                         this.studyLowerLimit = 96;
-                    } else if(this.ectsCount > 90 && this.ectsCount < 120 && this.ectsCount != 96){
-                        $("#scenario").html(impossibleScenario);
+                    
                     } else {
                         console.log(this.studyLowerLimit);
                         if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance >= 4){

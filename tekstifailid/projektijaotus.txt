@@ -9,7 +9,6 @@ Karl-Reimond Kõrs:
 Konfiguratsioonifaili lugemine
 
 Enri Gregor Riim:
-graafik - 
 informaatikaõpetaja erijuhtum
 
 
@@ -26,6 +25,7 @@ konfiguratsioonifaili lugemise integreerimine*
 keelevahetuse kõik elemendid testida, korrektsus kontrollida
 
 Tehtud:
+süvaõppe arvutus
 enter nuppu vajutades kalkuleerida
 Error-messaged
 teha Main.js faili stiil ühtseks - nagu nt vanilla javascripti osad, mis on eelnevalt Jqueryga tehtud, muuta Jqueryks

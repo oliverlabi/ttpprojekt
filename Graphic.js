@@ -373,7 +373,7 @@ class Graphic extends CurriculumCalculator {
 						}
 					} else if(this.degree == "masters"){
 							if(this.ectsCount > 118 && this.ectsCount < 120){
-								XPosition = (this.ectsCount/123)*XLength;
+								XPosition = (this.ectsCount/122)*XLength;
 							} else if(this.ectsCount == 120){
 								XPosition = ((this.ectsCount-partTimeEdu)/(120-partTimeEdu))*XLength-graphBorderWidth;
 							} else if(this.ectsCount == partTimeEdu){
