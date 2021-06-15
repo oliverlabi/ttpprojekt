@@ -20,27 +20,27 @@
 <body>
     <div id="whole_page_area">
         <p id="heading">Õppekava täitmise kalkulaator</p>
-        <a href="https://www.tlu.ee/" id="mainpage">Tagasi pealehele</a>
-        <a onclick="CalculatorToEst();" class="lang_link" id="ee">Eesti keeles </a>
-        <a class="lang_link" id="link_line">|</a>
-        <a onclick="CalculatorToEng();" class="lang_link" id="en"> In English</a>
-        <p id="info_text">Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt (ÕISist)</p>
+        <a href="https://www.tlu.ee/dt" id="mainpage" data-html2canvas-ignore="true">Tagasi pealehele</a>
+        <a onclick="CalculatorToEst();" class="lang_link" id="ee" data-html2canvas-ignore="true">Eesti keeles </a>
+        <a class="lang_link" id="link_line" data-html2canvas-ignore="true">|</a>
+        <a onclick="CalculatorToEng();" class="lang_link" id="en" data-html2canvas-ignore="true"> In English</a>
+        <p id="info_text">Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt</p>
         <div id="curriculum_choice_area">
             <label for="curriculum_dropdown" id="curriculum_dropdown_label">Vali õppekava: </label>
             <select name="curriculum_dropdown" id="curriculum_dropdown">
-                <option value="select_curriculum"id="select_curriculum" disabled selected>Vali õppekava...</option>
-                <option value="computer_science" id="computer_science">Informaatika</option>
-                <option value="info_science" id="info_science_bd">Infoteadus (BA)</option>
-                <option value="info_science" id="info_science_md">Infoteadus (MA)</option>
-                <option value="mathematics" id="mathematics">Matemaatika, majandusmatemaatika ja andmeanalüüs</option>
-                <option value="education_technology" id="education_technology">Haridustehnoloogia</option>
-                <option value="computer_science_business" id="computer_science_business">Infotehnoloogia juhtimine</option>
-                <option value="computer_science_teacher" id="computer_science_teacher">Informaatikaõpetaja</option>
+                <option value="select_curriculum" id="select_curriculum" disabled selected>Vali õppekava...</option>
                 <option value="open_society_technologies" id="open_society_technologies">Avatud ühiskonna tehnoloogiad</option>
                 <option value="digital_study_games" id="digital_study_games">Digitaalsed õpimängud</option>
+                <option value="education_technology" id="education_technology">Haridustehnoloogia</option>
+                <option value="computer_science" id="computer_science">Informaatika</option>
+                <option value="computer_science_teacher" id="computer_science_teacher">Informaatikaõpetaja</option>
+                <option value="info_science" id="info_science_bd">Infoteadus (BA)</option>
+                <option value="info_science" id="info_science_md">Infoteadus (MA)</option>
+                <option value="computer_science_business" id="computer_science_business">Infotehnoloogia juhtimine</option>
+                <option value="mathematics" id="mathematics">Matemaatika, majandusmatemaatika ja andmeanalüüs</option>
                 <option value="human_and_computer_interaction" id="human_and_computer_interaction">Inimese ja arvuti interaktsioon</option>
                 <option value="interaction_design" id="interaction_design">Interaktsioonidisain</option>
-            </select> 
+            </select>
             <div id="pay_load">
                 <br>
                 <input type="radio" id="free" name="pay_load" value="free" checked>
@@ -56,25 +56,25 @@
                 <label for="curriculum_attendance" id="curriculum_attendance_label">TLÜs viibitud semestrite arv</label>
                 <div class="help_button">
                     <i class="fa fa-question-circle" id="first_help"></i>
-                    <span class="help_txt" id="first_help_txt" style="width: 280px;">Sisaldab kõiki Tallinna Ülikoolis viibitud semestreid (k.a akadeemilisel puhkusel, välisõppes jne)</span>
+                    <span class="help_txt" id="first_help_txt" style="width: 300px; top: -15px;">Sisaldab kõiki Tallinna Ülikoolis viibitud semestreid (k.a akadeemilisel puhkusel, välisõppes jne)</span>
                 </div>
-                <input type="number" id="curriculum_attendance" value="7" min="0" oninput="validity.valid||(value=0);">
+                <input type="number" id="curriculum_attendance" value="0" min="0" oninput="validity.valid||(value=0);">
                 <br>
                 <br>
                 <label for="sabbatical_leave" id="sabbatical_leave_label">Akadeemilisel puhkusel viibitud semestrite arv</label>
                 <div class="help_button">
                     <i class="fa fa-question-circle" id="second_help"></i>
-                    <span class="help_txt" id="second_help_txt" style="width: 150px;">Õppeinfosüsteemi lahter "sh akadeemiliselt"</span>
+                    <span class="help_txt" id="second_help_txt" style="width: 150px; top: -15px;">Õppeinfosüsteemi lahter "sh akadeemilisel"</span>
                 </div>
-                <input type="number" id="sabbatical_leave" value="2" min="0" oninput="validity.valid||(value=0);">
+                <input type="number" id="sabbatical_leave" value="0" min="0" oninput="validity.valid||(value=0);">
                 <br>
                 <br>
                 <label for="ects_count" id="ects_count_label">Õppekava täitmisel arvesse minevad EAP-d</label>
                 <div class="help_button">
                     <i class="fa fa-question-circle" id="third_help"></i>
-                    <span class="help_txt" id="third_help_txt" style="width: 165px;">Õppeinfosüsteemi lahter "Koormusarvutusel arvesse minevad EAP-d sügissemestri ja õppeaasta lõpu seisuga"</span>
+                    <span class="help_txt" id="third_help_txt" style="width: 165px; top: -15px;">Õppeinfosüsteemi lahter "Koormusarvutusel arvesse minevad EAP-d"</span>
                 </div>
-                <input type="number" id="ects_count" value="98" min="0" max="180" oninput="validity.valid||(value='');">
+                <input type="number" id="ects_count" value="0" min="0" max="180" oninput="validity.valid||(value='');">
                 <br>
                 <br>
                 <label for="studied_abroad" id="studied_abroad_label">Kas oled viibinud välisõppes või välispraktikal?</label>
@@ -102,7 +102,7 @@
                         <br>
                         <br>
                         <label for="abroad_ects_count" id="abroad_ects_count_label">Välisõppes sooritatud ainepunktide arv</label>
-                        <input type="number" id="abroad_ects_count" value="0" min="0" oninput="validity.valid||(value='');">
+                        <input type="number" id="abroad_ects_count" value="0" min="0" max="168" oninput="validity.valid||(value='');">
                         <br>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                 <label for="studied_estonian" id="studied_estonian_label">Kas sulle on määratud ja oled edukalt täitnud riigikeele süvaõppe kõrvaleriala?</label>
                 <div class="help_button">
                     <i class="fa fa-question-circle" id="fourth_help"></i>
-                    <span class="help_txt" id="fourth_help_txt" style="width: 350px;">Süvaõppe mooduli täitmine on kohustuslik vaid eestikeelsete õppekavade üliõpilastele, kelle eesti keele tase ei vasta ülikoolis kehtestatud C1-nõudele ja kes on TLÜ poolt, paigutustesti alusel, määratud süvaõppe moodulit täitma.</span>
+                    <span class="help_txt" id="fourth_help_txt" style="width: 192px; top: -15px;">Süvaõppe mooduli täitmine on kohustuslik vaid eestikeelsete õppekavade üliõpilastele, kelle eesti keele tase ei vasta ülikoolis kehtestatud C1-nõudele ja kes on TLÜ poolt paigutustesti alusel määratud süvaõppe moodulit täitma.</span>
                 </div>
                 <div id="studied_estonian">
                     <br>
@@ -118,6 +118,12 @@
                     <label for="estonian_yes" class="yes_label">Jah</label>
                     <input type="radio" id="estonian_no" name="studied_estonian" value="no" checked>
                     <label for="estonian_no" class="no_label">Ei</label>
+                </div>
+                <div id="studied_estonian_input_area">
+                    <br>
+                    <label for="studied_estonian_ects_count" id="studied_estonian_ects_count_label">Süvaõppega määratud nominaalaja pikenduse semestrite arv </label>
+                    <input type="number" id="studied_estonian_ects_count" value="0" min="0" max="2" oninput="validity.valid||(value='');">
+                    <br>
                 </div>
                 <br>
                 <label for="current_sabbatical_leave" id="current_sabbatical_leave_label">Kas viibid hetkel akadeemilisel puhkusel?</label>
@@ -144,15 +150,17 @@
                     <div id="curriculum_result">Sinu õppekava: </div>
                     <div id="ects_result">Sinu ainepunktide arv: </div>
                     <div id="scenario">stsenaariumitekst</div>
+                    <div id="fees"></div>
                 </div>
             </div>
+            <div id="result_area_buttons" data-html2canvas-ignore="true">
+                <button id="new_calculation_button" class="white_btn">Alusta uuesti</button>
+                <button id="result_calculate_button" class="green_btn">Kalkuleeri</button>
+                <button id="pdf_save_button" class="green_btn">Salvesta PDFina</button>
+                <button id="clipboard_copy_button" class="green_btn">Kopeeri link</button>
+            </div>
     </div>
-    <div id="result_area_buttons">
-        <button id="new_calculation_button" class="white_btn">Alusta uuesti</button>
-        <button id="result_calculate_button" class="green_btn">Kalkuleeri</button>
-        <button id="pdf_save_button" class="green_btn">Salvesta PDFina</button>
-        <button id="clipboard_copy_button" class="green_btn"><img src="icon/copy_link.png" id="clipboard_pic"></button>
-    </div>
+    
     <div id="result_error"></div>
     <footer id="footer">
         <span id="infosystem">Õppeinfosüsteem:</span>

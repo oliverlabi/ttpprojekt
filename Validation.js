@@ -38,6 +38,12 @@ class Validation extends CurriculumCalculator {
         }
     }
 
+    checkInDepthStudy(){
+        if($("input[name='studied_estonian']:checked").val() == "yes"){
+            this.universityAttendance -= 1;
+        }
+    }
+
     inputValidation(){
         this.k1 = 0;
         this.k2 = 0;
@@ -45,6 +51,7 @@ class Validation extends CurriculumCalculator {
         this.k4 = 0;
         this.k5 = 0;
         this.k6 = 0;
+        this.k7 = 0;
         if($("#curriculum_attendance").val() > 0){
             if(this.degree == "masters" && this.universityAttendance <= 8){
                 this.k1 = 1;
@@ -52,11 +59,13 @@ class Validation extends CurriculumCalculator {
                 this.k1 = 1;
             }
         }
+        
         if($("#sabbatical_leave").val() >= 0){
-            if(parseInt($("#sabbatical_leave").val()) < parseInt($("#curriculum_attendance").val())){
+            if((parseInt($("#sabbatical_leave").val()) <= 2) && (parseInt($("#sabbatical_leave").val()) < this.universityAttendance)){
                 this.k2 = 1;
             }
         }
+
         if($("#ects_count").val() > 0){
             if(this.degree == "masters" && $("#ects_count").val() <= 120){
                 this.k3 = 1;
@@ -80,7 +89,22 @@ class Validation extends CurriculumCalculator {
         } else {
             this.k6 = 1;
         }
-        if(this.k1+this.k2+this.k3+this.k4+this.k5+this.k6 != 6){
+        if($("input[name='studied_estonian']:checked").val() == "yes"){
+            console.log($("#studied_estonian_ects_count").val());
+            if($("#studied_estonian_ects_count").val() > 0){
+                console.log("test2");
+                this.k7 = 1;
+            } else if($("#studied_estonian_ects_count").val() > 2){
+                this.k7 = -1;
+            } else {
+                this.k7 = 0;
+            }
+        } else {
+            this.k7 = 1;
+        }
+
+        if(this.k1+this.k2+this.k3+this.k4+this.k5+this.k6+this.k7 != 7){
+            console.log(this.k1, this.k2, this.k3, this.k4, this.k5, this.k6, this.k7);
             Validation.prototype.errorMessages.call(this);
             return 0;
         } else {
@@ -359,5 +383,54 @@ class Validation extends CurriculumCalculator {
             $("#result_error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");*/
             this.k6 = 1;
         }
+        if(this.k7 == 0 && lang == 1){
+            swal({
+                title: "Error!",
+                text: "The number of credits to be taken into account for the completion of the Estonian language module must not be 0!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            /*$("#error").append("\nAcademic leave and study abroad cannot be taken at the same time!");
+            $("#result_error").append("\nAcademic leave and study abroad cannot be taken at the same time!");*/
+            this.k7 = 1;
+        }
+        if(this.k7 == 0){
+            swal({
+                title: "Viga!",
+                text: "Riigikeele süvaõppe eriala täitmisel arvesse minevate EAP-de arv ei tohi olla 0!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            /*$("#error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");
+            $("#result_error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");*/
+            this.k7 = 1;
+        }
+        if(this.k7 == -1 && lang == 1){
+            swal({
+                title: "Error!",
+                text: "The number of credits to be taken into account for the completion of the Estonian language module must not be higher than 60!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            /*$("#error").append("\nAcademic leave and study abroad cannot be taken at the same time!");
+            $("#result_error").append("\nAcademic leave and study abroad cannot be taken at the same time!");*/
+            this.k7 = 1;
+        }
+        if(this.k7 == -1){
+            swal({
+                title: "Viga!",
+                text: "Riigikeele süvaõppe eriala täitmisel arvesse minevate EAP-de arv ei tohi olla suurem kui 60!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            /*$("#error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");
+            $("#result_error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");*/
+            this.k7 = 1;
+        }
+        
     }
 }

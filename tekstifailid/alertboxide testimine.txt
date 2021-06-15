@@ -1,8 +1,8 @@
 brauserid, kus alertboxid töötavad:
-	- Firefox (versioon 89.0; 11.06 seisuga uusim)
-	- Microsoft Edge (versioon 91.0.864.41; 11.06 seisuga uusim)
-	- Google Chrome (versioon 91.0.4472.101; 11.06 seisuga uusim)
-	- Opera Browser (versioon 77.0.4054.60; 11.06 seisuga uusim)
+	- Firefox (versioon 89.0; 14.06 seisuga uusim)
+	- Microsoft Edge (versioon 91.0.864.41; 14.06 seisuga uusim)
+	- Google Chrome (versioon 91.0.4472.101; 14.06 seisuga uusim)
+	- Opera Browser (versioon 77.0.4054.60; 14.06 seisuga uusim)
 
 veel testimata brauserid:
 	- Safari Browser
@@ -15,13 +15,13 @@ error messaged alertboxides:
                         (MÕLEMAS KEELES DONE)
     - õppekava valik dropdown menüüst (ei tohi jätta defaultiks)
 
-                    (EESTI DONE, INGLISE BROKEN)
+                        (MÕLEMAS KEELES DONE)
     - baka <= 12 semestrit, magister <= 8 semestrit, semestrite arv > 0 
 
-                        (KAHTLANE BUG)
+                        (MÕLEMAS KEELES DONE)
     - akadeemilise puhkuse semestrite arv <= TLÜs viibitud semestrite arv 
 
-                    (EESTI DONE, INGLISE BROKEN)
+                        (MÕLEMAS KEELES DONE)
     - baka <= 180 EAP, magister <= 120 EAP, EAPde arv > 0 
 
                         (MÕLEMAS KEELES DONE)

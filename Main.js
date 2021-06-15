@@ -1,12 +1,16 @@
 class CurriculumCalculator{
     constructor(language){
+        this.ectsFee = 30;
+        this.Url;
+        this.fullStudyLoadMinimum;
+        this.partTimeStudyLoadMinimum;
         this.currentSabbaticalLeave = 0;
         this.currentAbroadStudies = 0;
         this.curriculumChoice = $("#curriculum_dropdown :selected").text();
         this.bachelorsCurriculums = ["Informaatika", "Infoteadus (BA)", "Matemaatika, majandusmatemaatika ja andmeanalüüs"];
         this.mastersCurriculums = ["Haridustehnoloogia", "Infotehnoloogia juhtimine", "Infoteadus (MA)", "Informaatikaõpetaja", "Avatud ühiskonna tehnoloogiad", "Digitaalsed õpimängud", "Inimese ja arvuti interaktsioon", "Interaktsioonidisain"];
-        this.bachelorsCurriculumsEng = ["Informatics", "Information science (BA)", "Mathematics, economic mathematics and data analysis"];
-        this.mastersCurriculumsEng = ["Educational technology", "Information technology management", "Information science (MA)", "Informatics teacher", "Open society technologies", "Digital learning games", "Human and computer interaction", "Interaction design"];
+        this.bachelorsCurriculumsEng = ["Computer Science", "Information Science (BA)", "Mathematics, Mathematical Economics and Data Analysis"];
+        this.mastersCurriculumsEng = ["Educational Technology", "Management of Information Technology", "Information Science (MA)", "Teacher of Computer Science", "Open Society Technologies", "Digital Learning Games", "Human-Computer Interaction", "Interaction Design"];
         this.fullStudyLoadLowerLimit = 0;
         this.payLoad = $('input[name="pay_load"]:checked').val();
         this.studyLowerLimit = 0;
@@ -21,14 +25,17 @@ class CurriculumCalculator{
         this.universityAttendance = this.attendanceCount - this.sabbaticalCount;
         this.error = "";
         this.lang = language;
+        this.feeType = 0;
         this.fullStudyLoadFreeLimit = 0;
         this.init();
     }
 
     init(){
         //if(Validation.prototype.removeSpecialChars.call(this) == 1){
+            //this.loadConfig();
             Validation.prototype.checkCurriculumDegree.call(this);
             if(Validation.prototype.inputValidation.call(this) == 1){
+                Validation.prototype.checkInDepthStudy.call(this);
                 $("#error").html("");
                 $("#result_error").html("");
                 $("#input_area_buttons").css("display", "none");
@@ -41,17 +48,53 @@ class CurriculumCalculator{
                 this.drawResultBox();
                 
                 this.draw_graph();
+                console.log(this.ectsFee);
             }
             $("#new_calculation_button").on("click", ()=>{this.pageReload();});
             $("#en").on("click", ()=>{this.lang = 1;});
             $("#en").on("click", ()=>{this.draw_graph();});
+            $("#en").on("click", ()=>{Calculation.prototype.calcScenario.call(this)();});
             $("#en").on("click", ()=>{this.lang = 0;});
             $("#ee").on("click", ()=>{this.draw_graph();});
+            $("#ee").on("click", ()=>{Calculation.prototype.calcScenario.call(this)();});
         //}
         
     }
 
-    
+    /*loadConfig(){
+        fetch("config.txt")
+            .then(response => response.text())
+            .then(data => {
+                let rawData = data.split(",");
+                //let tukeldatud = andmed.split(":");
+                //console.log(tukeldatud);
+                let splitted, value;
+                var configurationArray = [];
+                for (var i = 0; i < rawData.length; i++) {
+                    if(i == 1){
+                        splitted = rawData[i].split(":");
+                        value = splitted[1] + splitted[2];
+                    } else{
+                        splitted = rawData[i].split(":");
+                        value = splitted[1];
+                    }
+                    configurationArray.push(value);
+                }
+                for(var i = 0; i <= configurationArray.length; i++){
+                    if(i == 0){
+                        this.ectsFee = configurationArray[0];
+                    } else if(i == 1){
+                        this.Url = configurationArray[1];
+                    } else if(i == 2){
+                        this.fullStudyLoadMinimum = configurationArray[2] / 2;
+                    } else if(i == 3){
+                        this.partTimeStudyLoadMinimum = configurationArray[3] / 2;
+                    }
+                }
+                console.log(this.ectsFee + " " + this.partTimeStudyLoadMinimum);
+            });
+    }*/
+
     pageReload(){
         location.reload();
     }
@@ -78,6 +121,7 @@ class CurriculumCalculator{
             $("#results").css("display", "block");
             $("#footer").css("margin-top", "50px");
             Calculation.prototype.calcScenario.call(this);
+            Calculation.prototype.calcFees.call(this);
         }
     }
 }
@@ -91,6 +135,14 @@ $("#abroad_yes").on("click", function(){
 
 $("#abroad_no").on("click", function(){
     $("#abroad_input_area").css("display", "none");
+})
+
+$("#estonian_yes").on("click", function(){
+    $("#studied_estonian_input_area").css("display", "block");
+})
+
+$("#estonian_no").on("click", function(){
+    $("#studied_estonian_input_area").css("display", "none");
 })
 
 $("#continue_button").on("click", function(){
@@ -196,6 +248,17 @@ $("#result_calculate_button").click(function(){
         ResultToEng();
     }
 })
+
+$(document).keypress(function(event){
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == "13"){ //enter nupuvajutus
+        let calculation = new CurriculumCalculator(lang);  
+        if(lang == 1){
+            ResultToEng();
+        }
+    }
+});
+
 function CalculatorToEng() {
     if(lang == 0){
         lang = 1;
@@ -203,48 +266,52 @@ function CalculatorToEng() {
         lang = 0;
     }
     $('#heading').html("Curriculum scenario calculator");
-    $('#info_text').html("Study data can be found in the study information system under study results (ÕIS)");
+    $('#info_text').html("Study data can be found in TU Study Information System under student performance records");
     $('#mainpage').html("Back to mainpage");
     $('#mainpage').css({"margin-right": "333px"});
     $('#curriculum_dropdown_label').html("Choose a curriculum: ");
     $('#select_curriculum').html("Choose a curriculum...");
-    $('#computer_science').html("Informatics");
-    $('#info_science_bd').html("Information science (BA)");
-    $('#info_science_md').html("Information science (MA)");
-    $('#mathematics').html("Mathematics, economic mathematics and data analysis");
-    $('#education_technology').html("Educational technology");
-    $('#computer_science_business').html("Information technology management");
-    $('#computer_science_teacher').html("Informatics teacher");
-    $('#open_society_technologies').html("Open society technologies");
-    $('#digital_study_games').html("Digital learning games");
-    $('#human_and_computer_interaction').html("Human and computer interaction");
-    $('#interaction_design').html("Interaction design");
+    $('#computer_science').html("Computer Science");
+    $('#info_science_bd').html("Information Science (BA)");
+    $('#info_science_md').html("Information Science (MA)");
+    $('#mathematics').html("Mathematics, Mathematical Economics and Data Analysis");
+    $('#education_technology').html("Educational Technology");
+    $('#computer_science_business').html("Management of Information Technology");
+    $('#computer_science_teacher').html("Teacher of Computer Science");
+    $('#open_society_technologies').html("Open Society Technologies");
+    $('#digital_study_games').html("Digital Learning Games");
+    $('#human_and_computer_interaction').html("Human-Computer Interaction");
+    $('#interaction_design').html("Interaction Design");
     $('#free_label').html("Free");
     $('#paid_label').html("Paid");
     $('#continue_button').html("Next");
-    $('#curriculum_attendance_label').html("Number of semesters spent at TU");
+    $('#curriculum_attendance_label').html("Number of semesters studied at TU");
     $('#sabbatical_leave_label').html("Number of semesters on academic leave");
     $('#ects_count_label').html("ECTS to be taken into account in the completion of the curriculum");
-    $('#studied_abroad_label').html("Have you been in foreign studies or foreign traineeships?");
-    $('#currently_studying_abroad_label').html("Are you currently in foreign studies or foreign internships?");
-    $('#abroad_semester_count_label').html("Number of semesters spent in foreign studies");
+    $('#studied_abroad_label').html("Have you done foreign studies or foreign traineeships?");
+    $('#currently_studying_abroad_label').html("Are you currently doing foreign studies or foreign internships?");
+    $('#abroad_semester_count_label').html("Number of semesters studied in foreign studies");
     $('#abroad_ects_count_label').html("Number of ECTS completed in foreign studies");
-    $('#studied_estonian_label').html("Have you been assigned and completed the in-depth study of the national language?");
+    $('#studied_estonian_label').html("Have you been assigned and completed additional Estonian language modules?");
     $('#current_sabbatical_leave_label').html("Are you currently on academic leave?");
     $('#back_button').html("Back");
     $('#calculate_button').html("Calculate");
-    $('#first_help_txt').html("Includes all semesters spent at Tallinn University (incl. academic leave, foreign studies, etc.)");
+    $('#first_help_txt').html("Includes all semesters studied at Tallinn University (incl. academic leave, foreign studies, etc.)");
     $('#first_help_txt').css({"width": "240px"});
-    $('#second_help_txt').css({"width": "190px"});
-    $('#fourth_help_txt').css({"top": "0.5px"});
-    $('#second_help_txt').html('Study information system (Õis) box "including academically"');
-    $('#third_help_txt').html('Study information system (Õis) box "ECTS to be taken into account in the load calculation as of the end of the autumn semester and academic year""');
-    $('#fourth_help_txt').html("The completion of the in-depth study module is mandatory only for students of Estonian-language curricula whose Estonian language level does not meet the C1 requirement established by the university and who are assigned by the TU, on the basis of a placement test, to complete the in-depth study module.");
+    $('#first_help_txt').css({"top": "-15px"});
+    $('#second_help_txt').css({"width": "194px"});
+    $('#second_help_txt').css({"top": "-15px"});
+    $('#third_help_txt').css({"top": "-15px"});
+    $('#fourth_help_txt').css({"width": "220px"});
+    $('#fourth_help_txt').css({"top": "-15px"});
+    $('#second_help_txt').html('TU Study Information System box "incl. on academic leave"');
+    $('#third_help_txt').html('TU Study Information System box "ECTS credits credited to the account of load calculations"');
+    $('#fourth_help_txt').html("The completion of the additional Estonian language module is mandatory only for students of Estonian language curricula whose Estonian language level does not meet the C1 requirement established by the university and who are assigned by the TU, on the basis of a placement test, to complete the additional Estonian language module.");
     $('#result_heading').html("Result");
     $('#new_calculation_button').html("New calculation");
     $('#result_calculate_button').html("Calculate");
     $('#pdf_save_button').html("Save as PDF");
-    $('#infosystem').html("Learning information system: ");
+    $('#infosystem').html("Study information system: ");
     
     $(".yes_label").each(function(){
         $(this).html('Yes');
@@ -277,7 +344,7 @@ function CalculatorToEst() {
         lang = 1;
     }
     $('#heading').html("Õppekava täitmise kalkulaator");
-    $('#info_text').html("Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt (ÕISist)");
+    $('#info_text').html("Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt");
     $('#mainpage').html("Tagasi pealehele");
     $('#mainpage').css({"margin-right": "340px"});
     $('#curriculum_dropdown_label').html("Vali õppekava: ");
@@ -288,7 +355,6 @@ function CalculatorToEst() {
     $('#mathematics').html("Matemaatika, majandusmatemaatika ja andmeanalüüs");
     $('#education_technology').html("Haridustehnoloogia");
     $('#computer_science_business').html("Infotehnoloogia juhtimine");
-    $('#computer_science_teacher').html("Informatics teacher");
     $('#open_society_technologies').html("Avatud ühiskonna tehnoloogiad");
     $('#digital_study_games').html("Digitaalsed õpimängud");
     $('#human_and_computer_interaction').html("Inimese ja arvuti interaktsioon");
@@ -308,11 +374,16 @@ function CalculatorToEst() {
     $('#back_button').html("Tagasi");
     $('#calculate_button').html("Kalkuleeri");
     $('#first_help_txt').html("Sisaldab kõiki Tallinna Ülikoolis viibitud semestreid (k.a akadeemilisel puhkusel, välisõppes jne)");
-    $('#first_help_txt').css({"width": "240px"});
-    $('#second_help_txt').css({"width": "190px"});
-    $('#fourth_help_txt').css({"top": "0.5px"});
+    $('#first_help_txt').css({"width": "300px"});
+    $('#first_help_txt').css({"top": "-15px"});
+    $('#second_help_txt').css({"width": "150px"});
+    $('#second_help_txt').css({"top": "-15px"});
+    $('#third_help_txt').css({"width": "165px"});
+    $('#third_help_txt').css({"top": "-15px"});
+    $('#fourth_help_txt').css({"width": "192px"});
+    $('#fourth_help_txt').css({"top": "-15px"});
     $('#second_help_txt').html('Õppeinfosüsteemi lahter "sh akadeemiliselt"');
-    $('#third_help_txt').html('Õppeinfosüsteemi lahter "Koormusarvutusel arvesse minevad EAP-d sügissemestri ja õppeaasta lõpu seisuga""');
+    $('#third_help_txt').html('Õppeinfosüsteemi lahter "Koormusarvutusel arvesse minevad EAP-d sügissemestri ja õppeaasta lõpu seisuga"');
     $('#fourth_help_txt').html("Süvaõppe mooduli täitmine on kohustuslik vaid eestikeelsete õppekavade üliõpilastele, kelle eesti keele tase ei vasta ülikoolis kehtestatud C1-nõudele ja kes on TLÜ poolt, paigutustesti alusel, määratud süvaõppe moodulit täitma.");
     $('#result_heading').html("Tulemus");
     $('#new_calculation_button').html("Alusta uuesti");

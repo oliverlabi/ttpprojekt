@@ -2,26 +2,31 @@ Mina:
 kodeerida erijuhtumid
 
 Oliver Antsov:
-TESTIDA ERROREID
+Vigade parandamine
+Stsenaariumite translation ingliskeelseks
 
 Karl-Reimond Kõrs:
 Konfiguratsioonifaili lugemine
 
 Enri Gregor Riim:
-ka erijuhtumid
-KALKULAATORI ERROR
+graafik - 
+informaatikaõpetaja erijuhtum
+
 
 Sofia Geroiskaja:
+Stsenaariumite translation ingliskeelseks
+
 
 Teha veel:
-Trahvirahad
+inglise keelsete õppekavadega kaotada ära funktsionaalsus vajutada tasuta õppekavale
+Trahvirahad*
 Tasuline tudeng - erinevad hüvitamise tasud
 URL parameetrite integreerimine
-õppekoormuse arvutamise ülevaatamine
-keelevahetuse kõik elemendid üle testida
-paid osa stsenaariumite korrektsus üle vaadata
+konfiguratsioonifaili lugemise integreerimine*
+keelevahetuse kõik elemendid testida, korrektsus kontrollida
 
 Tehtud:
+enter nuppu vajutades kalkuleerida
 Error-messaged
 teha Main.js faili stiil ühtseks - nagu nt vanilla javascripti osad, mis on eelnevalt Jqueryga tehtud, muuta Jqueryks
 URL parameetrite õigsuse kontroll
@@ -30,16 +35,24 @@ errori kirjad inglise keelseks
 Erijuhtumid:
 	Akadeemiline erijuhtum
 	Välisõppel viibimise erijuhtum
+paid osa stsenaariumite korrektsus üle vaadata
 
 Vead:
-kalkuleeri nupud on liiga all
 Graafiku PDFi allalaadimisel kast ümber (Väga väike bug tho, üks viimastest fixidest pigem)
-Clipboard nupp on valge
 URLi link on all
 abinuppu on läbi inglise keelse hoveri näha
 
 Intervjuu küsimused:
-Maksimaalne välisõppes viibitud semestrite ning EAPide arv
-Kuidas teha osakoormuselt üleminekut täiskoormusele? trahvirahad jne
-Osakoormuselt täiskoormusele (ja vastupidi)
+Mis on maksimaalne välisõppes viibitud semestrite ning EAPide arv?
+Kas osakoormuselt sai üle minna täiskoormusele? Kui sai, siis kuidas trahvirahade või õppemaksude süsteem toimib?
+Kas me saame kalkulaatorile ka õige URLi?
+Millised näevad välja eksmatrikuleerimise tasud?
+Miks meil konfiguratsioonifailis vaja muutujaid fullStudyLoadMinimum ja partTimeStudyLoadMinimum?
 
+Dropdowni järjekord üle teha, loogika nt digiõisi järgi
+
+have you done foreign studies
+are you currently doing foreign studies or foreign internships
+foreign studies - studied abroad
+have you been assigned and completed additional estonian language modules?
+dti.tlu.ee
