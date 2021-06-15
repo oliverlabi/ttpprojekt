@@ -35,9 +35,9 @@ class CurriculumCalculator{
         //if(Validation.prototype.removeSpecialChars.call(this) == 1){
             //this.loadConfig();
             Validation.prototype.checkCurriculumDegree.call(this);
+            Validation.prototype.checkInDepthStudy.call(this);
             if(Validation.prototype.inputValidation.call(this) == 1){
                 this.feeType = 0;
-                Validation.prototype.checkInDepthStudy.call(this);
                 $("#error").html("");
                 $("#result_error").html("");
                 $("#input_area_buttons").css("display", "none");

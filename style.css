@@ -207,15 +207,20 @@ input[type=number] {
 
  /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    #whole_page_area{
-        width: ;
+    body{
+        
     }
-    
+    .errorMsg{
+        
+    }
+    .swal-modal {
+        margin-bottom: 400px;
+    }
 }
 
  /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-    #whole_page_area{
+    body{
         transform: scale(0.85);
     }
 }
@@ -232,7 +237,7 @@ input[type=number] {
 
  /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-    #whole_page_area{
+    body{
         transform: scale(1);
     }
 } 

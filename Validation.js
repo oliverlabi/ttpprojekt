@@ -63,8 +63,6 @@ class Validation extends CurriculumCalculator {
         }
         
         if($("#sabbatical_leave").val() >= 0){
-            console.log($("#sabbatical_leave").val());
-            console.log(this.universityAttendance);
             if($("#sabbatical_leave").val() < this.attendanceCount){
                 this.k2 = 1;
             }

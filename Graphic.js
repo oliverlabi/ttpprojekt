@@ -95,7 +95,11 @@ class Graphic extends CurriculumCalculator {
 			} else if (this.degree == "bachelors" && this.universityAttendance < 6){
 				ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3) - graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
 			} else {
-				ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/2) - graphBorderWidth*1.5, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+				if(this.degree == "masters" && this.ectsCount == 8 || this.degree == "bachelors" && this.ectsCount == 12){
+					ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, (canvas.width - 2*graphX) - graphBorderWidth*1, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+				} else {
+					ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/2) - graphBorderWidth*1.5, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+				}
 			}
 			ctx.closePath();
 			ctx.stroke();
@@ -160,11 +164,7 @@ class Graphic extends CurriculumCalculator {
 		}
 		if(this.lang == 0){
 			EAPScaleText = "EAP-de alampiiride skaala:";
-			if((this.degree == "bachelors" && this.universityAttendance*15 == 180) || (this.degree == "masters" && this.universityAttendance*15 == 120)){
-				partTimeText_1 ="Kooli lõpetamise";
-			} else {
-				partTimeText_1 ="Õppes jätkamise";
-			}
+			partTimeText_1 ="Õppes jätkamise";
 			partTimeText_2 ="alampiir";
 			fullTimeText_1 ="Täiskoormuse";
 			fullTimeText_2 ="alampiir";
@@ -173,14 +173,8 @@ class Graphic extends CurriculumCalculator {
 			maxECTSText_1 = "Kooli lõpp";
 		} else {
 			EAPScaleText = "EAP lower limit scale:";
-			if((this.degree == "bachelors" && this.universityAttendance*15 == 180) || (this.degree == "masters" && this.universityAttendance*15 == 120)){
-				partTimeText_1 ="School over";
-				partTimeText_2 ="";
-			} else {
-				partTimeText_1 ="Part-time";
-				partTimeText_2 ="lower limit";
-			}
-			
+			partTimeText_1 ="Part-time";
+			partTimeText_2 ="lower limit";
 			fullTimeText_1 ="Full-time";
 			fullTimeText_2 ="lower limit";
 			freeFullTimeText_1 = "Free full-time";
@@ -205,16 +199,23 @@ class Graphic extends CurriculumCalculator {
 			ctx.fillStyle = "black";
 			ctx.textAlign = "center";
 			ctx.fillText(0, graphX+graphBorderWidth, graphY - graphBorderWidth*2);
+			//siit alla hakkab osa mida vaja parandada (test andmed infotehnoloogai juht, 8, 0, 100)
 			if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6) || payload == "free"){
-				ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)*1/3)+graphX, graphY - graphBorderWidth*2);
-				ctx.font = "12px arial";
-				ctx.fillText(partTimeText_1, ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*5);
-				ctx.fillText(partTimeText_2, ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*9);
+				if(this.degree == "masters" && this.ectsCount != 8 || this.degree == "bachelors" && this.ectsCount != 12){
+					ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)*1/3)+graphX, graphY - graphBorderWidth*2);
+					ctx.font = "12px arial";
+					ctx.fillText(partTimeText_1, ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*5);
+					ctx.fillText(partTimeText_2, ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*9);
+				}
+				
 			} else {
-				ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)/2)+graphX, graphY - graphBorderWidth*2);
-				ctx.font = "12px arial";
-				ctx.fillText(partTimeText_1, ((canvas.width-2*graphX)/2)+graphX, (canvas.height - graphY) + graphBorderWidth*5);
-				ctx.fillText(partTimeText_2, ((canvas.width-2*graphX)/2)+graphX, (canvas.height - graphY) + graphBorderWidth*9);
+				if(this.degree == "masters" && this.ectsCount != 8 || this.degree == "bachelors" && this.ectsCount != 12){
+					ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)/2)+graphX, graphY - graphBorderWidth*2);
+					ctx.font = "12px arial";
+					ctx.fillText(partTimeText_1, ((canvas.width-2*graphX)/2)+graphX, (canvas.height - graphY) + graphBorderWidth*5);
+					ctx.fillText(partTimeText_2, ((canvas.width-2*graphX)/2)+graphX, (canvas.height - graphY) + graphBorderWidth*9);
+				}
+				
 			}
 				
 			ctx.font = "16px arial";
@@ -280,6 +281,12 @@ class Graphic extends CurriculumCalculator {
 		let arrowX;
 		let legendText;
 		let ctrl;
+		let maxECTS;
+		if(this.degree == "bachelors"){
+			maxECTS = 180;
+		} else {
+			maxECTS = 120;
+		}
 		if(this.lang == 0){
 			legendText = " Sina oled siin";
 		} else {
@@ -354,7 +361,7 @@ class Graphic extends CurriculumCalculator {
 			}
 			
 		} else if (payload == "paid"){
-			if((this.degree == "bachelors" && this.universityAttendance > 6) || (this.degree == "masters" && this.universityAttendance > 4)){
+			if((this.degree == "bachelors" && this.universityAttendance >= 6) || (this.degree == "masters" && this.universityAttendance >= 4)){
 				XLength = (canvas.width-2*graphX)/2;
 				ctrl = 1;
 				
@@ -395,7 +402,7 @@ class Graphic extends CurriculumCalculator {
 					ctx.closePath();
 					arrowX = (canvas.width/2) + XPosition;
 				} else {
-					XPosition = (this.ectsCount/180)*XLength-graphBorderWidth;
+					XPosition = (this.ectsCount/partTimeEdu)*XLength-graphBorderWidth;
 					ctx.beginPath();
 						ctx.strokeStyle = "black";
 						ctx.lineWidth = 4;

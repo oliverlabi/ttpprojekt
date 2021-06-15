@@ -372,7 +372,6 @@ class Calculation extends CurriculumCalculator {
                     } else if(this.universityAttendance == 7 && this.ectsCount >= 96){
                         $("#scenario").html(mpScenario2);
                         this.feeType = 2;
-                        this.studyLowerLimit = 96;
                     } else {
                         console.log(this.studyLowerLimit);
                         if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance >= 4){
