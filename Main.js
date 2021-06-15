@@ -2,8 +2,8 @@ class CurriculumCalculator{
     constructor(language){
         this.ectsFee = 30;
         this.Url;
-        this.fullStudyLoadMinimumConfig = 45;
-        this.partTimeStudyLoadMinimumConfig = 30;
+        this.fullStudyLoadMinimumConfig;
+        this.partTimeStudyLoadMinimumConfig;
         this.currentSabbaticalLeave = 0;
         this.currentAbroadStudies = 0;
         this.curriculumChoice = $("#curriculum_dropdown :selected").text();
@@ -13,6 +13,7 @@ class CurriculumCalculator{
         this.mastersCurriculumsEng = ["Educational Technology", "Management of Information Technology", "Information Science (MA)", "Teacher of Computer Science", "Open Society Technologies", "Digital Learning Games", "Human-Computer Interaction", "Interaction Design"];
         this.fullStudyLoadLowerLimit = 0;
         this.payLoad = $('input[name="pay_load"]:checked').val();
+        this.studiedEstonianSemesterCount = $("#studied_estonian_ects_count").val();
         this.studyLowerLimit = 0;
         this.scenarioText = "";
         this.studyLoad = "";
@@ -257,16 +258,6 @@ $("#result_calculate_button").click(function(){
         ResultToEng();
     }
 })
-
-$(document).keypress(function(event){
-    var keycode = (event.keyCode ? event.keyCode : event.which);
-    if(keycode == "13"){ //enter nupuvajutus
-        let calculation = new CurriculumCalculator(lang);  
-        if(lang == 1){
-            ResultToEng();
-        }
-    }
-});
 
 function CalculatorToEng() {
     if(lang == 0 && calculated == 0){

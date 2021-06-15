@@ -39,8 +39,10 @@ class Validation extends CurriculumCalculator {
     }
 
     checkInDepthStudy(){
-        if($("input[name='studied_estonian']:checked").val() == "yes"){
+        if(this.studiedEstonianSemesterCount == 1){
             this.universityAttendance -= 1;
+        } else if(this.studiedEstonianSemesterCount == 2){
+            this.universityAttendance -= 2;
         }
     }
 
@@ -61,7 +63,9 @@ class Validation extends CurriculumCalculator {
         }
         
         if($("#sabbatical_leave").val() >= 0){
-            if((parseInt($("#sabbatical_leave").val()) <= 2) && (parseInt($("#sabbatical_leave").val()) < this.universityAttendance)){
+            console.log($("#sabbatical_leave").val());
+            console.log(this.universityAttendance);
+            if($("#sabbatical_leave").val() < this.attendanceCount){
                 this.k2 = 1;
             }
         }
@@ -74,7 +78,7 @@ class Validation extends CurriculumCalculator {
             }
         }
         if($("input[name='studied_abroad']:checked").val() == "yes"){
-            if($("#abroad_semester_count").val() > 0){
+            if($("#abroad_semester_count").val() > 0 && parseInt($("#abroad_semester_count").val()) <= 2){
                 this.k4 = 1;
             }
             if($("#abroad_ects_count").val() > 0){
@@ -106,7 +110,7 @@ class Validation extends CurriculumCalculator {
         }
 
         if(this.k1+this.k2+this.k3+this.k4+this.k5+this.k6+this.k7 != 7){
-            //console.log(this.k1, this.k2, this.k3, this.k4, this.k5, this.k6, this.k7);
+            console.log(this.k1, this.k2, this.k3, this.k4, this.k5, this.k6, this.k7);
             Validation.prototype.errorMessages.call(this);
             return 0;
         } else {

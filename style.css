@@ -122,11 +122,13 @@ b{font-size: 18px;}
 #result_error {display: none;}
 
 .green_btn{
+    opacity: 0.8;
     background-color: rgb(107,203,186);
     color: white;
     border: none;
     box-shadow:inset 0px 1px 0px 0px rgb(107,203,186);
-	background:linear-gradient(to bottom, rgb(138, 209, 196) 5%, rgb(73, 204, 180) 100%);
+	background:linear-gradient(to bottom, rgb(138, 209, 196) 1%, rgb(73, 204, 180) 100%);
+    transition-duration: 0.8s;
 }
 
 .white_btn{
