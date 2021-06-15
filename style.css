@@ -145,19 +145,9 @@ a, p, #infosystem{font-size: 14px;}
 
 #result_calculate_button{float: right;}
 
-#clipboard_pic{filter: brightness(0) invert(1);}
-
-#clipboard_copy_button{
+#pdf_save_button, #clipboard_copy_button{
     float: right;
-    margin-top: 1.2px;
-    margin-right: 7.5px;
-    transform: scale(0.93);
-    background-color: rgb(107,203,186);
-}
-
-#pdf_save_button{
-    float: right;
-    margin-right: 9px;
+    margin-right: 5px;
 }
 
 input[type=number] {

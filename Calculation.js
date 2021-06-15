@@ -30,7 +30,7 @@ class Calculation extends CurriculumCalculator {
             var avgAbroadEctsCount = this.abroadEctsCount / this.abroadSemesterCount;
             if(avgAbroadEctsCount <= 15){
                 this.universityAttendance -= 1;
-           }
+            }
         }*/
         if(this.abroadEctsCount/this.abroadSemesterCount >= 15){
             this.universityAttendance -= this.abroadSemesterCount;
@@ -96,8 +96,6 @@ class Calculation extends CurriculumCalculator {
             mfScenario4_1 = "Semestri lõpuks oleksid pidanud koguma " + (this.universityAttendance*30) + " EAP. Lubatud võlgnevus on kokku 6 EAPi. Kahjuks oled kogunud vähem kui " + (this.fullStudyLoadFreeLimit) + " EAP-d. Õnneks muudetakse vastavalt eeskirjale õppekoormuseid ainult paarisarvulistel semestritel. Järgmise semestri lõpuks peaksid koguma " + ((this.universityAttendance + 1) * 30) + " EAP-d õppekavajärgseid aineid. Et sa ei peaks trahvi maksma, siis minimaalselt " + ((this.universityAttendance + 1) * 30 - 6) + " EAP.";
             mfScenario5_1 = "Kahjuks ei ole sa täitnud täiskoormusel õppe nõuet ehk sooritanud kumulatiivselt vähemalt 22,5 EAP õppekavajärgseid aineid semestri kohta. Osakoormuse nõudeks on kumulatiivselt vähemalt 15 EAP õppekavajärgsete ainete sooritamine iga õppetööst osavõetud semestri kohta.";
             mfScenario6_1 = "Sa ei ole täitnud osakoormusel õppe nõuet ehk sooritanud minimaalselt 15 EAP õppekavajärgseid aineid semestris. Õnneks muudetakse vastavalt eeskirjale õppekoormuseid kui ka eksmatrikuleerimist ainult paarisarvulistel semestritel. Järgmise semestri lõpuks peaksid koguma vähemalt " +((this.universityAttendance+1)*15) + " EAP-d õppekavajärgseid aineid, et püsida osakoormusel.";
-        
-
             mfScenario7_1 = "<b>Jätkad täiskoormusel õppimist, kuid pead maksma trahviraha.</b> Semestri lõpuks oleksid pidanud koguma " + (this.universityAttendance*30) + " EAP. Lubatud võlgnevus on kokku 6 EAPi. Kahjuks oled kogunud vähem kui " + (this.fullStudyLoadFreeLimit) + " EAP-d.";
             bpScenario1 = "<b>Kahjuks on viimane võimalus bakalaureuse tööd esitada-kaitsta mööda läinud ning oled koolist eksmatrikuleeritud.</b><br>";
             errorScenario = "<b>ERROR!</b><br>";
@@ -114,8 +112,6 @@ class Calculation extends CurriculumCalculator {
             mpScenario1 = "<b>Kahjuks on viimane võimalus magistri tööd esitada-kaitsta mööda läinud ning oled koolist eksmatrikuleeritud.</b><br>";
             mpScenario2 = "<b>Järgnev, ehk 8. semester, on viimane võimalus oma õpingud lõpetada!</b><br>";
             mpScenario3 = "Jätkad õpingutega osakoormusel.";
-            
-
             abroadScenario = "<b>Viibid hetkel välisõppes/välispraktikal.</b>";
             sabbaticalLeaveScenario = "<b>Viibid hetkel akadeemilisel puhkusel.</b>";
         } else {
@@ -187,7 +183,12 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").html(bfScenario2);
                         $("#scenario").append(bfScenario2_1);
                         this.feeType = 3;
-                    } else if(this.universityAttendance == 6 && this.ectsCount > 162 && this.ectsCount < 180){
+                    } else if(this.ectsCount == 168 && this.universityAttendance < 6){
+                        $("#scenario").html(bfScenario3); 
+                        $("#scenario").append(bfScenario3_1 + "<br>");
+                        $("#scenario").append(bfScenario1_1);
+                        this.payLoad = "free";
+                    } else if(this.ectsCount > 162 && this.ectsCount < 180 && this.ectsCount != 168){
                         $("#scenario").html(impossibleScenario);
                     } else {
                         if(this.ectsCount >= (this.fullStudyLoadFreeLimit + 6) && this.universityAttendance < 6){
@@ -232,7 +233,12 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").html(mfScenario2);
                         $("#scenario").append(mfScenario2_1);
                         this.feeType = 3;
-                    } else if(this.universityAttendance == 4 && this.ectsCount > 90 && this.ectsCount < 120){
+                    } else if(this.ectsCount == 96 && this.universityAttendance < 4){
+                        $("#scenario").html(bfScenario3); 
+                        $("#scenario").append(bfScenario3_1 + "<br>");
+                        $("#scenario").append(mfScenario1);
+                        this.payLoad = "free";
+                    } else if(this.ectsCount > 90 && this.ectsCount < 120 && this.ectsCount != 96){
                         $("#scenario").html(impossibleScenario);
                     } else {
                         if(this.ectsCount >= (this.fullStudyLoadFreeLimit + 6) && this.universityAttendance < 4){
@@ -280,6 +286,8 @@ class Calculation extends CurriculumCalculator {
                     } else if(this.universityAttendance == 11 && this.ectsCount >= 165){
                         $("#scenario").html(bLastSemesterScenario); //juhtumid vahemikus 12-11 lõppevad
                         this.feeType = 2;
+                    } else if(this.ectsCount > 162 && this.ectsCount < 180){
+                        $("#scenario").html(impossibleScenario);
                     } else {
                         console.log(this.studyLowerLimit);
                         if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance >= 6){
@@ -326,6 +334,8 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").html(mpScenario2); //juhtumid vahemikus 12-11 lõppevad
                         this.feeType = 2;
                         this.studyLowerLimit = 96;
+                    } else if(this.ectsCount > 90 && this.ectsCount < 120 && this.ectsCount != 96){
+                        $("#scenario").html(impossibleScenario);
                     } else {
                         console.log(this.studyLowerLimit);
                         if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance >= 4){

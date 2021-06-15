@@ -255,7 +255,7 @@ class Graphic extends CurriculumCalculator {
 		} else {
 			legendText = " You are here"
 		} 
-		if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "masters" && this.universityAttendance < 6) || (payload == "free")){
+		if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6) || (payload == "free")){
 			if(this.ectsCount < partTimeEdu){
 				XLength = (canvas.width-2*graphX)/3-graphBorderWidth;
 				XPosition = (this.ectsCount/partTimeEdu)*XLength;

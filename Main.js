@@ -265,7 +265,7 @@ function CalculatorToEng() {
     } else {
         lang = 0;
     }
-    $('#heading').html("Curriculum scenario calculator");
+    $('#heading').html("Curriculum completion calculator");
     $('#info_text').html("Study data can be found in TU Study Information System under student performance records");
     $('#mainpage').html("Back to mainpage");
     $('#mainpage').css({"margin-right": "333px"});

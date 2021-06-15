@@ -29,3 +29,13 @@ error messaged alertboxides:
 
                         (MÕLEMAS KEELES DONE)
     - akadeemilisel puhkusel & välisõppel korraga ei tohi olla e arv > 0 
+
+
+Graafiku vead:
+Andmed semestrid 5, eap 92, magister++
+Andmed semestrid 4, eap 90, 96, 120, magister
+Andmed semestrid 7, eap 162, 168, baka
+Andmed semestrid 6, eap 162, 168, baka
+Andmed semestrid 12, eap 180, baka
+Andmed semestrid 8, eap 120, magister
+Stsenaariumi vead:

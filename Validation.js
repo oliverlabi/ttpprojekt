@@ -90,21 +90,23 @@ class Validation extends CurriculumCalculator {
             this.k6 = 1;
         }
         if($("input[name='studied_estonian']:checked").val() == "yes"){
-            console.log($("#studied_estonian_ects_count").val());
-            if($("#studied_estonian_ects_count").val() > 0){
-                console.log("test2");
-                this.k7 = 1;
-            } else if($("#studied_estonian_ects_count").val() > 2){
+            if(this.universityAttendance - $("#studied_estonian_ects_count").val() < 1){
                 this.k7 = -1;
-            } else {
+            } else if($("#studied_estonian_ects_count").val() > this.universityAttendance){
+                this.k7 = -2;
+            } else if($("#studied_estonian_ects_count").val() > this.attendanceCount){
+                this.k7 = -3;
+            } else if($("#studied_estonian_ects_count").val() == 0){
                 this.k7 = 0;
+            } else {
+                this.k7 = 1;
             }
         } else {
             this.k7 = 1;
         }
 
         if(this.k1+this.k2+this.k3+this.k4+this.k5+this.k6+this.k7 != 7){
-            console.log(this.k1, this.k2, this.k3, this.k4, this.k5, this.k6, this.k7);
+            //console.log(this.k1, this.k2, this.k3, this.k4, this.k5, this.k6, this.k7);
             Validation.prototype.errorMessages.call(this);
             return 0;
         } else {
@@ -386,7 +388,7 @@ class Validation extends CurriculumCalculator {
         if(this.k7 == 0 && lang == 1){
             swal({
                 title: "Error!",
-                text: "The number of credits to be taken into account for the completion of the Estonian language module must not be 0!",
+                text: "The number of semesters to be taken into account for the completion of the Estonian language module must not be 0!",
                 icon: "error",
                 button: "OK",
                 className: "errorMsg",
@@ -398,7 +400,7 @@ class Validation extends CurriculumCalculator {
         if(this.k7 == 0){
             swal({
                 title: "Viga!",
-                text: "Riigikeele süvaõppe eriala täitmisel arvesse minevate EAP-de arv ei tohi olla 0!",
+                text: "Riigikeele süvaõppe eriala täitmisel arvesse minevate semestrite arv ei tohi olla 0!",
                 icon: "error",
                 button: "OK",
                 className: "errorMsg",
@@ -410,7 +412,7 @@ class Validation extends CurriculumCalculator {
         if(this.k7 == -1 && lang == 1){
             swal({
                 title: "Error!",
-                text: "The number of credits to be taken into account for the completion of the Estonian language module must not be higher than 60!",
+                text: "The subtraction of overall semesters and the number of semesters to be taken into account for the completion of the Estonian language module must not be lower than 1!",
                 icon: "error",
                 button: "OK",
                 className: "errorMsg",
@@ -422,7 +424,55 @@ class Validation extends CurriculumCalculator {
         if(this.k7 == -1){
             swal({
                 title: "Viga!",
-                text: "Riigikeele süvaõppe eriala täitmisel arvesse minevate EAP-de arv ei tohi olla suurem kui 60!",
+                text: "Üldsemestrite ning riigikeele süvaõppe eriala täitmisel arvesse minevate semestrite arvu vahe ei tohi olla väiksem kui 1!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            /*$("#error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");
+            $("#result_error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");*/
+            this.k7 = 1;
+        }
+        if(this.k7 == -2 && lang == 1){
+            swal({
+                title: "Error!",
+                text: "The number of semesters to be taken into account for the completion of the Estonian language module must not be higher than overall semesters!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            /*$("#error").append("\nAcademic leave and study abroad cannot be taken at the same time!");
+            $("#result_error").append("\nAcademic leave and study abroad cannot be taken at the same time!");*/
+            this.k7 = 1;
+        }
+        if(this.k7 == -2){
+            swal({
+                title: "Viga!",
+                text: "Riigikeele süvaõppe eriala täitmisel arvesse minevate semestrite arv ei tohi olla suurem üldsemestrite arvust!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            /*$("#error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");
+            $("#result_error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");*/
+            this.k7 = 1;
+        }
+        if(this.k7 == -3 && lang == 1){
+            swal({
+                title: "Error!",
+                text: "The number of semesters to be taken into account for the completion of the Estonian language module must not be higher than semesters studied at TU!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            /*$("#error").append("\nAcademic leave and study abroad cannot be taken at the same time!");
+            $("#result_error").append("\nAcademic leave and study abroad cannot be taken at the same time!");*/
+            this.k7 = 1;
+        }
+        if(this.k7 == -3){
+            swal({
+                title: "Viga!",
+                text: "Riigikeele süvaõppe eriala täitmisel arvesse minevate semestrite arv ei tohi olla suurem TLÜs viibitud semestrite arvust!",
                 icon: "error",
                 button: "OK",
                 className: "errorMsg",
