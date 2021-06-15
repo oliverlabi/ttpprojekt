@@ -4,6 +4,7 @@ kodeerida erijuhtumid
 Oliver Antsov:
 Vigade parandamine
 Stsenaariumite translation ingliskeelseks
+Responsiveness
 
 Karl-Reimond Kõrs:
 Konfiguratsioonifaili lugemine
@@ -14,17 +15,17 @@ informaatikaõpetaja erijuhtum
 
 Sofia Geroiskaja:
 Stsenaariumite translation ingliskeelseks
-
+inglise keelsete õppekavadega kaotada ära funktsionaalsus vajutada tasuta õppekavale
 
 Teha veel:
-inglise keelsete õppekavadega kaotada ära funktsionaalsus vajutada tasuta õppekavale
-Trahvirahad*
-Tasuline tudeng - erinevad hüvitamise tasud
+Responsiveness
+Trahvirahad* - eksmati hoiatused puudu
 URL parameetrite integreerimine
 konfiguratsioonifaili lugemise integreerimine*
 keelevahetuse kõik elemendid testida, korrektsus kontrollida
 
 Tehtud:
+inglise keelsete õppekavadega kaotada ära funktsionaalsus vajutada tasuta õppekavale
 süvaõppe arvutus
 enter nuppu vajutades kalkuleerida
 Error-messaged

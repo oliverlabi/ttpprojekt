@@ -95,7 +95,7 @@ class Graphic extends CurriculumCalculator {
 			} else if (this.degree == "bachelors" && this.universityAttendance < 6){
 				ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3) - graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
 			} else {
-				ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/2) - graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+				ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/2) - graphBorderWidth*1.5, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
 			}
 			ctx.closePath();
 			ctx.stroke();
@@ -123,7 +123,7 @@ class Graphic extends CurriculumCalculator {
 				ctx.fillStyle = "green";
 				ctx.lineWidth = graphBorderWidth;
 				ctx.beginPath();
-					ctx.rect(((canvas.width - 2*graphX)/2)+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/2)-graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+					ctx.rect(((canvas.width - 2*graphX)/2)+graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/2)-2*graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
 				ctx.closePath();
 				ctx.stroke();
 				ctx.fill();
@@ -190,7 +190,7 @@ class Graphic extends CurriculumCalculator {
 		}
 		
 		ctx.beginPath();
-			ctx.strokeStyle = "black";
+			ctx.strokeStyle = "rgba(112, 203, 188, 1)";
 			ctx.lineWidth = 2;
 			if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6) || payload == "free"){
 				ctx.moveTo(((canvas.width-2*graphX)*1/3)+graphX, graphY+(graphBorderWidth/2));
@@ -224,7 +224,7 @@ class Graphic extends CurriculumCalculator {
 		
 			if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6) || payload == "free"){
 				ctx.beginPath();
-					ctx.strokeStyle = "black";
+					ctx.strokeStyle = "rgba(112, 203, 188, 1)";
 					ctx.lineWidth = 2;
 					ctx.moveTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), graphY+(graphBorderWidth/2));
 					ctx.lineTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY)-(graphBorderWidth/2));
@@ -249,7 +249,7 @@ class Graphic extends CurriculumCalculator {
 			ctx.fillText(maxECTSText_2, canvas.width-2*graphX-graphBorderWidth*2, (canvas.height - graphY) + graphBorderWidth*9);
 		} else if(payload == "free"){
 			ctx.beginPath();
-				ctx.strokeStyle = "black";
+				ctx.strokeStyle = "rgba(112, 203, 188, 1)";
 				ctx.lineWidth = 2;
 				ctx.moveTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(5/6)- graphBorderWidth), graphY+(graphBorderWidth/2));
 				ctx.lineTo(((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(5/6)- graphBorderWidth), (canvas.height - graphY)-(graphBorderWidth/2));

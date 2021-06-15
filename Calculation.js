@@ -59,11 +59,11 @@ class Calculation extends CurriculumCalculator {
         } else{
             ectsFee = "For each less completed credit point, you have to pay the so-called penalty fee according to the Study Regulations § 10(2) p 1 based on the formula 1 ECTS = " + this.ectsFee +" EUR. <br>";
             feeBack = "<b>NB!</b> If you graduate with a nominal period, you have the right to request a refund of the fine paid to the university on application within 30 calendar days of the protection of the graduation.";
-            partTimeFees = "In part-time study, according to the Study Regulations § 10 (2) 3), the following shall be paid in next semester:</b><br>";
-            partTimeFee_1 = "* for the subjects registered in the study program for a semester, based on the credit point fee - the fee rate depends on which institute curates the subject, the cost of the DT subjects is 40 euros;<br>";
-            partTimeFee_2 = "* an instructional fee of EUR 266, which entitles to receive instructions for 2 semesters;<br>";
-            partTimeFee_3 = "* final remuneration EUR 266 to be paid when submitting the final work;<br>";
-            partTimeFee_4 = "* an administration fee of EUR 73 per semester, when none of the above fees apply.";
+            partTimeFees = "In part-time study, according to the Study Regulations § 10(2) p 3, the following shall be paid in next semester:</b><br>";
+            partTimeFee_1 = "* for the subjects registered in the study program for a semester, based on the credit point fee - the fee rate depends on which institute curates the subject, the cost of the DT subjects is 40 EUR;<br>";
+            partTimeFee_2 = "* an instructional fee of 266 EUR, which entitles to receive instructions for 2 semesters;<br>";
+            partTimeFee_3 = "* final remuneration 266 EUR to be paid when submitting the final work;<br>";
+            partTimeFee_4 = "* an administration fee of 73 EUR per semester, when none of the above fees apply.";
             finishEctsFee = "You will have to pay a penalty for substances not performed at the nominal time based on the formula 1 ECTS = " + this.ectsFee +". No penalty is required for the thesis.<br>";
             finishNextSemFee = "If you do not complete your studies in the next semester, you will be charged a new penalty payment at the end of the semester for not invoiced subjects. <br>";
             finishLastChance = "<b>NB!</b> This is your last chance to complete your studies for free.<br>";
@@ -128,10 +128,10 @@ class Calculation extends CurriculumCalculator {
             bpScenario1 = "<b>Kahjuks on viimane võimalus bakalaureuse tööd esitada-kaitsta mööda läinud ning oled koolist eksmatrikuleeritud.</b><br>";
             errorScenario = "<b>ERROR!</b><br>";
             bLastSemesterScenario = "<b>Järgnev, ehk 12. semester, on viimane võimalus oma õpingud lõpetada!</b><br>";
-            bpScenario2 = "Jätkad osakoormusel õppimist.";
+            bpScenario2 = "<b>Jätkad osakoormusel õppimist.</b>";
             bpScenario3_1 = "Pead järgneval semestril vähemalt " + (this.universityAttendance + 1 ) * 15 + " koormusarvutusel arvesse minevat EAPi omandama, et jätkata osakoormusel õppimist.)";
             bpScenario4 = "Jätkad õpingutega käesoleval ning järgneval semestril osakoormusel.";
-            bpScenario5 = "Jätkad õpingutega osakoormusel. ";
+            bpScenario5 = "<b>Jätkad õpingutega osakoormusel.</b>";
             bpScenario5_1 = "Kui on soovi minna õpingutega üle täiskoormusele, siis pead omandama järgneva semestriga " +(this.universityAttendance+1)*22.5 + " EAPi";
             bpScenario6 = "<b>Jätkad õpingutega hetkel osakoormusel, kuid oled ületanud täiskoormuse lävendi.</b><br>";
             bpScenario6_1 = "Kui oled järgmine semester jätkuvalt üle nimetatud alampiiri, siis viiakse sind üle täiskoormusele.";
@@ -154,7 +154,7 @@ class Calculation extends CurriculumCalculator {
             exmatriculateScenario = "<b>Unfortunately, you are exmatriculated.</b><br>";
             exmatriculateScenario_1 = "According to the study regulations, you would have had to complete a minimum of 15 ECTS credits of post-curricular subjects during the first semester in order to continue your studies. Unfortunately, you have not fulfilled this requirement.";
             bfScenario4 = "<b>You will continue your studies full-time.</b><br> ";
-            bfScenario4_1 = "You have completed fewer credits than the required number of credits (30 ECTS), but within the allowed number of credits (6 ECTS). If you are enrolled on a free place at the university, you will continue to study free of charge. \nExpect that you will have to make up the EAPs currently taken in the following semesters.";
+            bfScenario4_1 = "You have completed fewer credits than the required number of credits (30 ECTS), but within the allowed number of credits (6 ECTS). If you are enrolled on a free place at the university, you will continue to study free of charge. \nExpect that you will have to make up the ECTS currently taken in the following semesters.";
             bfScenario5 = "<b>After the fine will be paid, you can continue to study full-time, but you will need to complete the minimum full-time limit the following semester.</b><br>";
             bfScenario5_1 = "By the end of the semester you should have accumulated " + (this.universityAttendance*30) + " ECTS. The total amount of debt allowed is 6 ECTS. Unfortunately, you have accumulated less than " + (this.fullStudyLoadFreeLimit) + " ECTS. Fortunately, according to the rules, the study load is only changed in even-numbered semesters. By the end of the next semester, you should have accumulated " + ((this.universityAttendance + 1) * 30) + " ECTS in post-study subjects. So that you don't have to pay a penalty, you should accumulate at least " + ((this.universityAttendance + 1) * 30 - 6) + " ECTS.";
             bfScenario6 = "<b>You fall to part time studies</b><br>";
@@ -166,7 +166,7 @@ class Calculation extends CurriculumCalculator {
             mfScenario1 = "You have passed all the post-curricular subjects, but you still have to submit and defend your mfaster's thesis.";
             mfScenario2 = "<b>The next semester is your last chance to finish your studies!</b><br>";
             mfScenario2_1 = "There is one 6 ECTS subject still to be completed as well as master's thesis still to be submitted and defended. You will have to pay the fine and you will be able to complete your subjects and submit your thesis in full time the following school year.";
-            mfScenario3_1 = "You have completed fewer credits than the required number of credits (30 ECTS), but within the allowed number of credits (6 ECTS). If you are enrolled on a free place at the university, you will continue to study free of charge. \nExpect that you will have to make up the EAPs currently taken in the following semesters.";
+            mfScenario3_1 = "You have completed fewer credits than the required number of credits (30 ECTS), but within the allowed number of credits (6 ECTS). If you are enrolled on a free place at the university, you will continue to study free of charge. \nExpect that you will have to make up the ECTS currently taken in the following semesters.";
             mfScenario4_1 = "By the end of the semester you should have accumulated " + (this.universityAttendance*30) + " ECTS. The total amount of debt allowed is 6 ECTS. Unfortunately, you have accumulated less than " + (this.fullStudyLoadFreeLimit) + " ECTS. Fortunately, according to the rules, the study load is only changed in even-numbered semesters. By the end of the next semester, you should have accumulated " + ((this.universityAttendance + 1) * 30) + " ECTS in post-study subjects. So that you don't have to pay a penalty, you should accumulate at least " + ((this.universityAttendance + 1) * 30 - 6) + " ECTS.";
             mfScenario5_1 = "Unfortunately, you have not fulfilled the full-time study requirement, i.e. have passed at least 22.5 ECTS of post-curricular subjects per semester. The part-time requirement is a cumulative total of at least 15 ECTS credits of post-curricular subjects per semester of part-time study.";
             mfScenario6_1 = "You have not fulfilled the part-time study requirement, i.e. have completed a minimum of 15 ECTS credits of post-curricular subjects per semester. Fortunately, according to the rules, both the course load and dismission are only changed in semesters with even numbers. By the end of the next semester, you should have accumulated at least " +((this.universityAttendance+1)*15) + " ECTS in post-curricular subjects in order to remain in part-time studies.";
@@ -178,7 +178,7 @@ class Calculation extends CurriculumCalculator {
             bpScenario3_1 = "You must accumulate at least " + (this.universityAttendance + 1 ) * 15 + " ECTS in the following semester to continue studying part-time.";
             bpScenario4 = "You will continue your studies part-time this and following semester.";
             bpScenario5 = "You will continue your studies part-time. ";
-            bpScenario5_1 = "If you wish to switch to full-time studies, you will need to acquire " + (this.universityAttendance + 1) * 22.5 + " EAPiv in the following semester.";
+            bpScenario5_1 = "If you wish to switch to full-time studies, you will need to acquire " + (this.universityAttendance + 1) * 22.5 + " ECTS in the following semester.";
             bpScenario6 = "<b>You are currently studying part-time but have exceeded the full-time threshold.</b><br>";
             bpScenario6_1 = "If you continue to exceed this minimum limit in the following semester, you will be transferred to full-time.";
             bpScenario7 = "<b>You will continue your studies full-time.</b><br>";
@@ -190,7 +190,6 @@ class Calculation extends CurriculumCalculator {
             sabbaticalLeaveScenario = "<b>You are currently on academic leave.</b>";
 
         }
-        //vahejuhtum taiskoormuse ning tasuta oppe puhverruumi vahel tegemata!
     
         if($("input[name='currently_studying_abroad']:checked").val() == "yes"){
             $("#scenario").html(abroadScenario);
@@ -198,8 +197,8 @@ class Calculation extends CurriculumCalculator {
         else if($("input[name='current_sabbatical_leave']:checked").val() == "yes"){
             $("#scenario").html(sabbaticalLeaveScenario);
         } else {
-            if(this.payLoad == "free"){ //tasuta õpe
-                if(this.degree == "bachelors"){ //bakalaureuse kraad
+            if(this.payLoad == "free"){
+                if(this.degree == "bachelors"){
                     if(this.ectsCount == 180){
                         $("#scenario").html(schoolOverScenario);
                     } else if(this.ectsCount > 162 && this.ectsCount < 180 && this.ectsCount != 168){
@@ -212,6 +211,11 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").html(bfScenario2);
                         $("#scenario").append(bfScenario2_1);
                         this.feeType = 3;
+                    } else if(this.universityAttendance == 6 && this.ectsCount < 162){
+                        $("#scenario").html(bfScenario6);
+                        $("#scenario").append(bfScenario6_1);
+                        this.payLoad = "paid";
+                        this.feeType = 2;
                     } else if(this.ectsCount == 168 && this.universityAttendance < 6){
                         $("#scenario").html(bfScenario3); 
                         $("#scenario").append(bfScenario3_1 + "<br>");
@@ -232,7 +236,7 @@ class Calculation extends CurriculumCalculator {
                             $("#scenario").html(bfScenario5);
                             $("#scenario").append(bfScenario5_1);
                             this.feeType = 1;
-                        } else if(this.ectsCount <= this.fullStudyLoadLowerLimit && this.universityAttendance % 2 == 0 && this.ectsCount > this.studyLowerLimit){
+                        } else if(this.ectsCount < this.fullStudyLoadLowerLimit && this.universityAttendance % 2 == 0 && this.ectsCount >= this.studyLowerLimit){
                             $("#scenario").html(bfScenario6);
                             $("#scenario").append(bfScenario6_1);
                             this.feeType = 2;
@@ -283,7 +287,7 @@ class Calculation extends CurriculumCalculator {
                             $("#scenario").html(bfScenario5);
                             $("#scenario").append(mfScenario4_1);
                             this.feeType = 1;
-                        } else if(this.ectsCount <= this.fullStudyLoadLowerLimit && this.universityAttendance % 2 == 0 && this.ectsCount > this.studyLowerLimit){
+                        } else if(this.ectsCount <= this.fullStudyLoadLowerLimit && this.universityAttendance % 2 == 0 && this.ectsCount >= this.studyLowerLimit){
                             $("#scenario").html(bfScenario6);
                             $("#scenario").append(mfScenario5_1);
                             this.feeType = 2;
@@ -303,12 +307,12 @@ class Calculation extends CurriculumCalculator {
                     }
                 }
             } else if(this.payLoad == "paid"){
-                if(this.degree == "bachelors"){ //bakalaureuse kraad
+                if(this.degree == "bachelors"){
                     if(this.ectsCount == 180){
                         $("#scenario").html(schoolOverScenario);
-                    } else if(this.ectsCount > 162 && this.ectsCount < 180){
+                    } else if(this.ectsCount > 162 && this.ectsCount < 180 && this.ectsCount != 168){
                         $("#scenario").html(impossibleScenario);
-                    } else if(this.universityAttendance == 12){ //juhtumid vahemikus 12-11
+                    } else if(this.universityAttendance == 12){
                         if(this.ectsCount == 180){
                             $("#scenario").html(schoolOverScenario);
                         } else if(this.ectsCount < 180){
@@ -317,7 +321,7 @@ class Calculation extends CurriculumCalculator {
                             $("#scenario").html(errorScenario);
                         }
                     } else if(this.universityAttendance == 11 && this.ectsCount >= 165){
-                        $("#scenario").html(bLastSemesterScenario); //juhtumid vahemikus 12-11 lõppevad
+                        $("#scenario").html(bLastSemesterScenario);
                         this.feeType = 2;
                     } else {
                         console.log(this.studyLowerLimit);
@@ -357,7 +361,7 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").html(schoolOverScenario);
                     } else if(this.ectsCount > 90 && this.ectsCount < 120 && this.ectsCount != 96){
                         $("#scenario").html(impossibleScenario);
-                    } else if(this.universityAttendance == 8){ //juhtumid vahemikus 8-7
+                    } else if(this.universityAttendance == 8){
                         if(this.ectsCount == 120){
                             $("#scenario").html(schoolOverScenario);
                         } else if(this.ectsCount < 120){
@@ -366,10 +370,9 @@ class Calculation extends CurriculumCalculator {
                             $("#scenario").html(errorScenario);
                         }
                     } else if(this.universityAttendance == 7 && this.ectsCount >= 96){
-                        $("#scenario").html(mpScenario2); //juhtumid vahemikus 12-11 lõppevad
+                        $("#scenario").html(mpScenario2);
                         this.feeType = 2;
                         this.studyLowerLimit = 96;
-                    
                     } else {
                         console.log(this.studyLowerLimit);
                         if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance >= 4){

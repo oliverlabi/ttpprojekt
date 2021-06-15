@@ -139,7 +139,6 @@ let calculated = 0;
 
 $("#curriculum_dropdown").change(function() {
     var dropdown = document.getElementById('curriculum_dropdown');
-    console.log(dropdown.value);
     if (dropdown.value == "interaction_design" || dropdown.value == "digital_study_games" || dropdown.value == "open_society_technologies" || dropdown.value == "human_and_computer_interaction") {
         $('input[id="free"]').prop("checked", false);
         $('input[id="free"]').prop("disabled", true);
