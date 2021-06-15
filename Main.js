@@ -2,8 +2,8 @@ class CurriculumCalculator{
     constructor(language){
         this.ectsFee = 30;
         this.Url;
-        this.fullStudyLoadMinimum;
-        this.partTimeStudyLoadMinimum;
+        this.fullStudyLoadMinimumConfig = 45;
+        this.partTimeStudyLoadMinimumConfig = 30;
         this.currentSabbaticalLeave = 0;
         this.currentAbroadStudies = 0;
         this.curriculumChoice = $("#curriculum_dropdown :selected").text();
@@ -35,6 +35,7 @@ class CurriculumCalculator{
             //this.loadConfig();
             Validation.prototype.checkCurriculumDegree.call(this);
             if(Validation.prototype.inputValidation.call(this) == 1){
+                this.feeType = 0;
                 Validation.prototype.checkInDepthStudy.call(this);
                 $("#error").html("");
                 $("#result_error").html("");
@@ -44,19 +45,25 @@ class CurriculumCalculator{
                 $("#result_error").css("display", "block");
                 Calculation.prototype.calcAbroadStudies.call(this);
                 Calculation.prototype.calcStudyLimits.call(this);
-                
                 this.drawResultBox();
-                
                 this.draw_graph();
-                console.log(this.ectsFee);
             }
             $("#new_calculation_button").on("click", ()=>{this.pageReload();});
-            $("#en").on("click", ()=>{this.lang = 1;});
-            $("#en").on("click", ()=>{this.draw_graph();});
-            $("#en").on("click", ()=>{Calculation.prototype.calcScenario.call(this)();});
-            $("#en").on("click", ()=>{this.lang = 0;});
-            $("#ee").on("click", ()=>{this.draw_graph();});
-            $("#ee").on("click", ()=>{Calculation.prototype.calcScenario.call(this)();});
+            $("#en").on("click", ()=>{
+                this.lang = 1;
+                this.draw_graph();
+                Calculation.prototype.calcScenario.call(this);
+                Calculation.prototype.calcFees.call(this);
+            });
+            $("#ee").on("click", ()=>{
+                this.lang = 0;
+                this.draw_graph();
+                Calculation.prototype.calcScenario.call(this);
+                Calculation.prototype.calcFees.call(this);
+            });
+            
+            
+            
         //}
         
     }
@@ -86,9 +93,9 @@ class CurriculumCalculator{
                     } else if(i == 1){
                         this.Url = configurationArray[1];
                     } else if(i == 2){
-                        this.fullStudyLoadMinimum = configurationArray[2] / 2;
+                        this.fullStudyLoadMinimumConfig = configurationArray[2] / 2;
                     } else if(i == 3){
-                        this.partTimeStudyLoadMinimum = configurationArray[3] / 2;
+                        this.partTimeStudyLoadMinimumConfig = configurationArray[3] / 2;
                     }
                 }
                 console.log(this.ectsFee + " " + this.partTimeStudyLoadMinimum);
@@ -127,6 +134,7 @@ class CurriculumCalculator{
 }
 
 let lang = 0;
+let calculated = 0;
 
 $("#abroad_yes").on("click", function(){
     $("#abroad_input_area").css("display", "block");
@@ -237,6 +245,7 @@ $(document).ready(function(){
 
 $("#calculate_button").click(function(){
     let calculation = new CurriculumCalculator(lang);
+    calculated = 1;
     if(lang == 1){
         ResultToEng();
     }
@@ -260,10 +269,10 @@ $(document).keypress(function(event){
 });
 
 function CalculatorToEng() {
-    if(lang == 0){
+    if(lang == 0 && calculated == 0){
         lang = 1;
     } else {
-        lang = 0;
+        lang = 1;
     }
     $('#heading').html("Curriculum completion calculator");
     $('#info_text').html("Study data can be found in TU Study Information System under student performance records");
@@ -288,15 +297,16 @@ function CalculatorToEng() {
     $('#curriculum_attendance_label').html("Number of semesters studied at TU");
     $('#sabbatical_leave_label').html("Number of semesters on academic leave");
     $('#ects_count_label').html("ECTS to be taken into account in the completion of the curriculum");
-    $('#studied_abroad_label').html("Have you done foreign studies or foreign traineeships?");
-    $('#currently_studying_abroad_label').html("Are you currently doing foreign studies or foreign internships?");
-    $('#abroad_semester_count_label').html("Number of semesters studied in foreign studies");
-    $('#abroad_ects_count_label').html("Number of ECTS completed in foreign studies");
+    $('#studied_abroad_label').html("Have you done abroad studies or abroad traineeships?");
+    $('#currently_studying_abroad_label').html("Are you currently doing abroad studies or abroad internships?");
+    $('#abroad_semester_count_label').html("Number of semesters studied in abroad studies");
+    $('#abroad_ects_count_label').html("Number of ECTS completed in abroad studies");
     $('#studied_estonian_label').html("Have you been assigned and completed additional Estonian language modules?");
+    $('#studied_estonian_ects_count_label').html("Number of taken semesters in Estonian language module");
     $('#current_sabbatical_leave_label').html("Are you currently on academic leave?");
     $('#back_button').html("Back");
     $('#calculate_button').html("Calculate");
-    $('#first_help_txt').html("Includes all semesters studied at Tallinn University (incl. academic leave, foreign studies, etc.)");
+    $('#first_help_txt').html("Includes all semesters studied at Tallinn University (incl. academic leave, abroad studies, etc.)");
     $('#first_help_txt').css({"width": "240px"});
     $('#first_help_txt').css({"top": "-15px"});
     $('#second_help_txt').css({"width": "194px"});
@@ -311,7 +321,8 @@ function CalculatorToEng() {
     $('#new_calculation_button').html("New calculation");
     $('#result_calculate_button').html("Calculate");
     $('#pdf_save_button').html("Save as PDF");
-    $('#infosystem').html("Study information system: ");
+    $('#clipboard_copy_button').html("Copy to clipboard");
+    $('#infosystem').html("Study Information System: ");
     
     $(".yes_label").each(function(){
         $(this).html('Yes');
@@ -338,10 +349,10 @@ function ResultToEng(){
 }
 
 function CalculatorToEst() {
-    if(lang == 1){
+    if(lang == 1 && calculated == 0){
         lang = 0;
     } else {
-        lang = 1;
+        lang = 0;
     }
     $('#heading').html("Õppekava täitmise kalkulaator");
     $('#info_text').html("Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt");
@@ -389,6 +400,7 @@ function CalculatorToEst() {
     $('#new_calculation_button').html("Alusta uuesti");
     $('#result_calculate_button').html("Kalkuleeri");
     $('#pdf_save_button').html("Salvesta PDFina");
+    $('#clipboard_copy_button').html("Kopeeri link");
     $('#infosystem').html("Õppeinfosüsteem: ");
 
     $(".yes_label").each(function(){

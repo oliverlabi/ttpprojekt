@@ -43,6 +43,8 @@ button:active {
 
 a, p, #infosystem{font-size: 14px;}
 
+b{font-size: 18px;}
+
 #help_link, #mainpage{
     color: rgba(76,134,123,255);
     text-decoration: underline;
