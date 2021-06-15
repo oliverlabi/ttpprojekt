@@ -308,10 +308,13 @@ class Graphic extends CurriculumCalculator {
 					ctx.stroke();
 				ctx.closePath();
 				arrowX = ((canvas.width-2*graphX)/3)+ graphX + XPosition;
-			} 
-			if((this.degree == "masters" && this.universityAttendance == 4) || (this.degree == "bachelors" && this.universityAttendance == 6)){
+			} else if((this.degree == "masters" && this.universityAttendance == 4) || (this.degree == "bachelors" && this.universityAttendance == 6)){
 				XLength = (((canvas.width)-2*graphX)/3);
-					XPosition = ((this.ectsCount - fullTimeEdu)/(freeFullEduLimit - fullTimeEdu))*XLength-graphBorderWidth;
+				if(this.ectsCount == maxECTS){
+					XPosition = ((this.ectsCount - fullTimeEdu)/(maxECTS - fullTimeEdu))*XLength-graphBorderWidth;
+				} else {
+					XPosition = ((this.ectsCount - fullTimeEdu)/(maxECTS - fullTimeEdu))*XLength;
+				}
 					ctx.beginPath();
 						ctx.strokeStyle = "black";
 						ctx.lineWidth = 4;

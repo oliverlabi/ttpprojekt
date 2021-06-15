@@ -287,7 +287,7 @@ class Calculation extends CurriculumCalculator {
                             $("#scenario").html(bfScenario5);
                             $("#scenario").append(mfScenario4_1);
                             this.feeType = 1;
-                        } else if(this.ectsCount <= this.fullStudyLoadLowerLimit && this.universityAttendance % 2 == 0 && this.ectsCount >= this.studyLowerLimit){
+                        } else if(this.ectsCount < this.fullStudyLoadLowerLimit && this.universityAttendance % 2 == 0 && this.ectsCount >= this.studyLowerLimit){
                             $("#scenario").html(bfScenario6);
                             $("#scenario").append(mfScenario5_1);
                             this.feeType = 2;

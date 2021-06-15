@@ -125,6 +125,7 @@ class CurriculumCalculator{
         if(this.error == ""){
             $("#curriculum_result").html("Sinu õppekava: " + this.curriculumChoice);
             $("#ects_result").html("Sinu ainepunktide arv: " + this.ectsCount + " EAP");
+            $("#semester_result").html("Sinu koormusarvutusel arvesse minev semestrite arv: " + this.universityAttendance);
             $("#result_padding").css("display", "block");
             $("#results").css("display", "block");
             $("#footer").css("margin-top", "50px");
