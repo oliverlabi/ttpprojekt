@@ -1,9 +1,8 @@
 Mina:
-kodeerida erijuhtumid
+stsenaariumitega tegelemine, vigade leidmine
 
 Oliver Antsov:
 Vigade parandamine
-Stsenaariumite translation ingliskeelseks
 Responsiveness
 
 Karl-Reimond Kõrs:
@@ -12,17 +11,20 @@ Konfiguratsioonifaili lugemine
 Enri Gregor Riim:
 informaatikaõpetaja erijuhtum
 
-
 Sofia Geroiskaja:
+Responsiveness
 Stsenaariumite translation ingliskeelseks
 inglise keelsete õppekavadega kaotada ära funktsionaalsus vajutada tasuta õppekavale
 
 Teha veel:
 Responsiveness
-Trahvirahad* - eksmati hoiatused puudu
+Trahvirahad* - eksmati hoiatused puudu, kui kukub täiskoormusest eksmatti. Osakoormusel ei tasu lisatasusid
 URL parameetrite integreerimine
 konfiguratsioonifaili lugemise integreerimine*
 keelevahetuse kõik elemendid testida, korrektsus kontrollida
+teha inglise keelsete õppekavade jaoks eraldi stsenaariumid
+informaatikaõpetaja erijuhtum
+stsenaariumeid testida
 
 Tehtud:
 inglise keelsete õppekavadega kaotada ära funktsionaalsus vajutada tasuta õppekavale

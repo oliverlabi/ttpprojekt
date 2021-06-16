@@ -95,8 +95,8 @@ class Graphic extends CurriculumCalculator {
 			} else if (this.degree == "bachelors" && this.universityAttendance < 6){
 				ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3) - graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
 			} else {
-				if(this.degree == "masters" && this.ectsCount == 8 || this.degree == "bachelors" && this.ectsCount == 12){
-					ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, (canvas.width - 2*graphX) - graphBorderWidth*1, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+				if(this.degree == "masters" && this.universityAttendance == 8 || this.degree == "bachelors" && this.universityAttendance == 12){
+					ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, (canvas.width - 2*graphX) - graphBorderWidth*2, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
 				} else {
 					ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/2) - graphBorderWidth*1.5, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
 				}
@@ -104,37 +104,36 @@ class Graphic extends CurriculumCalculator {
 			ctx.closePath();
 			ctx.stroke();
 			ctx.fill();
-			if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6)){
-				ctx.strokeStyle = "limegreen";
-				ctx.fillStyle = "limegreen";
-				ctx.lineWidth = graphBorderWidth;
-				ctx.beginPath();
-					ctx.rect(((canvas.width - 2*graphX)/3)+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3), ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
-				ctx.closePath();
-				ctx.stroke();
-				ctx.fill();
+			if((this.degree == "masters" && this.universityAttendance != 8) || (this.degree == "bachelors" && this.universityAttendance != 12)){
+				if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6)){
+					ctx.strokeStyle = "limegreen";
+					ctx.fillStyle = "limegreen";
+					ctx.lineWidth = graphBorderWidth;
+					ctx.beginPath();
+						ctx.rect(((canvas.width - 2*graphX)/3)+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3), ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+					ctx.closePath();
+					ctx.stroke();
+					ctx.fill();
 
-				ctx.strokeStyle = "green";
-				ctx.fillStyle = "green";
-				ctx.lineWidth = graphBorderWidth;
-				ctx.beginPath();
-					ctx.rect(((canvas.width - 2*graphX)*(2/3))+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3)-graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
-				ctx.closePath();
-				ctx.stroke();
-				ctx.fill();
-			} else {
-				ctx.strokeStyle = "green";
-				ctx.fillStyle = "green";
-				ctx.lineWidth = graphBorderWidth;
-				ctx.beginPath();
-					ctx.rect(((canvas.width - 2*graphX)/2)+graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/2)-2*graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
-				ctx.closePath();
-				ctx.stroke();
-				ctx.fill();
-			}
-		
-		
-		
+					ctx.strokeStyle = "green";
+					ctx.fillStyle = "green";
+					ctx.lineWidth = graphBorderWidth;
+					ctx.beginPath();
+						ctx.rect(((canvas.width - 2*graphX)*(2/3))+graphX, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/3)-graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+					ctx.closePath();
+					ctx.stroke();
+					ctx.fill();
+				} else {
+					ctx.strokeStyle = "green";
+					ctx.fillStyle = "green";
+					ctx.lineWidth = graphBorderWidth;
+					ctx.beginPath();
+						ctx.rect(((canvas.width - 2*graphX)/2)+graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)/2)-2*graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
+					ctx.closePath();
+					ctx.stroke();
+					ctx.fill();
+				}
+			} 
 	}
 
 	draw_data(){
@@ -186,22 +185,25 @@ class Graphic extends CurriculumCalculator {
 		ctx.beginPath();
 			ctx.strokeStyle = "rgba(112, 203, 188, 1)";
 			ctx.lineWidth = 2;
-			if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6) || payload == "free"){
-				ctx.moveTo(((canvas.width-2*graphX)*1/3)+graphX, graphY+(graphBorderWidth/2));
-				ctx.lineTo(((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY)-(graphBorderWidth/2));
-				ctx.stroke();
-			} else {
-				ctx.moveTo(((canvas.width-2*graphX)/2)+graphX, graphY+(graphBorderWidth/2));
-				ctx.lineTo(((canvas.width-2*graphX)/2)+graphX, (canvas.height - graphY)-(graphBorderWidth/2));
-				ctx.stroke();
+			if((this.degree == "masters" && this.universityAttendance < 8) || (this.degree == "bachelors" && this.universityAttendance < 12)){
+				if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6) || payload == "free"){
+					ctx.moveTo(((canvas.width-2*graphX)*1/3)+graphX, graphY+(graphBorderWidth/2));
+					ctx.lineTo(((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY)-(graphBorderWidth/2));
+					ctx.stroke();
+				} else {
+					ctx.moveTo(((canvas.width-2*graphX)/2)+graphX, graphY+(graphBorderWidth/2));
+					ctx.lineTo(((canvas.width-2*graphX)/2)+graphX, (canvas.height - graphY)-(graphBorderWidth/2));
+					ctx.stroke();
+				}
 			}
+			
 			ctx.font = "20px arial";
 			ctx.fillStyle = "black";
 			ctx.textAlign = "center";
 			ctx.fillText(0, graphX+graphBorderWidth, graphY - graphBorderWidth*2);
 			//siit alla hakkab osa mida vaja parandada (test andmed infotehnoloogai juht, 8, 0, 100)
 			if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6) || payload == "free"){
-				if(this.degree == "masters" && this.ectsCount != 8 || this.degree == "bachelors" && this.ectsCount != 12){
+				if((this.degree == "masters" && this.universityAttendance < 8) || (this.degree == "bachelors" && this.universityAttendance != 12)){
 					ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)*1/3)+graphX, graphY - graphBorderWidth*2);
 					ctx.font = "12px arial";
 					ctx.fillText(partTimeText_1, ((canvas.width-2*graphX)*1/3)+graphX, (canvas.height - graphY) + graphBorderWidth*5);
@@ -209,7 +211,7 @@ class Graphic extends CurriculumCalculator {
 				}
 				
 			} else {
-				if(this.degree == "masters" && this.ectsCount != 8 || this.degree == "bachelors" && this.ectsCount != 12){
+				if((this.degree == "masters" && this.universityAttendance != 8) || (this.degree == "bachelors" && this.universityAttendance != 12)){
 					ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)/2)+graphX, graphY - graphBorderWidth*2);
 					ctx.font = "12px arial";
 					ctx.fillText(partTimeText_1, ((canvas.width-2*graphX)/2)+graphX, (canvas.height - graphY) + graphBorderWidth*5);
@@ -362,8 +364,14 @@ class Graphic extends CurriculumCalculator {
 			
 		} else if (payload == "paid"){
 			if((this.degree == "bachelors" && this.universityAttendance >= 6) || (this.degree == "masters" && this.universityAttendance >= 4)){
-				XLength = (canvas.width-2*graphX)/2;
-				ctrl = 1;
+				if((this.degree == "masters" && this.universityAttendance < 8) || (this.degree == "bachelors" && this.universityAttendance < 12)){
+					XLength = (canvas.width-2*graphX)/2;
+					ctrl = 1;
+				} else {
+					XLength = (canvas.width-2*graphX);
+					ctrl = 2;
+				}
+				
 				
 			} else {
 				XLength = (canvas.width-2*graphX)/3;
@@ -412,7 +420,20 @@ class Graphic extends CurriculumCalculator {
 					ctx.closePath();
 					arrowX = graphX + graphBorderWidth + XPosition;
 				}
-				
+			} else if(ctrl == 2){
+				if(this.ectsCount == maxECTS){
+					XPosition = (this.ectsCount/maxECTS)*XLength-graphBorderWidth*2;
+				} else {
+					XPosition = (this.ectsCount/maxECTS)*XLength-graphBorderWidth;
+				}
+				ctx.beginPath();
+						ctx.strokeStyle = "black";
+						ctx.lineWidth = 4;
+						ctx.moveTo(graphX + XPosition + graphBorderWidth, graphY+(graphBorderWidth/2));
+						ctx.lineTo(graphX + XPosition + graphBorderWidth, (canvas.height - graphY)-(graphBorderWidth/2));
+						ctx.stroke();
+				ctx.closePath();
+				arrowX = graphX + XPosition + graphBorderWidth;
 			} else if(this.ectsCount < partTimeEdu){
 				XLength = (canvas.width-2*graphX)/3;
 				XPosition = (this.ectsCount/partTimeEdu)*XLength;
