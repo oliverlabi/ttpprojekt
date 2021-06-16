@@ -53,7 +53,7 @@ class Calculation extends CurriculumCalculator {
             finishNextSemFee = "Juhul kui sa järgmise semestri jooksul õpinguid ei lõpeta, siis semestri lõpus esitatakse sulle uus trahviraha arve sooritamata ainete eest. <br>";
             finishLastChance = "<b>NB!</b> See on sinu viimane võimalus õpingute tasuta lõpetamiseks.<br>";
             exmFees = "Sul tuleb vastavalt õppekorralduse eeskirjale § 10 lg 2 p 1 tasuda nn trahviraha iga ainepunkti eest, mis sul on tasuta õppe nõudest (30 EAP´d semestris) ja lubatud võlgnevusest (6 EAPst) vähem sooritatud. <br>";
-            exmEctsFee = "Ehk iga 84 EAPst vähem sooritatud ainepunkti eest, valemi “1 vähem sooritatud EAP = " + this.ectsFee + " eurot trahvi” alusel.<br>";
+            exmEctsFee = "Ehk iga " + this.fullStudyLoadFreeLimit + " EAPst vähem sooritatud ainepunkti eest, valemi “1 vähem sooritatud EAP = " + this.ectsFee + " eurot trahvi” alusel.<br>";
             exmNb = "<b>NB!</b> Eksmatrikuleerimine ei vabasta sind trahviraha tasumisest. Trahviraha arvuta välja oma sooritamata deklareeritud ainetest.<br>";
             exmNb2 = "<b>NB!</b> Eksmatrikuleerimine ei vabasta sind trahviraha tasumisest.";
         } else{
@@ -68,7 +68,7 @@ class Calculation extends CurriculumCalculator {
             finishNextSemFee = "If you do not complete your studies in the next semester, you will be charged a new penalty payment at the end of the semester for not invoiced subjects. <br>";
             finishLastChance = "<b>NB!</b> This is your last chance to complete your studies for free.<br>";
             exmFees = "According to the Study Regulations § 10(2) p 1, you must pay a penalty fee for each credit point that you have completed less than the study requirement (30 ECTS per semester) and the allowable debt (6 ECTS). <br>";
-            exmEctsFee = "I.e. for every credit point less than 84 ECTS, based on the formula 1 less ECTS = " + this.ectsFee + "EUR fine.<br>";
+            exmEctsFee = "I.e. for every credit point less than " + this.fullStudyLoadFreeLimit + " ECTS, based on the formula 1 less ECTS = " + this.ectsFee + "EUR fine.<br>";
             exmNb = "<b>NB!</b> Exmatriculation does not relieve you from the payment of a fine. Calculate your payment from non-performed declared subjects.<br>";
             exmNb2 = "<b>NB!</b> Exmatriculation does not relieve you from the payment of a fine.";
         }
@@ -85,7 +85,7 @@ class Calculation extends CurriculumCalculator {
             $("#fees").html(finishEctsFee);
             $("#fees").append(finishNextSemFee);
             $("#fees").append(finishLastChance);
-        } else if(this.feeType == 4){ //tasuta esimene semester eksmat?
+        } else if(this.feeType == 4){ //täiskoormusest kukub eksmatti
             $("#fees").html(exmFees);
             $("#fees").append(exmEctsFee);
             $("#fees").append(exmNb2);
@@ -231,6 +231,7 @@ class Calculation extends CurriculumCalculator {
                         } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_1);
+                            this.feeType = 4;
                         } else if(this.ectsCount >= this.fullStudyLoadFreeLimit && this.universityAttendance < 6 && this.ectsCount < (this.fullStudyLoadFreeLimit + 6)){
                             $("#scenario").html(bfScenario4); 
                             $("#scenario").append(bfScenario4_1);
@@ -245,9 +246,11 @@ class Calculation extends CurriculumCalculator {
                         } else if(this.ectsCount < (this.universityAttendance-1)*15 && this.universityAttendance % 2 == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
+                            this.feeType = 4;
                         } else if(this.universityAttendance % 2 == 0 && this.ectsCount < this.studyLowerLimit){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
+                            this.feeType = 4;
                         } else if(this.universityAttendance % 2 == 1 && this.ectsCount < this.studyLowerLimit){
                             $("#scenario").html(exmatriculateDangerScenario);
                             $("#scenario").append(exmatriculateDangerScenario_1);
@@ -281,6 +284,7 @@ class Calculation extends CurriculumCalculator {
                         } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_1);
+                            this.feeType = 4;
                         } else if(this.ectsCount >= this.fullStudyLoadFreeLimit && this.universityAttendance < 4 && this.ectsCount < (this.fullStudyLoadFreeLimit + 6)){
                             $("#scenario").html(bfScenario4); 
                             $("#scenario").append(mfScenario3_1);
@@ -295,9 +299,11 @@ class Calculation extends CurriculumCalculator {
                         } else if(this.ectsCount < (this.universityAttendance-1)*15 && this.universityAttendance % 2 == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
+                            this.feeType = 4;
                         } else if(this.universityAttendance % 2 == 0 && this.ectsCount < this.studyLowerLimit){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
+                            this.feeType = 4;
                         } else if(this.universityAttendance % 2 == 1 && this.ectsCount < this.studyLowerLimit){
                             $("#scenario").html(exmatriculateDangerScenario);
                             $("#scenario").append(mfScenario6_1);

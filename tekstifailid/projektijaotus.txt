@@ -9,7 +9,7 @@ Karl-Reimond Kõrs:
 Konfiguratsioonifaili lugemine
 
 Enri Gregor Riim:
-informaatikaõpetaja erijuhtum
+
 
 Sofia Geroiskaja:
 Responsiveness
@@ -18,15 +18,14 @@ inglise keelsete õppekavadega kaotada ära funktsionaalsus vajutada tasuta õpp
 
 Teha veel:
 Responsiveness
-Trahvirahad* - eksmati hoiatused puudu, kui kukub täiskoormusest eksmatti. Osakoormusel ei tasu lisatasusid
 URL parameetrite integreerimine
 konfiguratsioonifaili lugemise integreerimine*
 keelevahetuse kõik elemendid testida, korrektsus kontrollida
-teha inglise keelsete õppekavade jaoks eraldi stsenaariumid
 informaatikaõpetaja erijuhtum
 stsenaariumeid testida
 
 Tehtud:
+Trahvirahad* - eksmati hoiatused puudu, kui kukub täiskoormusest eksmatti. Osakoormusel ei tasu lisatasusid
 inglise keelsete õppekavadega kaotada ära funktsionaalsus vajutada tasuta õppekavale
 süvaõppe arvutus
 enter nuppu vajutades kalkuleerida
@@ -43,7 +42,6 @@ paid osa stsenaariumite korrektsus üle vaadata
 Vead:
 Graafiku PDFi allalaadimisel kast ümber (Väga väike bug tho, üks viimastest fixidest pigem)
 URLi link on all
-abinuppu on läbi inglise keelse hoveri näha
 
 Intervjuu küsimused:
 Mis on maksimaalne välisõppes viibitud semestrite ning EAPide arv?
