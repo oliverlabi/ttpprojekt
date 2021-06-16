@@ -129,10 +129,10 @@ class Calculation extends CurriculumCalculator {
             bpScenario1 = "<b>Kahjuks on viimane võimalus bakalaureuse tööd esitada-kaitsta mööda läinud ning oled koolist eksmatrikuleeritud.</b><br>";
             errorScenario = "<b>ERROR!</b><br>";
             bLastSemesterScenario = "<b>Järgnev, ehk 12. semester, on viimane võimalus oma õpingud lõpetada!</b><br>";
-            bpScenario2 = "<b>Jätkad osakoormusel õppimist.</b>";
+            bpScenario2 = "<b>Jätkad osakoormusel õppimist.</b><br>";
             bpScenario3_1 = "Pead järgneval semestril vähemalt " + (this.universityAttendance + 1 ) * 15 + " koormusarvutusel arvesse minevat EAPi omandama, et jätkata osakoormusel õppimist.)";
-            bpScenario4 = "Jätkad õpingutega käesoleval ning järgneval semestril osakoormusel.";
-            bpScenario5 = "<b>Jätkad õpingutega osakoormusel.</b>";
+            bpScenario4 = "<b>Jätkad õpingutega käesoleval ning järgneval semestril osakoormusel.</b><br>";
+            bpScenario5 = "<b>Jätkad õpingutega osakoormusel.</b><br>";
             bpScenario5_1 = "Kui on soovi minna õpingutega üle täiskoormusele, siis pead omandama järgneva semestriga " +(this.universityAttendance+1)*22.5 + " EAPi";
             bpScenario6 = "<b>Jätkad õpingutega hetkel osakoormusel, kuid oled ületanud täiskoormuse lävendi.</b><br>";
             bpScenario6_1 = "Kui oled järgmine semester jätkuvalt üle nimetatud alampiiri, siis viiakse sind üle täiskoormusele.";
@@ -353,24 +353,36 @@ class Calculation extends CurriculumCalculator {
                         } else if(this.ectsCount < (this.universityAttendance-1)*15 && this.universityAttendance % 2 == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
+                            this.payLoad = "free";
+                        } else if(this.universityAttendance % 2 == 1 && this.ectsCount < this.studyLowerLimit && this.universityAttendance < 6){
+                            $("#scenario").html(exmatriculateDangerScenario);
+                            $("#scenario").append(bpScenario3_1);
+                            this.payLoad = "free";
                         } else if(this.universityAttendance % 2 == 1 && this.ectsCount < this.studyLowerLimit){
                             $("#scenario").html(exmatriculateDangerScenario);
                             $("#scenario").append(bpScenario3_1);
                         } else if(this.ectsCount < this.fullStudyLoadLowerLimit && this.universityAttendance < 6 && this.ectsCount >= this.studyLowerLimit && this.universityAttendance % 2 == 0){
                             $("#scenario").html(bpScenario4);
                             this.feeType = 2;
+                            this.payLoad = "free";
                         } else if(this.ectsCount < this.fullStudyLoadLowerLimit && this.universityAttendance < 6 && this.ectsCount >= this.studyLowerLimit && this.universityAttendance % 2 == 1){
                             $("#scenario").html(bpScenario5);
                             $("#scenario").append(bpScenario5_1);
                             this.feeType = 2;
+                            this.payLoad = "free";
                         } else if(this.universityAttendance < 6 && this.ectsCount >= this.fullStudyLoadLowerLimit && this.universityAttendance % 2 == 1){
                             $("#scenario").html(bpScenario6);
                             $("#scenario").append(bpScenario6_1);
                             this.feeType = 2;
+                            this.payLoad = "free";
                         } else if(this.universityAttendance < 6 && this.ectsCount >= this.fullStudyLoadLowerLimit && this.universityAttendance % 2 == 0){
                             $("#scenario").html(bpScenario7);
                             $("#scenario").append(bpScenario7_1);
                             $("#scenario").append(bfScenario3_1);
+                            this.payLoad = "free";
+                        } else if(this.universityAttendance % 2 == 0 && this.ectsCount < this.studyLowerLimit && this.universityAttendance < 6){
+                            $("#scenario").html(exmatriculateScenario);
+                            $("#scenario").append(exmatriculateScenario_2);
                             this.payLoad = "free";
                         } else if(this.universityAttendance % 2 == 0 && this.ectsCount < this.studyLowerLimit){
                             $("#scenario").html(exmatriculateScenario);
@@ -422,6 +434,11 @@ class Calculation extends CurriculumCalculator {
                         } else if(this.ectsCount < (this.universityAttendance-1)*15 && this.universityAttendance % 2 == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
+                            this.payLoad = "free";
+                        } else if(this.universityAttendance % 2 == 1 && this.ectsCount < this.studyLowerLimit && this.universityAttendance < 4){
+                            $("#scenario").html(exmatriculateDangerScenario);
+                            $("#scenario").append(bpScenario3_1);
+                            this.payLoad = "free";
                         } else if(this.universityAttendance % 2 == 1 && this.ectsCount < this.studyLowerLimit){
                             $("#scenario").html(exmatriculateDangerScenario);
                             $("#scenario").append(bpScenario3_1);
@@ -444,10 +461,13 @@ class Calculation extends CurriculumCalculator {
                             $("#scenario").append(bpScenario7_1);
                             $("#scenario").append(bfScenario3_1);
                             this.payLoad = "free";
-                        } else if(this.universityAttendance % 2 == 0 && this.ectsCount < this.studyLowerLimit){
+                        } else if(this.universityAttendance % 2 == 0 && this.ectsCount < this.studyLowerLimit && this.universityAttendance < 4){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
                             this.payLoad = "free";
+                        } else if(this.universityAttendance % 2 == 0 && this.ectsCount < this.studyLowerLimit){
+                            $("#scenario").html(exmatriculateScenario);
+                            $("#scenario").append(exmatriculateScenario_2);
                         }
                     }
                 }

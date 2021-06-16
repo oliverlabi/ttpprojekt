@@ -9,6 +9,11 @@ html, body{
     min-height: 92%;
 }
 
+#footer{
+    padding: 20px;
+    position: sticky;
+}
+
 .errorMsg{width: 600px;}
 
 canvas {
