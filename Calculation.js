@@ -140,7 +140,7 @@ class Calculation extends CurriculumCalculator {
             bpScenario7_1 = "Oled täitnud täiskoormusel õppe nõude ehk sooritanud kumulatiivselt vähemalt 22,5 EAP õppekavajärgseid aineid semestri kohta.";
             mpScenario1 = "<b>Kahjuks on viimane võimalus magistri tööd esitada-kaitsta mööda läinud ning oled koolist eksmatrikuleeritud.</b><br>";
             mpScenario2 = "<b>Järgnev, ehk 8. semester, on viimane võimalus oma õpingud lõpetada!</b><br>";
-            mpScenario3 = "Jätkad õpingutega osakoormusel.";
+            mpScenario3 = "<b>Jätkad õpingutega osakoormusel.</b><br>";
             abroadScenario = "<b>Viibid hetkel välisõppes/välispraktikal.</b>";
             sabbaticalLeaveScenario = "<b>Viibid hetkel akadeemilisel puhkusel.</b>";
         } else {
@@ -343,6 +343,10 @@ class Calculation extends CurriculumCalculator {
                         } else if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance >= 6){
                             $("#scenario").html(bpScenario2);
                             this.feeType = 2;
+                        } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance == 1){
+                            $("#scenario").html(exmatriculateScenario);
+                            $("#scenario").append(exmatriculateScenario_1);
+                            this.payLoad = "free";
                         } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance >= 6 && this.universityAttendance % 2 == 0){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
@@ -408,6 +412,10 @@ class Calculation extends CurriculumCalculator {
                         } else if(this.ectsCount >= this.studyLowerLimit && this.universityAttendance >= 4){
                             $("#scenario").html(bpScenario2);
                             this.feeType = 2;
+                        } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance == 1){
+                            $("#scenario").html(exmatriculateScenario);
+                            $("#scenario").append(exmatriculateScenario_1);
+                            this.payLoad = "free";
                         } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance >= 4 && this.universityAttendance % 2 == 0){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
