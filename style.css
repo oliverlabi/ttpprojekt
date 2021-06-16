@@ -12,6 +12,7 @@ html, body{
 
 #footer{
     flex-shrink: 0;
+    padding-top: 0px;
     padding-bottom: 20px;
     position: sticky;
 }

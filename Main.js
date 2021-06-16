@@ -169,7 +169,7 @@ $("#estonian_no").on("click", function(){
 })
 
 $("#continue_button").on("click", function(){
-    $("#footer").css("padding_top", "5px");
+    $("#footer").css("padding-top", "10px");
     if($("#curriculum_dropdown :selected").text() == "Vali õppekava..."){
         swal({
             width: "1000px",
@@ -260,7 +260,7 @@ $(document).ready(function(){
 })
 
 $("#calculate_button").click(function(){
-    $("#footer").css("padding_top", "0px");
+    $("#footer").css("padding-top", "0px");
     let calculation = new CurriculumCalculator(lang);
     calculated = 1;
     if(lang == 1){
