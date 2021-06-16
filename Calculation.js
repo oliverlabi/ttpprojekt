@@ -130,7 +130,7 @@ class Calculation extends CurriculumCalculator {
             errorScenario = "<b>ERROR!</b><br>";
             bLastSemesterScenario = "<b>Järgnev, ehk 12. semester, on viimane võimalus oma õpingud lõpetada!</b><br>";
             bpScenario2 = "<b>Jätkad osakoormusel õppimist.</b><br>";
-            bpScenario3_1 = "Pead järgneval semestril vähemalt " + (this.universityAttendance + 1 ) * 15 + " koormusarvutusel arvesse minevat EAPi omandama, et jätkata osakoormusel õppimist.)";
+            bpScenario3_1 = "Pead järgneval semestril vähemalt " + (this.universityAttendance + 1 ) * 15 + " koormusarvutusel arvesse minevat EAPi omandama, et jätkata osakoormusel õppimist.";
             bpScenario4 = "<b>Jätkad õpingutega käesoleval ning järgneval semestril osakoormusel.</b><br>";
             bpScenario5 = "<b>Jätkad õpingutega osakoormusel.</b><br>";
             bpScenario5_1 = "Kui on soovi minna õpingutega üle täiskoormusele, siis pead omandama järgneva semestriga " +(this.universityAttendance+1)*22.5 + " EAPi";
