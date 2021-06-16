@@ -1,7 +1,23 @@
+function getParameters(){
+    let url = window.location.href;
+    let parameters = url.split("?").pop();
+	if(parameters != ""){
+		let splitParam = new URLSearchParams(parameters);
+        let incrementValue = 0;
+		splitParam.forEach(function(value, key) {
+            incrementValue = incrementValue + 1;
+		});	
+        if(incrementValue == 8){
+            let paramCalculation = new CurriculumCalculator(0, 1);
+        }							
+	}
+}
+
 class CurriculumCalculator{
-    constructor(language){
-        this.ectsFee = 30;
-        this.Url;
+    constructor(language, parameterCheck){
+        this.parameterCheck = parameterCheck;
+        this.ectsFee ;
+        this.Url = "";
         this.fullStudyLoadMinimumConfig;
         this.partTimeStudyLoadMinimumConfig;
         this.currentSabbaticalLeave = 0;
@@ -23,85 +39,169 @@ class CurriculumCalculator{
         this.abroadSemesterCount = $("#abroad_semester_count").val();
         this.abroadEctsCount = $("#abroad_ects_count").val();
         this.degree = "none";
-        this.universityAttendance = this.attendanceCount - this.sabbaticalCount;
         this.error = "";
         this.lang = language;
         this.feeType = 0;
         this.fullStudyLoadFreeLimit = 0;
-        this.init();
+        this.checkParameters(this.parameterCheck);
+        this.universityAttendance = this.attendanceCount - this.sabbaticalCount;
+        this.loadConfig();
     }
 
-    init(){
-        //if(Validation.prototype.removeSpecialChars.call(this) == 1){
-            //this.loadConfig();
-            Validation.prototype.checkCurriculumDegree.call(this);
-            Validation.prototype.checkInDepthStudy.call(this);
-            if(Validation.prototype.inputValidation.call(this) == 1){
-                this.feeType = 0;
-                $("#error").html("");
-                $("#result_error").html("");
-                $("#input_area_buttons").css("display", "none");
-                $("#result_area_buttons").css("display", "block");
-                $("#error").css("display", "none");
-                $("#result_error").css("display", "block");
-                Calculation.prototype.calcAbroadStudies.call(this);
-                Calculation.prototype.calcStudyLimits.call(this);
-                this.drawResultBox();
-                this.draw_graph();
+    readData(data){
+        let rawData = data.split(",");
+        let splitted, value;
+        var configurationArray = [];
+        for (var i = 0; i < rawData.length; i++) {
+            if(i == 1){
+                splitted = rawData[i].split(":");
+                value = splitted[1] + splitted[2];
+            } else{
+                splitted = rawData[i].split(":");
+                value = splitted[1];
             }
-            $("#new_calculation_button").on("click", ()=>{this.pageReload();});
-            $("#en").on("click", ()=>{
-                this.lang = 1;
-                this.draw_graph();
-                Calculation.prototype.calcScenario.call(this);
-                Calculation.prototype.calcFees.call(this);
-            });
-            $("#ee").on("click", ()=>{
-                this.lang = 0;
-                this.draw_graph();
-                Calculation.prototype.calcScenario.call(this);
-                Calculation.prototype.calcFees.call(this);
-            });
-            
-            
-            
-        //}
-        
+            configurationArray.push(value);  
+        }
+        for(var i = 0; i <= configurationArray.length; i++){
+            if(i == 0){
+                this.ectsFee = configurationArray[0];
+            } else if(i == 1){
+                this.Url = configurationArray[1];
+            } else if(i == 2){
+                this.fullStudyLoadMinimumConfig = parseInt(configurationArray[2]);
+            } else if(i == 3){
+                this.partTimeStudyLoadMinimumConfig = parseInt(configurationArray[3]);
+            }
+        }
+        this.init(configurationArray);
     }
 
-    /*loadConfig(){
-        fetch("config.txt")
-            .then(response => response.text())
-            .then(data => {
-                let rawData = data.split(",");
-                //let tukeldatud = andmed.split(":");
-                //console.log(tukeldatud);
-                let splitted, value;
-                var configurationArray = [];
-                for (var i = 0; i < rawData.length; i++) {
-                    if(i == 1){
-                        splitted = rawData[i].split(":");
-                        value = splitted[1] + splitted[2];
-                    } else{
-                        splitted = rawData[i].split(":");
-                        value = splitted[1];
-                    }
-                    configurationArray.push(value);
-                }
-                for(var i = 0; i <= configurationArray.length; i++){
+    init(configurationArray){
+        this.readConfig(configurationArray);
+        Validation.prototype.checkCurriculumDegree.call(this);
+        Validation.prototype.checkInDepthStudy.call(this);
+        if(Validation.prototype.inputValidation.call(this) == 1){
+            this.feeType = 0;
+            $("#error").html("");
+            $("#result_error").html("");
+            $("#input_area_buttons").css("display", "none");
+            $("#result_area_buttons").css("display", "block");
+            $("#error").css("display", "none");
+            $("#result_error").css("display", "block");
+            Calculation.prototype.calcAbroadStudies.call(this);
+            Calculation.prototype.calcStudyLimits.call(this);
+            this.drawResultBox();
+            this.draw_graph();
+            this.setParameters();
+        }
+        $("#new_calculation_button").on("click", ()=>{this.pageReload();});
+        $("#en").on("click", ()=>{
+            this.lang = 1;
+            this.draw_graph();
+            Calculation.prototype.calcScenario.call(this);
+            Calculation.prototype.calcFees.call(this);
+        });
+        $("#ee").on("click", ()=>{
+            this.lang = 0;
+            this.draw_graph();
+            Calculation.prototype.calcScenario.call(this);
+            Calculation.prototype.calcFees.call(this);
+        });
+    }
+
+    readConfig(configurationArray){
+        for(var i = 0; i <= configurationArray.length; i++){
+            if(i == 0){
+                this.ectsFee = configurationArray[0];
+            } else if(i == 1){
+                this.Url = configurationArray[1];
+            } else if(i == 2){
+                this.fullStudyLoadMinimumConfig = parseInt(configurationArray[2]);
+            } else if(i == 3){
+                this.partTimeStudyLoadMinimumConfig = parseInt(configurationArray[3]);
+            }
+        }
+    }
+
+
+    loadConfig(){
+        var file = "config.txt";
+        var test = $.get(file, (data)=>this.readData(data));
+    }
+
+    checkParameters(){ 
+        if(this.parameterCheck == 1){ 
+            let url = window.location.href;
+            let parameters = url.split("?").pop();
+	        if(parameters != ""){
+		        let splitParam = new URLSearchParams(parameters);
+                let incrementValue = 0;
+                let values = [];
+		        splitParam.forEach(function(value) {
+                    values[incrementValue] = value;
+                    incrementValue = incrementValue + 1;
+		        });
+                for(let i=0; i<values.length; i++){
                     if(i == 0){
-                        this.ectsFee = configurationArray[0];
+                        if(values[i] == 0){
+                            this.curriculumChoice = "Vali õppekava...";
+                        } else {
+                            this.curriculumChoice = values[i];
+                        }
                     } else if(i == 1){
-                        this.Url = configurationArray[1];
+                        this.attendanceCount = parseInt(values[i]);
                     } else if(i == 2){
-                        this.fullStudyLoadMinimumConfig = configurationArray[2] / 2;
+                        this.ectsCount = parseInt(values[i]);
                     } else if(i == 3){
-                        this.partTimeStudyLoadMinimumConfig = configurationArray[3] / 2;
+                        this.sabbaticalCount = parseInt(values[i]);
+                    } else if(i == 4){
+                        this.currentAbroadStudies = parseInt(values[i]);
+                        if(this.currentAbroadStudies == 1){
+                            $("input[id='abroad_yes'][value='yes']").prop("checked", true);
+                            $("#abroad_input_area").css("display", "block");
+                        } else if(this.currentAbroadStudies != 1) {
+                            this.currentAbroadStudies == 0;
+                            $("input[id='abroad_no'][value='no']").prop("checked", true);
+                            $("#abroad_input_area").css("display", "none");
+                        }
+                    }else if(i == 5){
+                        this.abroadSemesterCount = parseInt(values[i]);
+                    } else if(i == 6){
+                        this.abroadEctsCount = parseInt(values[i]);
+                    } else if(i == 7){
+                        this.currentSabbaticalLeave = parseInt(values[i]);
+                        if(this.currentSabbaticalLeave == 1){
+                            $("input[name='studied_abroad'][value='yes']").prop("checked", true);
+                        } else{
+                            $("input[name='studied_abroad'][value='yes']").prop("checked", false);
+                        }
                     }
                 }
-                console.log(this.ectsFee + " " + this.partTimeStudyLoadMinimum);
-            });
-    }*/
+                $("#curriculum_choice_area").css("display", "none");
+                $("#curriculum_choice_area_buttons").css("display", "none");
+                $("#input_area").css("display", "block");
+                $("#curriculum_dropdown :selected").text(this.curriculumChoice);
+                $("#curriculum_attendance").val(this.attendanceCount);
+                $("#sabbatical_leave").val(this.sabbaticalCount);
+                $("#ects_count").val(this.ectsCount);
+                $("#abroad_semester_count").val(this.abroadSemesterCount);
+                $("#abroad_ects_count").val(this.abroadEctsCount);
+            }
+        }
+    }
+
+    setParameters(){
+		var queryParams = new URLSearchParams(window.location.search);
+		queryParams.set("sel",this.curriculumChoice);
+		queryParams.set("cur",this.attendanceCount);
+		queryParams.set("ect",this.ectsCount);
+		queryParams.set("acd",this.sabbaticalCount);
+        queryParams.set("curabr",this.currentAbroadStudies);
+		queryParams.set("abr",this.abroadSemesterCount);
+		queryParams.set("aec",this.abroadEctsCount);
+		queryParams.set("cursab",this.currentSabbaticalLeave);
+		history.pushState(null, null, "?"+queryParams.toString());
+	}
 
     pageReload(){
         location.reload();
@@ -158,6 +258,8 @@ $("#abroad_yes").on("click", function(){
 
 $("#abroad_no").on("click", function(){
     $("#abroad_input_area").css("display", "none");
+    $("#abroad_semester_count").val(0);
+    $("#abroad_ects_count").val(0);
 })
 
 $("#estonian_yes").on("click", function(){
@@ -261,7 +363,7 @@ $(document).ready(function(){
 
 $("#calculate_button").click(function(){
     $("#footer").css("padding-top", "0px");
-    let calculation = new CurriculumCalculator(lang);
+    let calculation = new CurriculumCalculator(lang, 0);
     calculated = 1;
     if(lang == 1){
         ResultToEng();
@@ -269,7 +371,7 @@ $("#calculate_button").click(function(){
 })
 
 $("#result_calculate_button").click(function(){
-    let calculation = new CurriculumCalculator(lang);
+    let calculation = new CurriculumCalculator(lang, 0);
     if(lang == 1){
         ResultToEng();
     }
@@ -432,3 +534,7 @@ function ResultToEst(){
     $("#study_lower_limit_result").html("Õppes jätkamise alampiir: " + ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5) + " ECTS");
     $("#full_study_load_limit_result").html("Alampiir õpingute jätkamiseks täiskoormuses: " + (($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5) + " ECTS");
 }
+
+window.onload = (event) => {
+    getParameters();
+  };

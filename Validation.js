@@ -76,6 +76,7 @@ class Validation extends CurriculumCalculator {
             }
         }
         if($("input[name='studied_abroad']:checked").val() == "yes"){
+            this.currentAbroadStudies = 1;
             if($("#abroad_semester_count").val() > 0 && parseInt($("#abroad_semester_count").val()) <= 2){
                 this.k4 = 1;
             }
@@ -87,6 +88,7 @@ class Validation extends CurriculumCalculator {
             this.k5 = 1;
         }
         if($("input[name='current_sabbatical_leave']:checked").val() == "yes" && $("input[name='currently_studying_abroad']:checked").val() == "yes"){
+            this.currentSabbaticalLeave = 1;
             this.k6 = 0;
         } else {
             this.k6 = 1;

@@ -1,24 +1,24 @@
 class Calculation extends CurriculumCalculator {
     calcStudyLimits(){
         if(this.degree == "masters"){
-            this.studyLowerLimit = (this.universityAttendance * 30) * 0.5;
-            this.fullStudyLoadLowerLimit = this.universityAttendance * 22.5;
+            this.studyLowerLimit = (this.universityAttendance * this.partTimeStudyLoadMinimumConfig) * 0.5;
+            this.fullStudyLoadLowerLimit = this.universityAttendance * (this.fullStudyLoadMinimumConfig/2);
             if((this.universityAttendance) > 4){
                 this.payLoad = "paid";
             }
-            this.fullStudyLoadFreeLimit = (this.universityAttendance * 30) - 6;
+            this.fullStudyLoadFreeLimit = (this.universityAttendance * this.partTimeStudyLoadMinimumConfig) - 6;
             if(this.universityAttendance >= 4){
                 this.fullStudyLoadFreeLimit = 120;
             }
         } else {
-            this.studyLowerLimit = (this.universityAttendance * 30) * 0.5;
+            this.studyLowerLimit = (this.universityAttendance * this.partTimeStudyLoadMinimumConfig) * 0.5;
             if(this.universityAttendance <= 6){
-                this.fullStudyLoadLowerLimit = this.universityAttendance * 22.5;
+                this.fullStudyLoadLowerLimit = this.universityAttendance * (this.fullStudyLoadMinimumConfig/2);
             }
             if((this.universityAttendance) > 6){
                 this.payLoad = "paid";
             }
-            this.fullStudyLoadFreeLimit = (this.universityAttendance * 30) - 6;
+            this.fullStudyLoadFreeLimit = (this.universityAttendance * this.partTimeStudyLoadMinimumConfig) - 6;
             if(this.universityAttendance >= 6){
                 this.fullStudyLoadFreeLimit = 180;
             }
@@ -243,7 +243,7 @@ class Calculation extends CurriculumCalculator {
                             $("#scenario").html(bfScenario6);
                             $("#scenario").append(bfScenario6_1);
                             this.feeType = 2;
-                        } else if(this.ectsCount < (this.universityAttendance-1)*15 && this.universityAttendance % 2 == 1){
+                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2) && this.universityAttendance % 2 == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
                             this.feeType = 4;
@@ -296,7 +296,7 @@ class Calculation extends CurriculumCalculator {
                             $("#scenario").html(bfScenario6);
                             $("#scenario").append(mfScenario5_1);
                             this.feeType = 2;
-                        } else if(this.ectsCount < (this.universityAttendance-1)*15 && this.universityAttendance % 2 == 1){
+                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2) && this.universityAttendance % 2 == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
                             this.feeType = 4;
@@ -356,7 +356,7 @@ class Calculation extends CurriculumCalculator {
                         } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance >= 6 && this.universityAttendance % 2 == 0){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
-                        } else if(this.ectsCount < (this.universityAttendance-1)*15 && this.universityAttendance % 2 == 1){
+                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2) && this.universityAttendance % 2 == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
                             this.payLoad = "free";
@@ -437,7 +437,7 @@ class Calculation extends CurriculumCalculator {
                         } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance >= 4 && this.universityAttendance % 2 == 0){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
-                        } else if(this.ectsCount < (this.universityAttendance-1)*15 && this.universityAttendance % 2 == 1){
+                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2) && this.universityAttendance % 2 == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
                             this.payLoad = "free";

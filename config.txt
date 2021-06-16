@@ -1,4 +1,4 @@
 ectsFee : 30,
 ectsFeesUrl : "https://ois.tlu.ee/pls/portal/ois2.ois_public.main",
 fullStudyLoadMinimum : 45,
-partTimeStudyLoadMinimum : 30
+partTimeStudyLoadMinimum : 30,

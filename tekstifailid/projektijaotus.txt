@@ -40,6 +40,7 @@ Erijuhtumid:
 paid osa stsenaariumite korrektsus üle vaadata
 
 Vead:
+pdf vigane
 Graafiku PDFi allalaadimisel kast ümber (Väga väike bug tho, üks viimastest fixidest pigem)
 URLi link on all
 
