@@ -213,7 +213,7 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").html(bfScenario2);
                         $("#scenario").append(bfScenario2_1);
                         this.feeType = 3;
-                    } else if(this.universityAttendance == 6 && this.ectsCount < 162){
+                    } else if(this.universityAttendance == 6 && this.ectsCount < 162 && this.ectsCount > this.studyLowerLimit){
                         $("#scenario").html(bfScenario6);
                         $("#scenario").append(bfScenario6_1);
                         this.payLoad = "paid";

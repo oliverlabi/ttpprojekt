@@ -6,11 +6,13 @@ html, body{
 }
 
 #whole_page_area{
-    min-height: 92%;
+    flex: 1 0 auto;
+    /*min-height: 92%;*/
 }
 
 #footer{
-    padding: 20px;
+    flex-shrink: 0;
+    padding-bottom: 20px;
     position: sticky;
 }
 

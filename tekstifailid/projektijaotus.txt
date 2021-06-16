@@ -6,7 +6,7 @@ Vigade parandamine
 Responsiveness
 
 Karl-Reimond Kõrs:
-Konfiguratsioonifaili lugemine
+testija
 
 Enri Gregor Riim:
 
