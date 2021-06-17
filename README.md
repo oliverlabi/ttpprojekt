@@ -2,7 +2,7 @@
 
 Ülikoolis õppides on hindamissüsteem võrreldes näiteks gümnaasiumi või põhikooliga teistsugune - arvestada tuleb osakoormusega, täiskoormusega, tasuta ning tasulise õppega. Tarkvaraarendusprojekti "Õppekava täitmise kalkulaator" eesmärgiks on kirjeldatud protsessi teha lihtsamaks ning arusaadavamaks üliõpilastele. Õppeandmeid sisestades näitab kalkulaator, millised on tudengi tegevuse või tegevusetuse tagajärjed - kas ta püsib või teda viiakse üle täiskoormusele, osakoormusele või on ta üldse koolist eksmatrikuleeritud.
 
-Tehtud [Tallinna Ülikooli Digitehnoloogiate instituudi](https://www.tlu.ee/dt) aine "Tarkvaraarendusprojekti" raames.
+Tehtud [Tallinna Ülikooli Digitehnoloogiate instituudi](https://www.tlu.ee/dt) aine ["Tarkvaraarendusprojekti"](https://ois2.tlu.ee/tluois/aine/IFI6231.DT) raames.
 
 ## Rakenduse ekraanipildid
 
