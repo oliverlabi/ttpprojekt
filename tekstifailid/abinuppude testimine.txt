@@ -1,6 +1,0 @@
-abinupud töötavad:
-	- FireFox (versioon 89.0, 09.06 seisuga uusim)
-	- Microsoft Edge (versioon 91.0.864.41; 09.06 seisuga uusim)
-	- Google Chrome (versioon 91.0.4472.77; 09.06 seisuga uusim)
-	- Opera Browser (versioon 77.0.4054.60; 09.06 seisuga uusim)
-    - Safari Browser
