@@ -11,10 +11,10 @@ Tehtud Tallinna Ülikooli Digitehnoloogiate instituudi aine "Tarkvaraarendusproj
 
 ### Kasutatud tehnoloogiad
 
-[jQuery versioon 3.6.0](https://code.jquery.com/jquery-3.6.0.js)
-[html2canvas versioon 0.5.0](https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-alpha1/html2canvas.js)
-[jsPDF versioon 1.5.3](https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js)
-[SweetAlert versioon 1.0.1](https://unpkg.com/sweetalert/dist/sweetalert.min.js)
+- [jQuery versioon 3.6.0](https://code.jquery.com/jquery-3.6.0.js)
+- [html2canvas versioon 0.5.0](https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-alpha1/html2canvas.js)
+- [jsPDF versioon 1.5.3](https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js)
+- [SweetAlert versioon 1.0.1](https://unpkg.com/sweetalert/dist/sweetalert.min.js)
 
 ### Projekti panustajad
 
