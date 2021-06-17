@@ -1,4 +1,6 @@
-function getParameters(){
+//Veebirakendus on üles ehitatud kujul, kus kõik toimub ühel lehel. Peidetakse div elemente ning tuuakse esile, kui on vajadust
+
+function getParameters(){ //getParameters funktsioon kontrollib, kas lehekülje URLil on parameetreid. Kui on, siis käivitab kalkulaatori parameterCheck = 1 muutujaga
     let url = window.location.href;
     let parameters = url.split("?").pop();
 	if(parameters != ""){
@@ -7,21 +9,22 @@ function getParameters(){
 		splitParam.forEach(function(value, key) {
             incrementValue = incrementValue + 1;
 		});	
-        if(incrementValue == 8){
+        if(incrementValue == 11){
             let paramCalculation = new CurriculumCalculator(0, 1);
         }							
 	}
 }
 
 class CurriculumCalculator{
-    constructor(language, parameterCheck){
+    constructor(language, parameterCheck){ //language muutuja kontrollib, mis keel on veebirakendusel kalkuleerimist alustades. parameterCheck kontrollib URLi parameetrite olemasolu
         this.parameterCheck = parameterCheck;
-        this.ectsFee ;
-        this.Url = "";
+        this.ectsFee;
+        this.Url ="";
         this.fullStudyLoadMinimumConfig;
         this.partTimeStudyLoadMinimumConfig;
         this.currentSabbaticalLeave = 0;
         this.currentAbroadStudies = 0;
+        this.currentlyAbroad = 0;
         this.curriculumChoice = $("#curriculum_dropdown :selected").text();
         this.bachelorsCurriculums = ["Informaatika", "Infoteadus (BA)", "Matemaatika, majandusmatemaatika ja andmeanalüüs"];
         this.mastersCurriculums = ["Haridustehnoloogia", "Infotehnoloogia juhtimine", "Infoteadus (MA)", "Informaatikaõpetaja", "Avatud ühiskonna tehnoloogiad", "Digitaalsed õpimängud", "Inimese ja arvuti interaktsioon", "Interaktsioonidisain"];
@@ -29,6 +32,7 @@ class CurriculumCalculator{
         this.mastersCurriculumsEng = ["Educational Technology", "Management of Information Technology", "Information Science (MA)", "Teacher of Computer Science", "Open Society Technologies", "Digital Learning Games", "Human-Computer Interaction", "Interaction Design"];
         this.fullStudyLoadLowerLimit = 0;
         this.payLoad = $('input[name="pay_load"]:checked').val();
+        this.studiedEstonian = 0;
         this.studiedEstonianSemesterCount = $("#studied_estonian_ects_count").val();
         this.studyLowerLimit = 0;
         this.scenarioText = "";
@@ -43,12 +47,17 @@ class CurriculumCalculator{
         this.lang = language;
         this.feeType = 0;
         this.fullStudyLoadFreeLimit = 0;
-        this.checkParameters(this.parameterCheck);
+        this.checkParameters(this.parameterCheck); //kontrollib, kas on parameterCheck == 1. Kui on, siis funktsioon arvutab URL andmete põhjal tulemuse
         this.universityAttendance = this.attendanceCount - this.sabbaticalCount;
-        this.loadConfig();
+        this.loadConfig(); //laeb lahti konfiguratsiooni tekstifaili
     }
 
-    readData(data){
+    loadConfig(){
+        var file = "config.txt";
+        var test = $.get(file, (data)=>this.readData(data)); //loeb andmeid konfiguratsiooni failist
+    }
+
+    readData(data){ //loeb konfiguratsioonifailist muutujad ning lisab neid massiivi
         let rawData = data.split(",");
         let splitted, value;
         var configurationArray = [];
@@ -73,14 +82,14 @@ class CurriculumCalculator{
                 this.partTimeStudyLoadMinimumConfig = parseInt(configurationArray[3]);
             }
         }
-        this.init(configurationArray);
+        this.init(configurationArray); //initsialiseerib rakendust, saadab konfiguratsioonimuutujate massiivi kõrgemasse skoopi
     }
 
     init(configurationArray){
-        this.readConfig(configurationArray);
-        Validation.prototype.checkCurriculumDegree.call(this);
-        Validation.prototype.checkInDepthStudy.call(this);
-        if(Validation.prototype.inputValidation.call(this) == 1){
+        this.readConfig(configurationArray); //loeb konfiguratsioonimuutujate massiivi ja salvestab need vastavalt konstruktori muutujatesse
+        Validation.prototype.checkCurriculumDegree.call(this); //kontrollib, kas õppekava on bakalaureusekraad või magistrikraad
+        if(Validation.prototype.inputValidation.call(this) == 1){ //erinevate võimalike sisestuslahtrite errorijuhtumite kontroll - kui funktsiooni väärtus 1, siis erroreid ei ole
+            Validation.prototype.checkInDepthStudy.call(this); //kontrollib välisõppe/välispraktika sisestuste olemasolu
             this.feeType = 0;
             $("#error").html("");
             $("#result_error").html("");
@@ -88,28 +97,28 @@ class CurriculumCalculator{
             $("#result_area_buttons").css("display", "block");
             $("#error").css("display", "none");
             $("#result_error").css("display", "block");
-            Calculation.prototype.calcAbroadStudies.call(this);
-            Calculation.prototype.calcStudyLimits.call(this);
-            this.drawResultBox();
-            this.draw_graph();
-            this.setParameters();
+            Calculation.prototype.calcAbroadStudies.call(this); //kalkuleerib välisõppes olevate semestrite ning eap-de suhtes koormusarvutusel arvesse minevad semestrid
+            Calculation.prototype.calcStudyLimits.call(this); //kalkuleerib täiskoormuse, osakoormuse, eksmatrikuleerimise alampiirid ja õppekoormuse
+            this.drawResultBox(); //toob tulemuste div kasti peidust välja õigete andmetega, selle sees arvutab ka teine funktsioon stsenaariumid
+            this.draw_graph(); //joonistab õppeandmetele toetudes graafiku
+            this.setParameters(); //sätib parameetrid URLi, et saaks kopeerida linki ning jagada teistega
         }
-        $("#new_calculation_button").on("click", ()=>{this.pageReload();});
-        $("#en").on("click", ()=>{
+        $("#new_calculation_button").on("click", ()=>{this.pageReload();}); //vajutades uue kalkulatsiooni nupule laeb lehekülje avalehe lahti ilma parameetriteta
+        $("#en").on("click", ()=>{ //inglise keele nupule vajutades muudab kõik kalkulatsioonid jne inglise keelseks
             this.lang = 1;
             this.draw_graph();
-            Calculation.prototype.calcScenario.call(this);
-            Calculation.prototype.calcFees.call(this);
+            Calculation.prototype.calcScenario.call(this); //muudab stsenaariumite keelt
+            Calculation.prototype.calcFees.call(this); //muudab maksude/trahvide keelt
         });
-        $("#ee").on("click", ()=>{
+        $("#ee").on("click", ()=>{ //inglise keelsest eesti keelde ümber minnes muudab kõik kalkulatsioonid jne ümber tagasi eesti keelseks
             this.lang = 0;
             this.draw_graph();
-            Calculation.prototype.calcScenario.call(this);
-            Calculation.prototype.calcFees.call(this);
+            Calculation.prototype.calcScenario.call(this); //muudab stsenaariumite keelt
+            Calculation.prototype.calcFees.call(this); //muudab maksude/trahvide keelt
         });
     }
 
-    readConfig(configurationArray){
+    readConfig(configurationArray){ //loeb konfiguratsioonimuutujate massiivi ja salvestab need vastavalt konstruktori muutujatesse
         for(var i = 0; i <= configurationArray.length; i++){
             if(i == 0){
                 this.ectsFee = configurationArray[0];
@@ -123,13 +132,7 @@ class CurriculumCalculator{
         }
     }
 
-
-    loadConfig(){
-        var file = "config.txt";
-        var test = $.get(file, (data)=>this.readData(data));
-    }
-
-    checkParameters(){ 
+    checkParameters(){  //kontrollib parameetreid lehel, kui olemas, siis asendab väärtused htmlis ning viib läbi kalkulatsiooni
         if(this.parameterCheck == 1){ 
             let url = window.location.href;
             let parameters = url.split("?").pop();
@@ -147,6 +150,9 @@ class CurriculumCalculator{
                             this.curriculumChoice = "Vali õppekava...";
                         } else {
                             this.curriculumChoice = values[i];
+                            if(values[i] == "Informaatikaõpetaja"){
+                                document.getElementById("curriculum_dropdown").value = "computer_science_teacher";
+                            }
                         }
                     } else if(i == 1){
                         this.attendanceCount = parseInt(values[i]);
@@ -157,11 +163,11 @@ class CurriculumCalculator{
                     } else if(i == 4){
                         this.currentAbroadStudies = parseInt(values[i]);
                         if(this.currentAbroadStudies == 1){
-                            $("input[id='abroad_yes'][value='yes']").prop("checked", true);
+                            $("#abroad_yes").click();
                             $("#abroad_input_area").css("display", "block");
                         } else if(this.currentAbroadStudies != 1) {
-                            this.currentAbroadStudies == 0;
-                            $("input[id='abroad_no'][value='no']").prop("checked", true);
+                            this.currentAbroadStudies = 0;
+                            $("#abroad_no").click();
                             $("#abroad_input_area").css("display", "none");
                         }
                     }else if(i == 5){
@@ -169,11 +175,29 @@ class CurriculumCalculator{
                     } else if(i == 6){
                         this.abroadEctsCount = parseInt(values[i]);
                     } else if(i == 7){
+                        this.currentlyAbroad = parseInt(values[i]);
+                        if(this.currentlyAbroad == 1){
+                            $("#currently_abroad_yes").click();
+                        } else {
+                            $("#currently_abroad_no").click();
+                        }
+                    } else if(i == 8){
+                        this.studiedEstonian = parseInt(values[i]);
+                        if(this.studiedEstonian == 1){
+                            $("#studied_estonian_input_area").css("display", "block");
+                            $("#estonian_yes").click();
+                        } else {
+                            $("#studied_estonian_input_area").css("display", "none");
+                            $("#estonian_no").click();
+                        }
+                    } else if(i == 9){
+                        this.studiedEstonianSemesterCount = parseInt(values[i]);
+                    } else if(i == 10){
                         this.currentSabbaticalLeave = parseInt(values[i]);
                         if(this.currentSabbaticalLeave == 1){
-                            $("input[name='studied_abroad'][value='yes']").prop("checked", true);
+                            $("#current_sabbatical_leave_yes").click();
                         } else{
-                            $("input[name='studied_abroad'][value='yes']").prop("checked", false);
+                            $("#current_sabbatical_leave_no").click();
                         }
                     }
                 }
@@ -186,11 +210,12 @@ class CurriculumCalculator{
                 $("#ects_count").val(this.ectsCount);
                 $("#abroad_semester_count").val(this.abroadSemesterCount);
                 $("#abroad_ects_count").val(this.abroadEctsCount);
+                $("#studied_estonian_ects_count").val(this.studiedEstonianSemesterCount);
             }
         }
     }
 
-    setParameters(){
+    setParameters(){ //sätib parameetrid URLi, et saaks kopeerida linki ning jagada teistega
 		var queryParams = new URLSearchParams(window.location.search);
 		queryParams.set("sel",this.curriculumChoice);
 		queryParams.set("cur",this.attendanceCount);
@@ -199,29 +224,33 @@ class CurriculumCalculator{
         queryParams.set("curabr",this.currentAbroadStudies);
 		queryParams.set("abr",this.abroadSemesterCount);
 		queryParams.set("aec",this.abroadEctsCount);
+        queryParams.set("crab",this.currentlyAbroad);
+        queryParams.set("ses",this.studiedEstonian);
+        queryParams.set("sesc",this.studiedEstonianSemesterCount);
 		queryParams.set("cursab",this.currentSabbaticalLeave);
 		history.pushState(null, null, "?"+queryParams.toString());
 	}
 
-    pageReload(){
-        location.reload();
+    pageReload(){ //funktsioon, mis laeb lehekülje uuesti lahti ilma parameetriteta
+        var newURL = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname;
+        location.replace(newURL);
     }
 
-    draw_graph(){
-		Graphic.prototype.clear_canvas.call(this);
-		Graphic.prototype.draw_base.call(this);
+    draw_graph(){ //alustab graafiku funktsioone
+		Graphic.prototype.clear_canvas.call(this); //teeb graafiku aluspinna puhtaks, et oleks võimalik puhtalt uus joonistada
+		Graphic.prototype.draw_base.call(this); //joonistab graafikule aluskasti/ümbrise kuhu sisse hakkavad kõik jooned jne tulema
 		if(this.payLoad == "free"){
-			Graphic.prototype.draw_freeMargins.call(this);
+			Graphic.prototype.draw_freeMargins.call(this); //joonistab tasuta õpingute* graafiku piirid ja alad
 		} 
 		if(this.payLoad == "paid"){
-			Graphic.prototype.draw_paidMargins.call(this);
+			Graphic.prototype.draw_paidMargins.call(this); //joonistab tasulise ehk osakoormuse piirid
 		}
-		Graphic.prototype.draw_data.call(this);
-		Graphic.prototype.draw_student.call(this);
+		Graphic.prototype.draw_data.call(this); //joonistab EAP-ide piirid, tekstid ja kriipsud vastavalt eelnevatele andmetele.
+		Graphic.prototype.draw_student.call(this); //õpilase joonistamine graafikule. Lisaks veel legend.
 		
 	}
 
-    drawResultBox(){
+    drawResultBox(){ //toob tulemuste kasti peidust välja, alustab stsenaariumite arvutust
         if(this.error == ""){
             $("#curriculum_result").html("Sinu õppekava: " + this.curriculumChoice);
             $("#ects_result").html("Sinu ainepunktide arv: " + this.ectsCount + " EAP");
@@ -229,8 +258,8 @@ class CurriculumCalculator{
             $("#result_padding").css("display", "block");
             $("#results").css("display", "block");
             $("#footer").css("margin-top", "50px");
-            Calculation.prototype.calcScenario.call(this);
-            Calculation.prototype.calcFees.call(this);
+            Calculation.prototype.calcScenario.call(this); //arvutab välja andmete põhjal stsenaariumi
+            Calculation.prototype.calcFees.call(this); //arvutab välja andmete põhjal stsenaariumite maksed või trahvi
         }
     }
 }
@@ -238,7 +267,7 @@ class CurriculumCalculator{
 let lang = 0;
 let calculated = 0;
 
-$("#curriculum_dropdown").change(function() {
+$("#curriculum_dropdown").change(function() { //raadio nuppude vahetuse võimaluse kaotamine ainult tasuliste õppekavade puhul
     var dropdown = document.getElementById('curriculum_dropdown');
     if (dropdown.value == "interaction_design" || dropdown.value == "digital_study_games" || dropdown.value == "open_society_technologies" || dropdown.value == "human_and_computer_interaction") {
         $('input[id="free"]').prop("checked", false);
@@ -251,26 +280,26 @@ $("#curriculum_dropdown").change(function() {
     }
 });
 
-$("#abroad_yes").on("click", function(){
+$("#abroad_yes").on("click", function(){ //välisõppe jah nupu vajutuse funktsionaalsus
     $("#abroad_input_area").css("display", "block");
     $("#footer").css("margin-top", "50px");
 })
 
-$("#abroad_no").on("click", function(){
+$("#abroad_no").on("click", function(){ //välisõppe ei nupu vajutuse funktsionaalsus
     $("#abroad_input_area").css("display", "none");
     $("#abroad_semester_count").val(0);
     $("#abroad_ects_count").val(0);
 })
 
-$("#estonian_yes").on("click", function(){
+$("#estonian_yes").on("click", function(){ //süvaõppe jah nupu vajutuse funktsionaalsus
     $("#studied_estonian_input_area").css("display", "block");
 })
 
-$("#estonian_no").on("click", function(){
+$("#estonian_no").on("click", function(){ //süvaõppe ei nupu vajutuse funktsionaalsus
     $("#studied_estonian_input_area").css("display", "none");
 })
 
-$("#continue_button").on("click", function(){
+$("#continue_button").on("click", function(){ //avalehel edasi nupu vajutuse funktsionaalsus
     $("#footer").css("padding-top", "10px");
     if($("#curriculum_dropdown :selected").text() == "Vali õppekava..."){
         swal({
@@ -281,7 +310,6 @@ $("#continue_button").on("click", function(){
             button: "OK",
             className: "errorMsg",
         });
-        //$("#error").html("Vali õppekava!");
     } else if($("#curriculum_dropdown :selected").text() == "Choose a curriculum..."){
         swal({
             width: "1000px",
@@ -291,7 +319,6 @@ $("#continue_button").on("click", function(){
             button: "OK",
             className: "errorMsg",
         });
-        //$("#error").html("Select curriculum!");
     } else {
         $("#error").html("");
         $("#curriculum_choice_area").css("display", "none");
@@ -302,28 +329,28 @@ $("#continue_button").on("click", function(){
     
 })
 
-$("#en").on("click", function(){
+$("#en").on("click", function(){ //inglise keele nupu vajutuse css muudatused
     $("#en").css("color", "rgb(16, 16, 16)");
     $("#en").css("font-decoration", "none");
     $("#ee").css("color", "rgb(160, 206, 200)");
     $("#ee").css("font-decoration", "underline");
 })
 
-$("#ee").on("click", function(){
+$("#ee").on("click", function(){ //eesti keele nupu vajutuse css muudatused
     $("#ee").css("color", "rgb(16, 16, 16)");
     $("#en").css("color", "rgb(160, 206, 200)");
     $("#ee").css("font-decoration", "none");
     $("#en").css("font-decoration", "underline");
 })
 
-$("#back_button").on("click", function(){
+$("#back_button").on("click", function(){ //tagasi nupu funktsionaalsus
     $("#curriculum_choice_area").css("display", "block");
     $("#curriculum_choice_area_buttons").css("display", "block");
     $("#input_area").css("display", "none");
     $("#input_area_buttons").css("display", "none");
 })
 
-$("#pdf_save_button").on("click", function(){
+$("#pdf_save_button").on("click", function(){ //pdfi salvestamise nupu funktsionaalsus
     html2canvas($("#whole_page_area"), {
         onrendered: function(canvas) {         
             var imgData = canvas.toDataURL(
@@ -335,9 +362,9 @@ $("#pdf_save_button").on("click", function(){
     });
 })
 
-$(document).ready(function(){
+$(document).ready(function(){ //kopeeri linki nupu funktsionaalsus
     var $temp = $("<input>");
-    var $url = $(location).attr('href');
+    var $url = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname + window.location.search;
     $('#clipboard_copy_button').click(function() {
     $("body").append($temp);
     $temp.val($url).select();
@@ -349,6 +376,7 @@ $(document).ready(function(){
             title: "Link copied!",
             icon: "success",
             button: "OK",
+            className: "errorMsg",
         });
     } else {
         //alert("Link kopeeritud!");
@@ -356,12 +384,13 @@ $(document).ready(function(){
             title: "Link kopeeritud!",
             icon: "success",
             button: "OK",
+            className: "errorMsg",
         });
     }
     });
 })
 
-$("#calculate_button").click(function(){
+$("#calculate_button").click(function(){ //kalkulatsiooni nupule vajutamine ilma tulemuste divita
     $("#footer").css("padding-top", "0px");
     let calculation = new CurriculumCalculator(lang, 0);
     calculated = 1;
@@ -370,14 +399,14 @@ $("#calculate_button").click(function(){
     }
 })
 
-$("#result_calculate_button").click(function(){
+$("#result_calculate_button").click(function(){ //kalkulatsiooni nupule vajutamine tulemuste div olemasolul
     let calculation = new CurriculumCalculator(lang, 0);
     if(lang == 1){
         ResultToEng();
     }
 })
 
-function CalculatorToEng() {
+function CalculatorToEng() { //kalkulaator inglise keelseks
     if(lang == 0 && calculated == 0){
         lang = 1;
     } else {
@@ -445,7 +474,7 @@ function CalculatorToEng() {
 }
 
 
-function ResultToEng(){
+function ResultToEng(){ //tulemuste div inglise keelseks
     $("#curriculum_result").html("Your curriculum: " + $("#curriculum_dropdown :selected").text());
     $("#ects_result").html("Your number of ECTS: " + $("#ects_count").val() + " ECTS");
     if($("#ects_count").val() < ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
@@ -457,7 +486,7 @@ function ResultToEng(){
     $("#full_study_load_limit_result").html("Minimum required for full-time studies: " + (($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5) + " ECTS");
 }
 
-function CalculatorToEst() {
+function CalculatorToEst() { //kalkulaator eesti keelseks
     if(lang == 1 && calculated == 0){
         lang = 0;
     } else {
@@ -523,7 +552,7 @@ function CalculatorToEst() {
     ResultToEst(); 
 }
 
-function ResultToEst(){
+function ResultToEst(){ //tulemuste div eesti keelseks
     $("#curriculum_result").html("Sinu õppekava: " + $("#curriculum_dropdown :selected").text());
     $("#ects_result").html("Sinu ainepunktide arv: " + $("#ects_count").val() + " EAP");
     if($("#ects_count").val() < ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
@@ -536,5 +565,5 @@ function ResultToEst(){
 }
 
 window.onload = (event) => {
-    getParameters();
+    getParameters(); //lehe laadimisel kontrollida URL parameetreid
   };

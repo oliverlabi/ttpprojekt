@@ -1,5 +1,5 @@
 class Calculation extends CurriculumCalculator {
-    calcStudyLimits(){
+    calcStudyLimits(){ //kalkuleerib täiskoormuse, osakoormuse, eksmatrikuleerimise alampiirid ja õppekoormuse
         if(this.degree == "masters"){
             this.studyLowerLimit = (this.universityAttendance * this.partTimeStudyLoadMinimumConfig) * 0.5;
             this.fullStudyLoadLowerLimit = this.universityAttendance * (this.fullStudyLoadMinimumConfig/2);
@@ -25,22 +25,16 @@ class Calculation extends CurriculumCalculator {
         }
     }
 
-    calcAbroadStudies(){
-        /*for(var i=0; i<this.abroadSemesterCount; i++){
-            var avgAbroadEctsCount = this.abroadEctsCount / this.abroadSemesterCount;
-            if(avgAbroadEctsCount <= 15){
-                this.universityAttendance -= 1;
-            }
-        }*/
+    calcAbroadStudies(){ //kalkuleerib välisõppes olevate semestrite ning eap-de suhtes koormusarvutusel arvesse minevad semestrid
         if(this.abroadEctsCount/this.abroadSemesterCount >= 15){
             this.universityAttendance -= this.abroadSemesterCount;
-        } else if(this.abroadEctsCount >= 15 && this.abroadSemesterCount ){
+        } else if(this.abroadEctsCount >= 15 && this.abroadSemesterCount){
             this.universityAttendance -= 1;
         }  
     }
 
-    calcFees(){
-        let exmNb2, ectsFee, feeBack, partTimeFees, partTimeFee_1, partTimeFee_2, partTimeFee_3, partTimeFee_4, finishEctsFee, finishNextSemFee, finishLastChance, exmFees, exmEctsFee, exmNb;
+    calcFees(){ //arvutab välja andmete põhjal stsenaariumite maksed või trahvi
+        let exmNb2, ectsFee, feeBack, partTimeFees, partTimeFee_1, partTimeFee_2, partTimeFee_3, partTimeFee_4, finishEctsFee, finishNextSemFee, finishLastChance, exmFees, exmEctsFee, exmNb, ifiteach;
         if(lang == 0){
             ectsFee = "Iga vähemsooritatud ainepunkti eest pead vastavalt õppekorralduse eeskirjale § 10 lg 2 p 1 tasuma nn trahviraha valemi 1 EAP = " + this.ectsFee + " eurot alusel. <br>";
             feeBack = "<b>NB!</b> Kui lõpetad nominaalajaga, siis on sul õigus taotleda ülikoolilt makstud trahviraha tagasi avalduse alusel 30 kalendripäeva jooksul pärast lõputöö kaitsmist.";
@@ -48,7 +42,7 @@ class Calculation extends CurriculumCalculator {
             partTimeFee_1 = "* semestri õpingukavasse registreeritud õppeainete eest ainepunktitasu alusel - tasumäär sõltub millise instituudi poolt on aine kureeritav, DT ainete ainepunkti maksumuseks on 40 eurot;<br>";
             partTimeFee_2 = "* juhendamistasu 266 eurot,mis annab õiguse saada juhendamist 2 semestri vältel;<br>";
             partTimeFee_3 = "* lõputöötasu 266 eurot, mis tuleb maksta lõputöö kaitsmisele esitamisel;<br>";
-            partTimeFee_4 = "* administreerimistasu 73 eurot semestritel, millal ükski eelpool nimetatud tasudest ei rakendu.";
+            partTimeFee_4 = "* administreerimistasu 73 eurot semestritel, millal ükski eelpool nimetatud tasudest ei rakendu.<br>";
             finishEctsFee = "Pead tasuma trahvi nominaalajal sooritamata jäänud ainete eest valemi 1 EAP = " + this.ectsFee + " eurot alusel. Lõputöö eest trahvi ei nõuta.<br>";
             finishNextSemFee = "Juhul kui sa järgmise semestri jooksul õpinguid ei lõpeta, siis semestri lõpus esitatakse sulle uus trahviraha arve sooritamata ainete eest. <br>";
             finishLastChance = "<b>NB!</b> See on sinu viimane võimalus õpingute tasuta lõpetamiseks.<br>";
@@ -56,6 +50,11 @@ class Calculation extends CurriculumCalculator {
             exmEctsFee = "Ehk iga " + this.fullStudyLoadFreeLimit + " EAPst vähem sooritatud ainepunkti eest, valemi “1 vähem sooritatud EAP = " + this.ectsFee + " eurot trahvi” alusel.<br>";
             exmNb = "<b>NB!</b> Eksmatrikuleerimine ei vabasta sind trahviraha tasumisest. Trahviraha arvuta välja oma sooritamata deklareeritud ainetest.<br>";
             exmNb2 = "<b>NB!</b> Eksmatrikuleerimine ei vabasta sind trahviraha tasumisest.";
+            if($("#curriculum_dropdown").val() == "computer_science_teacher"){
+                ifiteach = "<b>*Informaatikaõpetaja tudengid on õppekulude hüvitamisest vabastatud.</b>";
+            } else {
+                ifiteach = "";
+            } 
         } else{
             ectsFee = "For each less completed credit point, you have to pay the so-called penalty fee according to the Study Regulations § 10(2) p 1 based on the formula 1 ECTS = " + this.ectsFee +" EUR. <br>";
             feeBack = "<b>NB!</b> If you graduate with a nominal period, you have the right to request a refund of the fine paid to the university on application within 30 calendar days of the protection of the graduation.";
@@ -63,7 +62,7 @@ class Calculation extends CurriculumCalculator {
             partTimeFee_1 = "* for the subjects registered in the study program for a semester, based on the credit point fee - the fee rate depends on which institute curates the subject, the cost of the DT subjects is 40 EUR;<br>";
             partTimeFee_2 = "* an instructional fee of 266 EUR, which entitles to receive instructions for 2 semesters;<br>";
             partTimeFee_3 = "* final remuneration 266 EUR to be paid when submitting the final work;<br>";
-            partTimeFee_4 = "* an administration fee of 73 EUR per semester, when none of the above fees apply.";
+            partTimeFee_4 = "* an administration fee of 73 EUR per semester, when none of the above fees apply.<br>";
             finishEctsFee = "You will have to pay a penalty for substances not performed at the nominal time based on the formula 1 ECTS = " + this.ectsFee +". No penalty is required for the thesis.<br>";
             finishNextSemFee = "If you do not complete your studies in the next semester, you will be charged a new penalty payment at the end of the semester for not invoiced subjects. <br>";
             finishLastChance = "<b>NB!</b> This is your last chance to complete your studies for free.<br>";
@@ -71,6 +70,11 @@ class Calculation extends CurriculumCalculator {
             exmEctsFee = "I.e. for every credit point less than " + this.fullStudyLoadFreeLimit + " ECTS, based on the formula 1 less ECTS = " + this.ectsFee + "EUR fine.<br>";
             exmNb = "<b>NB!</b> Exmatriculation does not relieve you from the payment of a fine. Calculate your payment from non-performed declared subjects.<br>";
             exmNb2 = "<b>NB!</b> Exmatriculation does not relieve you from the payment of a fine.";
+            if($("#curriculum_dropdown").val() == "computer_science_teacher"){
+                ifiteach = '<b>*Students of "Teacher of Computer Science" are exempt from reimbursement of study expenses.</b>';
+            } else {
+                ifiteach = "";
+            }
         }
         if(this.feeType == 1){ //trahviraha, kui tasuta õppe puhverruumist alla
             $("#fees").html(ectsFee);
@@ -81,6 +85,7 @@ class Calculation extends CurriculumCalculator {
             $("#fees").append(partTimeFee_2);
             $("#fees").append(partTimeFee_3);
             $("#fees").append(partTimeFee_4);
+            $("#fees").append(ifiteach);
         } else if(this.feeType == 3){//lõpetamise trahiraha, kui on 90-96 eap või 162-168 eap.
             $("#fees").html(finishEctsFee);
             $("#fees").append(finishNextSemFee);
@@ -94,7 +99,7 @@ class Calculation extends CurriculumCalculator {
         }
     }
 
-    calcScenario(){
+    calcScenario(){ //arvutab välja andmete põhjal stsenaariumi
         let bfScenario3_2, abroadScenario, sabbaticalLeaveScenario, errorScenario, feeScenario1, exmatriculateScenario, exmatriculateDangerScenario, exmatriculateDangerScenario_1, exmatriculateScenario_2, exmatriculateScenario_1, schoolOverScenario, impossibleScenario, bfScenario1, bfScenario1_1, bfScenario2, bfScenario2_1, bfScenario3, bfScenario3_1, bfScenario4, bfScenario4_1, bfScenario5, bfScenario5_1, bfScenario6, bfScenario6_1, bpScenario1, bpScenario2, bpScenario3_1, bpScenario4, bpScenario5, bpScenario5_1, bpScenario6, bpScenario6_1, bpScenario7, bpScenario7_1, mfScenario1, mfScenario2, mfScenario2_1, mfScenario3_1, mfScenario4_1, mfScenario5_1, mfScenario6_1, mfScenario7_1, mpScenario1, mpScenario2, mpScenario3, bLastSemesterScenario;
         if(lang == 0){
             schoolOverScenario = "<b>Kool on edukalt läbitud!</b><br>";
@@ -223,11 +228,16 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").append(bfScenario3_1 + "<br>");
                         $("#scenario").append(bfScenario1_1);
                         this.payLoad = "free";
-                    
+                    } else if(this.ectsCount == 168 && this.universityAttendance > 6 && this.universityAttendance < 12){
+                        $("#scenario").html(bfScenario4);
+                        $("#scenario").append(bfScenario1_1);
                     } else {
                         if(this.ectsCount >= (this.fullStudyLoadFreeLimit + 6) && this.universityAttendance < 6){
                             $("#scenario").html(bfScenario3); 
                             $("#scenario").append(bfScenario3_1);
+                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2)){
+                            $("#scenario").html(exmatriculateScenario);
+                            $("#scenario").append(exmatriculateScenario_2);
                         } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_1);
@@ -243,10 +253,6 @@ class Calculation extends CurriculumCalculator {
                             $("#scenario").html(bfScenario6);
                             $("#scenario").append(bfScenario6_1);
                             this.feeType = 2;
-                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2) && this.universityAttendance % 2 == 1){
-                            $("#scenario").html(exmatriculateScenario);
-                            $("#scenario").append(exmatriculateScenario_2);
-                            this.feeType = 4;
                         } else if(this.universityAttendance % 2 == 0 && this.ectsCount < this.studyLowerLimit){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
@@ -262,8 +268,12 @@ class Calculation extends CurriculumCalculator {
                 } else if(this.degree == "masters"){
                     if(this.ectsCount == 120){
                         $("#scenario").html(schoolOverScenario);
-                    } else if(this.ectsCount > 90 && this.ectsCount < 120 && this.ectsCount != 96){
+                    } else if(this.ectsCount > 90 && this.ectsCount < 120 && (this.ectsCount != 96 || this.ectsCount != 102)){
                         $("#scenario").html(impossibleScenario);
+                    } else if(this.universityAttendance == 4 && this.ectsCount == 102){
+                        $("#scenario").html(bfScenario1);
+                        $("#scenario").append(mfScenario1);
+                        this.payLoad = "free";
                     } else if(this.universityAttendance == 4 && this.ectsCount == 96){
                         $("#scenario").html(bfScenario1);
                         $("#scenario").append(mfScenario1);
@@ -277,10 +287,14 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").append(bfScenario3_1 + "<br>");
                         $("#scenario").append(mfScenario1);
                         this.payLoad = "free";
+                    } else if(this.ectsCount == 96 && this.universityAttendance > 4 && this.universityAttendance < 8){
+                        $("#scenario").html(bfScenario4);
+                        $("#scenario").append(mfScenario1);
                     } else {
                         if(this.ectsCount >= (this.fullStudyLoadFreeLimit + 6) && this.universityAttendance < 4){
                             $("#scenario").html(bfScenario3); 
                             $("#scenario").append(bfScenario3_1);
+
                         } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance == 1){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_1);
@@ -296,10 +310,9 @@ class Calculation extends CurriculumCalculator {
                             $("#scenario").html(bfScenario6);
                             $("#scenario").append(mfScenario5_1);
                             this.feeType = 2;
-                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2) && this.universityAttendance % 2 == 1){
+                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2)){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
-                            this.feeType = 4;
                         } else if(this.universityAttendance % 2 == 0 && this.ectsCount < this.studyLowerLimit){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
@@ -327,15 +340,21 @@ class Calculation extends CurriculumCalculator {
                         } else {
                             $("#scenario").html(errorScenario);
                         }
-                    } else if(this.universityAttendance == 11 && this.ectsCount >= 165){
+                    } else if(this.universityAttendance == 11 && this.ectsCount >= 151){
                         $("#scenario").html(bLastSemesterScenario);
                         this.feeType = 2;
+                    } else if(this.ectsCount == 168 && this.universityAttendance > 6 && this.universityAttendance < 12){
+                        $("#scenario").html(bfScenario4);
+                        $("#scenario").append(bfScenario1_1);
                     } else {
                         if(this.universityAttendance == 6 && this.ectsCount == 168){
                             $("#scenario").html(bfScenario1);
                             $("#scenario").append(bfScenario1_1 + "<br>");
                             $("#scenario").append(bfScenario3_1);
                             this.payLoad = "free";
+                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2)){
+                            $("#scenario").html(exmatriculateScenario);
+                            $("#scenario").append(exmatriculateScenario_2);
                         } else if(this.universityAttendance < 6 && this.ectsCount == 168 && this.universityAttendance % 2 == 0){
                             $("#scenario").html(bfScenario3);
                             $("#scenario").append(bfScenario1_1  + "<br>");
@@ -356,7 +375,7 @@ class Calculation extends CurriculumCalculator {
                         } else if(this.ectsCount < this.studyLowerLimit && this.universityAttendance >= 6 && this.universityAttendance % 2 == 0){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
-                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2) && this.universityAttendance % 2 == 1){
+                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2)){
                             $("#scenario").html(exmatriculateScenario);
                             $("#scenario").append(exmatriculateScenario_2);
                             this.payLoad = "free";
@@ -398,7 +417,9 @@ class Calculation extends CurriculumCalculator {
                 } else if(this.degree = "masters"){
                     if(this.ectsCount == 120){
                         $("#scenario").html(schoolOverScenario);
-                    } else if(this.ectsCount > 90 && this.ectsCount < 120 && this.ectsCount != 96){
+                    } else if(this.ectsCount > 96 && this.ectsCount < 120){
+                        $("#scenario").html(impossibleScenario);
+                    } else if(this.ectsCount > 96 && this.ectsCount < 120){
                         $("#scenario").html(impossibleScenario);
                     } else if(this.universityAttendance == 8){
                         if(this.ectsCount == 120){
@@ -408,15 +429,21 @@ class Calculation extends CurriculumCalculator {
                         } else {
                             $("#scenario").html(errorScenario);
                         }
-                    } else if(this.universityAttendance == 7 && this.ectsCount >= 96){
+                    } else if(this.universityAttendance == 7 && this.ectsCount >= 82){
                         $("#scenario").html(mpScenario2);
                         this.feeType = 2;
+                    } else if(this.ectsCount == 96 && this.universityAttendance > 4 && this.universityAttendance < 8){
+                        $("#scenario").html(bfScenario4);
+                        $("#scenario").append(mfScenario1);
                     } else {
                         if(this.universityAttendance == 4 && this.ectsCount == 96){
                             $("#scenario").html(bfScenario1);
                             $("#scenario").append(mfScenario1 + "<br>");
                             $("#scenario").append(bfScenario3_1);
                             this.payLoad = "free";
+                        } else if(this.ectsCount < (this.universityAttendance-1)*(this.partTimeStudyLoadMinimumConfig/2)){
+                            $("#scenario").html(exmatriculateScenario);
+                            $("#scenario").append(exmatriculateScenario_2);
                         } else if(this.universityAttendance < 4 && this.ectsCount == 96 && this.universityAttendance % 2 == 0){
                             $("#scenario").html(bfScenario3);
                             $("#scenario").append(mfScenario1  + "<br>");

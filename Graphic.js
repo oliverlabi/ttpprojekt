@@ -1,15 +1,15 @@
 class Graphic extends CurriculumCalculator {
-	clear_canvas(){
+	clear_canvas(){ //teeb graafiku aluspinna puhtaks, et oleks võimalik puhtalt uus joonistada
 		let canvas = document.getElementById("canvas");
 		let ctx = canvas.getContext("2d");
-		ctx.fillStyle = "white";
+		ctx.fillStyle = "white"; 
 		ctx.beginPath();
 			ctx.rect(0, 0, canvas.width, canvas.height);
 		ctx.closePath();
 		ctx.fill();
 	}
 
-	draw_base(){
+	draw_base(){ //joonistab graafikule aluskasti/ümbrise kuhu sisse hakkavad kõik jooned jne tulema
 		let canvas = document.getElementById("canvas");
 		let ctx = canvas.getContext("2d");
 		let graphX = 10;
@@ -24,7 +24,7 @@ class Graphic extends CurriculumCalculator {
 		ctx.stroke();
 	}
 
-	draw_freeMargins(){
+	draw_freeMargins(){ //joonistab tasuta õpingute* graafiku piirid ja alad
 		let canvas = document.getElementById("canvas");
 		let ctx = canvas.getContext("2d");
 		let graphX = 10;
@@ -34,6 +34,7 @@ class Graphic extends CurriculumCalculator {
 		ctx.fillStyle = "red";
 		ctx.lineWidth = graphBorderWidth;
 		ctx.beginPath();
+			//siin tehakse iga piiri vastavad arvutused. Arvutused on relatiivsed üksteise ja canvase piiridega. Kehtib iga ctx.beginPathi jne juures.
 			ctx.rect(graphX+graphBorderWidth, graphY+graphBorderWidth, ((canvas.width - 2*graphX)*1/3) - graphBorderWidth, ((canvas.height - 2*graphY)-(2*graphBorderWidth)));
 		ctx.closePath();
 		ctx.stroke();
@@ -79,7 +80,7 @@ class Graphic extends CurriculumCalculator {
 		
 	}
 
-	draw_paidMargins(){
+	draw_paidMargins(){ //joonistab tasulise ehk osakoormuse piirid
 		let canvas = document.getElementById("canvas");
 		let ctx = canvas.getContext("2d");
 		let graphX = 10;
@@ -136,14 +137,14 @@ class Graphic extends CurriculumCalculator {
 			} 
 	}
 
-	draw_data(){
+	draw_data(){ //joonistab EAP-ide piirid, tekstid ja kriipsud vastavalt eelnevatele andmetele.
 		let canvas = document.getElementById("canvas");
 		let ctx = canvas.getContext("2d");
 		let graphX = 10;
 		let graphY = 45;
 		let graphBorderWidth = 3;
 		let fullTimeEdu = this.fullStudyLoadLowerLimit;
-		let partTimeEdu = this.studyLowerLimit; //siia panna +15 pärast??
+		let partTimeEdu = this.studyLowerLimit; 
 		let freeFullEduLimit = this.fullStudyLoadFreeLimit;
 		let payload = this.payLoad;
 		let EAPScaleText = "";
@@ -161,7 +162,7 @@ class Graphic extends CurriculumCalculator {
 		} else {
 			maxECTS = 120;
 		}
-		if(this.lang == 0){
+		if(this.lang == 0){ //keelevahetus
 			EAPScaleText = "EAP-de alampiiride skaala:";
 			partTimeText_1 ="Õppes jätkamise";
 			partTimeText_2 ="alampiir";
@@ -182,7 +183,7 @@ class Graphic extends CurriculumCalculator {
 			maxECTSText_2 = "over";
 		}
 		
-		ctx.beginPath();
+		ctx.beginPath(); //osakoormuse piir ja tekst
 			ctx.strokeStyle = "rgba(112, 203, 188, 1)";
 			ctx.lineWidth = 2;
 			if((this.degree == "masters" && this.universityAttendance < 8) || (this.degree == "bachelors" && this.universityAttendance < 12)){
@@ -201,7 +202,7 @@ class Graphic extends CurriculumCalculator {
 			ctx.fillStyle = "black";
 			ctx.textAlign = "center";
 			ctx.fillText(0, graphX+graphBorderWidth, graphY - graphBorderWidth*2);
-			//siit alla hakkab osa mida vaja parandada (test andmed infotehnoloogai juht, 8, 0, 100)
+			//tehakse vastavalt osakoormuse piiridele juurde ka tekst
 			if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6) || payload == "free"){
 				if((this.degree == "masters" && this.universityAttendance < 8) || (this.degree == "bachelors" && this.universityAttendance != 12)){
 					ctx.fillText(partTimeEdu, ((canvas.width-2*graphX)*1/3)+graphX, graphY - graphBorderWidth*2);
@@ -224,7 +225,7 @@ class Graphic extends CurriculumCalculator {
 			ctx.textAlign = "left";
 			ctx.fillText(EAPScaleText, graphX, graphY - graphBorderWidth*4 -20);
 		ctx.closePath();
-		
+			//täiskoormuse piirid
 			if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6) || payload == "free"){
 				ctx.beginPath();
 					ctx.strokeStyle = "rgba(112, 203, 188, 1)";
@@ -241,12 +242,12 @@ class Graphic extends CurriculumCalculator {
 					ctx.fillText(fullTimeText_2, ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(1/3)- graphBorderWidth), (canvas.height - graphY) + graphBorderWidth*9);
 				ctx.closePath();
 			}		
-		
+		//lõpu piir
 		if((this.degree == "masters" && this.universityAttendance > 3) || (this.degree == "bachelors" && this.universityAttendance > 5)){
 			ctx.font = "20px arial";
 			ctx.fillStyle = "black";
 			ctx.textAlign = "center";		
-			ctx.fillText(maxECTS, canvas.width-2*graphX-graphBorderWidth, graphY - graphBorderWidth*2);
+			ctx.fillText(maxECTS, canvas.width-2*graphX-graphBorderWidth, graphY - graphBorderWidth*2.5);
 			ctx.font = "12px arial";
 			ctx.fillText(maxECTSText_1, canvas.width-2*graphX-graphBorderWidth*2, (canvas.height - graphY) + graphBorderWidth*5);
 			ctx.fillText(maxECTSText_2, canvas.width-2*graphX-graphBorderWidth*2, (canvas.height - graphY) + graphBorderWidth*9);
@@ -268,7 +269,7 @@ class Graphic extends CurriculumCalculator {
 		}
 	}
 
-	draw_student(){
+	draw_student(){ //õpilase joonistamine graafikule. Lisaks veel legend.
 		let canvas = document.getElementById("canvas");
 		let ctx = canvas.getContext("2d");
 		let graphX = 10;
@@ -294,6 +295,7 @@ class Graphic extends CurriculumCalculator {
 		} else {
 			legendText = " You are here"
 		} 
+		//täiskoormus
 		if((this.degree == "masters" && this.universityAttendance < 4) || (this.degree == "bachelors" && this.universityAttendance < 6) || (payload == "free")){
 			if(this.ectsCount < partTimeEdu){
 				XLength = (canvas.width-2*graphX)/3-graphBorderWidth;
@@ -361,7 +363,7 @@ class Graphic extends CurriculumCalculator {
 					arrowX = ((canvas.width / 2)+graphBorderWidth) + ((((canvas.width)-2*graphX)/2)*(5/6)- graphBorderWidth)+ XPosition;
 				}
 			}
-			
+			//osakoormus
 		} else if (payload == "paid"){
 			if((this.degree == "bachelors" && this.universityAttendance >= 6) || (this.degree == "masters" && this.universityAttendance >= 4)){
 				if((this.degree == "masters" && this.universityAttendance < 8) || (this.degree == "bachelors" && this.universityAttendance < 12)){
@@ -381,6 +383,7 @@ class Graphic extends CurriculumCalculator {
 				if(this.ectsCount >= partTimeEdu){
 					if(this.degree == "bachelors"){
 						if(this.ectsCount > 177 && this.ectsCount < 180){
+							//XPosition on õpilase asukoht graafikul alates kindlast punktist.
 							XPosition = (this.ectsCount/183)*XLength;
 						} else if(this.ectsCount == 180){
 							XPosition = ((this.ectsCount-partTimeEdu)/(180-partTimeEdu))*XLength-graphBorderWidth;
@@ -408,6 +411,7 @@ class Graphic extends CurriculumCalculator {
 						ctx.lineTo((canvas.width/2) + XPosition, (canvas.height - graphY)-(graphBorderWidth/2));
 						ctx.stroke();
 					ctx.closePath();
+					//arrowX on õpilase noolekese kaugus kindlast punktist.
 					arrowX = (canvas.width/2) + XPosition;
 				} else {
 					XPosition = (this.ectsCount/partTimeEdu)*XLength-graphBorderWidth;
@@ -457,7 +461,6 @@ class Graphic extends CurriculumCalculator {
 				ctx.closePath();
 				arrowX = ((canvas.width-2*graphX) / 3)+ graphX + XPosition;
 			} else if(this.ectsCount >= fullTimeEdu){
-				console.log("kolmas");
 				XLength = ((canvas.width-2*graphX)/3);
 				
 				XPosition = ((this.ectsCount - fullTimeEdu)/(freeFullEduLimit - fullTimeEdu))*XLength;
@@ -479,6 +482,7 @@ class Graphic extends CurriculumCalculator {
 		ctx.strokeStyle = 1;
 		//legendi muutuja
 		let legendX = (canvas.width * (4/5));
+		//siin joonistatakse legend ja nool. Mõlemad vahetavad asendit (ja asukohta-nool) vastavalt vajadusele
 		if((arrowX-graphX-graphBorderWidth)<(graphBorderWidth*3)){
 			ctx.beginPath();
 				ctx.moveTo(arrowX+graphBorderWidth*3, (canvas.height/2)-2*graphBorderWidth);

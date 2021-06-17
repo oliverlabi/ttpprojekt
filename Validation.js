@@ -1,33 +1,5 @@
 class Validation extends CurriculumCalculator {
-    /*removeSpecialChars(){
-        let check = 0;
-        for(var i = 0; i< this.bachelorsCurriculums.length;){
-            if($("curriculum_dropdown").val() != this.bachelorsCurriculums[i]){
-                i++;
-            } else {
-                check++;
-                break;
-            }
-        }
-        if(check < 1){
-            for(var i = 0; i < this.mastersCurriculums.length;){
-                if($("curriculum_dropdown").val() != this.mastersCurriculums[i]){
-                    i++;
-                } else {
-                    check++;
-                    break;   
-                }
-            }
-        }
-        if(check == 0){
-            return 0;
-        } else {
-            return 1;
-        }
-            
-    }*/
-
-    checkCurriculumDegree(){
+    checkCurriculumDegree(){ //kontrollib, kas õppekava on bakalaureusekraad või magistrikraad
         for(let i=0; i<this.mastersCurriculums.length; i++){
             if(this.mastersCurriculums[i] == this.curriculumChoice || (this.mastersCurriculumsEng[i] == this.curriculumChoice && lang == 1)){
                 this.degree = "masters";
@@ -38,7 +10,7 @@ class Validation extends CurriculumCalculator {
         }
     }
 
-    checkInDepthStudy(){
+    checkInDepthStudy(){ //kontrollib välisõppe/välispraktika sisestuste olemasolu
         if(this.studiedEstonianSemesterCount == 1){
             this.universityAttendance -= 1;
         } else if(this.studiedEstonianSemesterCount == 2){
@@ -46,7 +18,7 @@ class Validation extends CurriculumCalculator {
         }
     }
 
-    inputValidation(){
+    inputValidation(){ //erinevate võimalike sisestuslahtrite errorijuhtumite kontroll - kui funktsioon tagastab 1, siis erroreid ei ole
         this.k1 = 0;
         this.k2 = 0;
         this.k3 = 0;
@@ -63,7 +35,7 @@ class Validation extends CurriculumCalculator {
         }
         
         if($("#sabbatical_leave").val() >= 0){
-            if($("#sabbatical_leave").val() < this.attendanceCount){
+            if(parseInt($("#sabbatical_leave").val()) < this.attendanceCount){
                 this.k2 = 1;
             }
         }
@@ -91,17 +63,28 @@ class Validation extends CurriculumCalculator {
             this.currentSabbaticalLeave = 1;
             this.k6 = 0;
         } else {
+            if($("input[name='currently_studying_abroad']:checked").val() == "yes"){
+                this.currentlyAbroad = 1;
+            } else {
+                this.currentlyAbroad = 0;  
+            }
+            if($("input[name='current_sabbatical_leave']:checked").val() == "yes"){
+                this.currentSabbaticalLeave = 1;
+            }
             this.k6 = 1;
         }
         if($("input[name='studied_estonian']:checked").val() == "yes"){
-            if(this.universityAttendance - $("#studied_estonian_ects_count").val() < 1){
-                this.k7 = -1;
-            } else if($("#studied_estonian_ects_count").val() > this.universityAttendance){
-                this.k7 = -2;
-            } else if($("#studied_estonian_ects_count").val() > this.attendanceCount){
-                this.k7 = -3;
-            } else if($("#studied_estonian_ects_count").val() == 0){
+            this.studiedEstonian = 1;
+            if(parseInt($("#studied_estonian_ects_count").val()) == this.attendanceCount){
+                this.k7 = -4;
+            } else if(parseInt($("#studied_estonian_ects_count").val()) == 0){
                 this.k7 = 0;
+            } else if(parseInt($("#studied_estonian_ects_count").val()) == this.universityAttendance + this.studiedEstonianSemesterCount){
+                this.k7 = -5;
+            } else if(parseInt($("#studied_estonian_ects_count").val()) > this.attendanceCount){
+                this.k7 = -3;
+            } else if(this.universityAttendance - parseInt($("#studied_estonian_ects_count").val()) < 1){
+                this.k7 = -1;
             } else {
                 this.k7 = 1;
             }
@@ -119,8 +102,7 @@ class Validation extends CurriculumCalculator {
         
     }
 
-    errorMessages(){
-        //Validation.prototype.checkCurriculumDegree.call(this);
+    errorMessages(){ //saadab ekraanile errorikirja pop-upi
         if(this.k1 == 0 && lang == 1){
             if(this.degree == "masters" && this.universityAttendance > 8){
                 swal({
@@ -158,9 +140,6 @@ class Validation extends CurriculumCalculator {
                     className: "errorMsg",
                 });
             }
-
-            /*$("#error").append("\nThe number of semesters spent at TU must not be 0!\n");
-            $("#result_error").append("\nThe number of semesters spent at TU must not be 0!\n");*/
             this.k1 = 1;
         }
         if(this.k1 == 0){
@@ -200,9 +179,6 @@ class Validation extends CurriculumCalculator {
                     className: "errorMsg",
                 });
             }
-            
-            /*$("#error").append("\nTLÜs viibitud semestrite arv ei tohi olla 0!\n");
-            $("#result_error").append("\nTLÜs viibitud semestrite arv ei tohi olla 0!\n");*/
             this.k1 = 1;
         }
         if(this.k2 == 0 && lang == 1){
@@ -224,8 +200,6 @@ class Validation extends CurriculumCalculator {
                     className: "errorMsg",
                 });
             }
-            /*$("#error").append("\nThe number of semesters spent on academic leave must not exceed the number of semesters spent at TU!\n");
-            $("#result_error").append("\nThe number of semesters spent on academic leave must not exceed the number of semesters spent at TU!\n");*/
             this.k2 = 1;
         }
         if(this.k2 == 0){
@@ -247,9 +221,6 @@ class Validation extends CurriculumCalculator {
                     className: "errorMsg",
                 });
             }
-
-            /*$("#error").append("\nAkadeemilisel puhkusel viibitud semestrite arv ei tohi olla üle TLÜs viibitud semestrite arvust!\n");
-            $("#result_error").append("\nAkadeemilisel puhkusel viibitud semestrite arv ei tohi olla üle TLÜs viibitud semestrite arvust!\n");*/
             this.k2 = 1;
         }
         if(this.k3 == 0 && lang == 1){
@@ -280,8 +251,6 @@ class Validation extends CurriculumCalculator {
                     className: "errorMsg",
                 });
             }
-            /*$("#error").append("\nThe number of credits to be taken into account for the completion of the curriculum must not be 0!\n");
-            $("#result_error").append("\nThe number of credits to be taken into account for the completion of the curriculum must not be 0!\n");*/
             this.k3 = 1;
         }
         if(this.k3 == 0){
@@ -312,9 +281,6 @@ class Validation extends CurriculumCalculator {
                     className: "errorMsg",
                 });
             }
-
-            /*$("#error").append("\nÕppekava täitmisel arvesse minevate EAP-de arv ei tohi olla 0!\n");
-            $("#result_error").append("\nÕppekava täitmisel arvesse minevate EAP-de arv ei tohi olla 0!\n");*/
             this.k3 = 1;
         }
         if(this.k4 == 0 && lang == 1){
@@ -325,8 +291,6 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nThe number of semesters spent studying abroad must not be 0!\n");
-            $("#result_error").append("\nThe number of semesters spent studying abroad must not be 0!\n");*/
             this.k4 = 1;
         }
         if(this.k4 == 0){
@@ -337,8 +301,6 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nVälisõppes viibitud semestrite arv ei tohi olla 0!\n");
-            $("#result_error").append("\nVälisõppes viibitud semestrite arv ei tohi olla 0!\n");*/
             this.k4 = 1;
         }
         if(this.k5 == 0 && lang == 1){
@@ -349,8 +311,6 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nThe number of credits spent abroad must not be 0!\n");
-            $("#result_error").append("\nThe number of credits spent abroad must not be 0!\n");*/
             this.k5 = 1;
         }
         if(this.k5 == 0){
@@ -361,8 +321,6 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nVälisõppes viibitud ainepunktide arv ei tohi olla 0!\n");
-            $("#result_error").append("\nVälisõppes viibitud ainepunktide arv ei tohi olla 0!\n");*/
             this.k5 = 1;
         }
         if(this.k6 == 0 && lang == 1){
@@ -373,8 +331,6 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nAcademic leave and study abroad cannot be taken at the same time!");
-            $("#result_error").append("\nAcademic leave and study abroad cannot be taken at the same time!");*/
             this.k6 = 1;
         }
         if(this.k6 == 0){
@@ -385,8 +341,6 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");
-            $("#result_error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");*/
             this.k6 = 1;
         }
         if(this.k7 == 0 && lang == 1){
@@ -397,8 +351,6 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nAcademic leave and study abroad cannot be taken at the same time!");
-            $("#result_error").append("\nAcademic leave and study abroad cannot be taken at the same time!");*/
             this.k7 = 1;
         }
         if(this.k7 == 0){
@@ -409,8 +361,6 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");
-            $("#result_error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");*/
             this.k7 = 1;
         }
         if(this.k7 == -1 && lang == 1){
@@ -421,8 +371,6 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nAcademic leave and study abroad cannot be taken at the same time!");
-            $("#result_error").append("\nAcademic leave and study abroad cannot be taken at the same time!");*/
             this.k7 = 1;
         }
         if(this.k7 == -1){
@@ -433,32 +381,6 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");
-            $("#result_error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");*/
-            this.k7 = 1;
-        }
-        if(this.k7 == -2 && lang == 1){
-            swal({
-                title: "Error!",
-                text: "The number of semesters to be taken into account for the completion of the Estonian language module must not be higher than overall semesters!",
-                icon: "error",
-                button: "OK",
-                className: "errorMsg",
-            });
-            /*$("#error").append("\nAcademic leave and study abroad cannot be taken at the same time!");
-            $("#result_error").append("\nAcademic leave and study abroad cannot be taken at the same time!");*/
-            this.k7 = 1;
-        }
-        if(this.k7 == -2){
-            swal({
-                title: "Viga!",
-                text: "Riigikeele süvaõppe eriala täitmisel arvesse minevate semestrite arv ei tohi olla suurem üldsemestrite arvust!",
-                icon: "error",
-                button: "OK",
-                className: "errorMsg",
-            });
-            /*$("#error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");
-            $("#result_error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");*/
             this.k7 = 1;
         }
         if(this.k7 == -3 && lang == 1){
@@ -469,8 +391,6 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nAcademic leave and study abroad cannot be taken at the same time!");
-            $("#result_error").append("\nAcademic leave and study abroad cannot be taken at the same time!");*/
             this.k7 = 1;
         }
         if(this.k7 == -3){
@@ -481,10 +401,47 @@ class Validation extends CurriculumCalculator {
                 button: "OK",
                 className: "errorMsg",
             });
-            /*$("#error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");
-            $("#result_error").append("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!");*/
             this.k7 = 1;
         }
-        
+        if(this.k7 == -4 && lang == 1){
+            swal({
+                title: "Error!",
+                text: "The number of semesters to be taken into account for the completion of the Estonian language module must not equal to the number of semesters studied at TU!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            this.k7 = 1;
+        }
+        if(this.k7 == -4){
+            swal({
+                title: "Viga!",
+                text: "Riigikeele süvaõppe eriala täitmisel arvesse minevate semestrite arv ei tohi olla võrdne TLÜs viibitud semestrite arvuga!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            this.k7 = 1;
+        }
+        if(this.k7 == -5 && lang == 1){
+            swal({
+                title: "Error!",
+                text: "The number of semesters to be taken into account for the completion of the Estonian language module must not equal to the number of overall semesters!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            this.k7 = 1;
+        }
+        if(this.k7 == -5){
+            swal({
+                title: "Viga!",
+                text: "Riigikeele süvaõppe eriala täitmisel arvesse minevate semestrite arv ei tohi olla võrdne üldsemestrite arvuga!",
+                icon: "error",
+                button: "OK",
+                className: "errorMsg",
+            });
+            this.k7 = 1;
+        }
     }
 }
