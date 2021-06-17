@@ -1,13 +1,24 @@
 class Validation extends CurriculumCalculator {
     checkCurriculumDegree(){ //kontrollib, kas õppekava on bakalaureusekraad või magistrikraad
-        for(let i=0; i<this.mastersCurriculums.length; i++){
-            if(this.mastersCurriculums[i] == this.curriculumChoice || (this.mastersCurriculumsEng[i] == this.curriculumChoice && lang == 1)){
+        for(let i=0; i<this.mastersCurriculumsEng.length; i++){
+            if(this.mastersCurriculumsEng[i] == this.curriculumChoice){
                 this.degree = "masters";
                 break;
-            } else if (this.bachelorsCurriculums[i] == this.curriculumChoice || (this.bachelorsCurriculumsEng[i] == this.curriculumChoice && lang == 1)){
+            } else if (this.bachelorsCurriculumsEng[i] == this.curriculumChoice){
                 this.degree = "bachelors";
+                break;
             }
         }
+        for(let i=0; i<this.mastersCurriculums.length; i++){
+            if(this.mastersCurriculums[i] == this.curriculumChoice){
+                this.degree = "masters";
+                break;
+            } else if(this.bachelorsCurriculums[i] == this.curriculumChoice){
+                this.degree = "bachelors";
+                break;
+            }
+        }
+        
     }
 
     checkInDepthStudy(){ //kontrollib välisõppe/välispraktika sisestuste olemasolu
@@ -93,7 +104,6 @@ class Validation extends CurriculumCalculator {
         }
 
         if(this.k1+this.k2+this.k3+this.k4+this.k5+this.k6+this.k7 != 7){
-            console.log(this.k1, this.k2, this.k3, this.k4, this.k5, this.k6, this.k7);
             Validation.prototype.errorMessages.call(this);
             return 0;
         } else {
@@ -108,7 +118,7 @@ class Validation extends CurriculumCalculator {
                 swal({
                     title: "Error!",
                     text: "Masters curriculum semester count must not be higher than 8!",
-                    icon: "error",
+                    i   : "error",
                     button: "OK",
                     className: "errorMsg",
                 });

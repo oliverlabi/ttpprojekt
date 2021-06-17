@@ -197,7 +197,14 @@ class Calculation extends CurriculumCalculator {
             sabbaticalLeaveScenario = "<b>You are currently on academic leave.</b>";
 
         }
-    
+
+        let ifiomCheck = 0;
+        if(this.curriculumChoice == "Informaatikaõpetaja" || this.curriculumChoice == "Teacher of Computer Science"){
+            ifiomCheck = 1;
+        } else {
+            ifiomCheck = 0;
+        }
+
         if($("input[name='currently_studying_abroad']:checked").val() == "yes"){
             $("#scenario").html(abroadScenario);
         }
@@ -268,7 +275,9 @@ class Calculation extends CurriculumCalculator {
                 } else if(this.degree == "masters"){
                     if(this.ectsCount == 120){
                         $("#scenario").html(schoolOverScenario);
-                    } else if(this.ectsCount > 90 && this.ectsCount < 120 && (this.ectsCount != 96 || this.ectsCount != 102)){
+                    } else if(this.ectsCount > 96 && this.ectsCount < 120 && ifiomCheck == 0){
+                        $("#scenario").html(impossibleScenario);
+                    } else if(this.ectsCount > 102 && this.ectsCount < 120 && ifiomCheck == 1){
                         $("#scenario").html(impossibleScenario);
                     } else if(this.universityAttendance == 4 && this.ectsCount == 102){
                         $("#scenario").html(bfScenario1);
@@ -282,11 +291,16 @@ class Calculation extends CurriculumCalculator {
                         $("#scenario").html(mfScenario2);
                         $("#scenario").append(mfScenario2_1);
                         this.feeType = 3;
-                    } else if(this.ectsCount == 96 && this.universityAttendance < 4){
+                    } else if(this.ectsCount == 96 && this.universityAttendance < 4 && ifiomCheck == 0){
                         $("#scenario").html(bfScenario3); 
                         $("#scenario").append(bfScenario3_1 + "<br>");
                         $("#scenario").append(mfScenario1);
                         this.payLoad = "free";
+                    } else if(this.ectsCount == 102 && this.universityAttendance < 4 && ifiomCheck == 1){
+                            $("#scenario").html(bfScenario3); 
+                            $("#scenario").append(bfScenario3_1 + "<br>");
+                            $("#scenario").append(mfScenario1);
+                            this.payLoad = "free";
                     } else if(this.ectsCount == 96 && this.universityAttendance > 4 && this.universityAttendance < 8){
                         $("#scenario").html(bfScenario4);
                         $("#scenario").append(mfScenario1);
@@ -417,9 +431,9 @@ class Calculation extends CurriculumCalculator {
                 } else if(this.degree = "masters"){
                     if(this.ectsCount == 120){
                         $("#scenario").html(schoolOverScenario);
-                    } else if(this.ectsCount > 96 && this.ectsCount < 120){
+                    } else if(this.ectsCount > 96 && this.ectsCount < 120 && ifiomCheck == 0){
                         $("#scenario").html(impossibleScenario);
-                    } else if(this.ectsCount > 96 && this.ectsCount < 120){
+                    } else if(this.ectsCount > 102 && this.ectsCount < 120 && ifiomCheck == 1){
                         $("#scenario").html(impossibleScenario);
                     } else if(this.universityAttendance == 8){
                         if(this.ectsCount == 120){
