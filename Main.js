@@ -17,6 +17,7 @@ function getParameters(){ //getParameters funktsioon kontrollib, kas lehekülje 
 
 class CurriculumCalculator{
     constructor(language, parameterCheck){ //language muutuja kontrollib, mis keel on veebirakendusel kalkuleerimist alustades. parameterCheck kontrollib URLi parameetrite olemasolu
+        this.queryParams;
         this.parameterCheck = parameterCheck;
         this.ectsFee;
         this.Url ="";
@@ -116,6 +117,32 @@ class CurriculumCalculator{
             Calculation.prototype.calcScenario.call(this); //muudab stsenaariumite keelt
             Calculation.prototype.calcFees.call(this); //muudab maksude/trahvide keelt
         });
+        $("#clipboard_copy_button").click(() => {this.copyUrl();}); //kopeeri linki nupu funktsionaalsus
+    }
+
+    copyUrl(){
+        var $temp = $("<input>");
+        var $url = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname + "?" + this.queryParams.toString();
+        console.log($url);
+        $("body").append($temp);
+        $temp.val($url).select();
+        document.execCommand("copy");
+        $temp.remove();
+        if(lang == 1){
+            swal({
+                title: "Link copied!",
+                icon: "success",
+                button: "OK",
+                className: "errorMsg",
+            });
+        } else {
+            swal({
+                title: "Link kopeeritud!",
+                icon: "success",
+                button: "OK",
+                className: "errorMsg",
+            });
+        }
     }
 
     readConfig(configurationArray){ //loeb konfiguratsioonimuutujate massiivi ja salvestab need vastavalt konstruktori muutujatesse
@@ -216,19 +243,19 @@ class CurriculumCalculator{
     }
 
     setParameters(){ //sätib parameetrid URLi, et saaks kopeerida linki ning jagada teistega
-		var queryParams = new URLSearchParams(window.location.search);
-		queryParams.set("sel",this.curriculumChoice);
-		queryParams.set("cur",this.attendanceCount);
-		queryParams.set("ect",this.ectsCount);
-		queryParams.set("acd",this.sabbaticalCount);
-        queryParams.set("curabr",this.currentAbroadStudies);
-		queryParams.set("abr",this.abroadSemesterCount);
-		queryParams.set("aec",this.abroadEctsCount);
-        queryParams.set("crab",this.currentlyAbroad);
-        queryParams.set("ses",this.studiedEstonian);
-        queryParams.set("sesc",this.studiedEstonianSemesterCount);
-		queryParams.set("cursab",this.currentSabbaticalLeave);
-		history.pushState(null, null, "?"+queryParams.toString());
+		this.queryParams = new URLSearchParams();
+		this.queryParams.set("sel",this.curriculumChoice);
+		this.queryParams.set("cur",this.attendanceCount);
+		this.queryParams.set("ect",this.ectsCount);
+		this.queryParams.set("acd",this.sabbaticalCount);
+        this.queryParams.set("curabr",this.currentAbroadStudies);
+		this.queryParams.set("abr",this.abroadSemesterCount);
+		this.queryParams.set("aec",this.abroadEctsCount);
+        this.queryParams.set("crab",this.currentlyAbroad);
+        this.queryParams.set("ses",this.studiedEstonian);
+        this.queryParams.set("sesc",this.studiedEstonianSemesterCount);
+		this.queryParams.set("cursab",this.currentSabbaticalLeave);
+		history.pushState(null, null, "?"+this.queryParams.toString());
 	}
 
     pageReload(){ //funktsioon, mis laeb lehekülje uuesti lahti ilma parameetriteta
@@ -366,34 +393,6 @@ $("#pdf_save_button").on("click", function(){ //pdfi salvestamise nupu funktsion
     });
 })
 
-$(document).ready(function(){ //kopeeri linki nupu funktsionaalsus
-    var $temp = $("<input>");
-    var $url = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname + window.location.search;
-    $('#clipboard_copy_button').click(function() {
-    $("body").append($temp);
-    $temp.val($url).select();
-    document.execCommand("copy");
-    $temp.remove();
-    if(lang == 1){
-        //alert("Link copied!");
-        swal({
-            title: "Link copied!",
-            icon: "success",
-            button: "OK",
-            className: "errorMsg",
-        });
-    } else {
-        //alert("Link kopeeritud!");
-        swal({
-            title: "Link kopeeritud!",
-            icon: "success",
-            button: "OK",
-            className: "errorMsg",
-        });
-    }
-    });
-})
-
 $("#calculate_button").click(function(){ //kalkulatsiooni nupule vajutamine ilma tulemuste divita
     $("#footer").css("padding-top", "0px");
     let calculation = new CurriculumCalculator(lang, 0);
@@ -503,6 +502,7 @@ function CalculatorToEst() { //kalkulaator eesti keelseks
     $('#curriculum_dropdown_label').html("Vali õppekava: ");
     $('#select_curriculum').html("Vali õppekava...");
     $('#computer_science').html("Informaatika");
+    $('#computer_science_teacher').html("Informaatikaõpetaja");
     $('#info_science_bd').html("Infoteadus (BA)");
     $('#info_science_md').html("Infoteadus (MA)");
     $('#mathematics').html("Matemaatika, majandusmatemaatika ja andmeanalüüs");
